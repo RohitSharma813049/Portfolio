@@ -1,65 +1,59 @@
-import Image from "next/image";
+import Link from "next/link";
+import connectToDatabase from "@/lib/mongodb";
+import Project from "@/models/Project";
+import ProjectGrid from "@/components/ProjectGrid";
 
-export default function Home() {
+// Revalidate the page every 60 seconds (ISR) or leave it dynamic
+export const revalidate = 60;
+
+export default async function Home() {
+  await connectToDatabase();
+  // Fetch only published projects, sorted by newest
+  const projects = await Project.find({ status: "PUBLISHED" }).sort({ createdAt: -1 }).lean();
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <main className="min-h-screen bg-white">
+      {/* Header / Navigation */}
+      <header className="flex justify-between items-center py-6 px-8 max-w-7xl mx-auto border-b border-[#EAEAEA]">
+        <div className="font-bold text-xl tracking-tight">PortfolioCMS</div>
+        <nav className="flex gap-6 items-center">
+          <Link href="/" className="text-sm font-medium hover:text-[#666666] transition">Projects</Link>
+          <Link href="/categories" className="text-sm font-medium hover:text-[#666666] transition">Categories</Link>
+          <Link href="/admin" className="bg-[#111111] text-white px-5 py-2 rounded-[8px] text-sm font-medium hover:bg-[#333] transition">
+            Admin Login
+          </Link>
+        </nav>
+      </header>
+
+      {/* Hero Section */}
+      <section className="max-w-7xl mx-auto px-8 pt-24 pb-16 text-center">
+        <span className="inline-block py-1 px-3 rounded-full bg-[#f4f4f4] text-xs font-semibold uppercase tracking-wider mb-6 text-[#666666]">
+          Premium Software Portfolio
+        </span>
+        <h1 className="text-5xl md:text-6xl font-extrabold tracking-tight mb-6 max-w-4xl mx-auto leading-tight">
+          Ready-Made Software Projects on Modern Technology
+        </h1>
+        <p className="text-lg text-[#666666] max-w-2xl mx-auto mb-10">
+          Deploy production-ready software solutions instantly. Explore our comprehensive collection of premium applications tailored for your business needs.
+        </p>
+      </section>
+
+      {/* Project Grid (Client Component for Search) */}
+      <section className="max-w-7xl mx-auto px-8 pb-16">
+        <ProjectGrid initialProjects={JSON.parse(JSON.stringify(projects))} />
+      </section>
+
+      {/* Footer */}
+      <footer className="border-t border-[#EAEAEA] py-12 mt-20">
+        <div className="max-w-7xl mx-auto px-8 flex flex-col md:flex-row justify-between items-center text-sm text-[#666666]">
+          <p>© 2026 Webbeside Technology. All rights reserved.</p>
+          <div className="flex gap-6 mt-4 md:mt-0">
+            <Link href="#" className="hover:text-[#111111]">Terms</Link>
+            <Link href="#" className="hover:text-[#111111]">Privacy Policy</Link>
+            <Link href="#" className="hover:text-[#111111]">Contact</Link>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+      </footer>
+    </main>
   );
 }
