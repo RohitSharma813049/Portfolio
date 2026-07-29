@@ -3,7 +3,8 @@
 import { useState, useEffect } from "react";
 import { useRouter, useParams } from "next/navigation";
 import Link from "next/link";
-import { Plus, Trash2, UploadCloud } from "lucide-react";
+import { Plus, Trash2 } from "lucide-react";
+import ImageUploader from "@/components/ImageUploader";
 
 export default function EditProject() {
   const router = useRouter();
@@ -111,43 +112,6 @@ export default function EditProject() {
     setter(newArray);
   };
 
-  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>, fieldName: string, isArray: boolean = false, index?: number) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    try {
-      setUploading(true);
-      const data = new FormData();
-      data.append("file", file);
-
-      const res = await fetch("/api/upload", {
-        method: "POST",
-        body: data,
-      });
-
-      const json = await res.json();
-      
-      if (json.success) {
-        if (isArray && index !== undefined) {
-            if (fieldName === "panels") {
-               handleArrayChange(setPanels, panels, index, "image", json.url);
-            } else {
-               handleArrayChange(setScreenshots, screenshots, index, "url", json.url);
-            }
-        } else {
-            setFormData(prev => ({ ...prev, [fieldName]: json.url }));
-        }
-      } else {
-        alert("Upload failed: " + json.error);
-      }
-    } catch (err) {
-      console.error(err);
-      alert("An error occurred during upload.");
-    } finally {
-      setUploading(false);
-    }
-  };
-
   const addArrayItem = (setter: any, array: any, emptyItem: any) => {
     setter([...array, emptyItem]);
   };
@@ -241,20 +205,10 @@ export default function EditProject() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-2">
               <label className="text-sm font-semibold text-[#0B1B3D]">Feature Image</label>
-              <div className="flex gap-2">
-                <input 
-                  type="text" 
-                  name="featureImage"
-                  value={formData.featureImage}
-                  onChange={handleChange}
-                  className="flex-1 px-4 py-3 rounded-none-none border border-[#EAEAEA] focus:outline-none focus:border-[#111111] transition"
-                  placeholder="Image URL or upload..."
-                />
-                <label className="flex items-center justify-center bg-[#f4f4f4] hover:bg-[#eaeaea] text-[#0B1B3D] px-4 py-3 rounded-none-none cursor-pointer transition">
-                  <UploadCloud className="w-5 h-5" />
-                  <input type="file" className="hidden" accept="image/*" onChange={(e) => handleFileUpload(e, "featureImage")} />
-                </label>
-              </div>
+              <ImageUploader 
+                onUpload={(url) => setFormData(prev => ({ ...prev, featureImage: url }))} 
+                defaultImage={formData.featureImage} 
+              />
             </div>
             <div className="space-y-2">
               <label className="text-sm font-semibold text-[#0B1B3D]">Live Preview URL</label>
@@ -407,18 +361,12 @@ export default function EditProject() {
                     className="w-full px-4 py-2 rounded-none-none border border-[#EAEAEA] focus:outline-none focus:border-[#111111] transition text-sm"
                     placeholder="Panel Description (Optional)"
                   />
-                  <div className="flex gap-2 w-full">
-                    <input 
-                      type="text" 
-                      value={panel.image || ""}
-                      onChange={(e) => handleArrayChange(setPanels, panels, index, "image", e.target.value)}
-                      className="flex-1 px-4 py-2 rounded-none-none border border-[#EAEAEA] focus:outline-none focus:border-[#111111] transition text-sm"
-                      placeholder="Panel Image URL or upload..."
+                  <div className="w-full">
+                    <label className="text-xs font-semibold text-[#888] uppercase tracking-wider mb-2 block">Panel Image</label>
+                    <ImageUploader 
+                      onUpload={(url) => handleArrayChange(setPanels, panels, index, "image", url)} 
+                      defaultImage={panel.image} 
                     />
-                    <label className="flex items-center justify-center bg-[#f4f4f4] hover:bg-[#eaeaea] text-[#0B1B3D] px-3 py-2 rounded-none-none cursor-pointer transition">
-                      <UploadCloud className="w-4 h-4" />
-                      <input type="file" className="hidden" accept="image/*" onChange={(e) => handleFileUpload(e, "panels", true, index)} />
-                    </label>
                   </div>
                 </div>
                 <button type="button" onClick={() => removeArrayItem(setPanels, panels, index)} className="p-2 text-red-500 hover:bg-red-50 rounded-none-none transition">
@@ -450,18 +398,12 @@ export default function EditProject() {
                   <option value="MOBILE">Mobile</option>
                   <option value="TABLET">Tablet</option>
                 </select>
-                <div className="flex-1 flex gap-2">
-                  <input 
-                    type="text" 
-                    value={shot.url}
-                    onChange={(e) => handleArrayChange(setScreenshots, screenshots, index, "url", e.target.value)}
-                    className="flex-1 px-4 py-2 rounded-none-none border border-[#EAEAEA] focus:outline-none focus:border-[#111111] transition text-sm"
-                    placeholder="Image URL or upload..."
+                <div className="flex-1 w-full">
+                  <label className="text-xs font-semibold text-[#888] uppercase tracking-wider mb-2 block">Screenshot Image</label>
+                  <ImageUploader 
+                    onUpload={(url) => handleArrayChange(setScreenshots, screenshots, index, "url", url)} 
+                    defaultImage={shot.url} 
                   />
-                  <label className="flex items-center justify-center bg-[#f4f4f4] hover:bg-[#eaeaea] text-[#0B1B3D] px-3 py-2 rounded-none-none cursor-pointer transition">
-                    <UploadCloud className="w-4 h-4" />
-                    <input type="file" className="hidden" accept="image/*" onChange={(e) => handleFileUpload(e, "screenshots", true, index)} />
-                  </label>
                 </div>
                 <button type="button" onClick={() => removeArrayItem(setScreenshots, screenshots, index)} className="p-2 text-red-500 hover:bg-red-50 rounded-none-none transition">
                   <Trash2 className="w-5 h-5" />

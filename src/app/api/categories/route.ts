@@ -27,7 +27,10 @@ export async function POST(req: Request) {
       return NextResponse.json({ success: false, error: "Name is required" }, { status: 400 });
     }
 
-    const category = await Category.create({ name: body.name });
+    const category = await Category.create({ 
+      name: body.name,
+      coverImage: body.coverImage || ""
+    });
     return NextResponse.json({ success: true, data: category });
   } catch (error: any) {
     if (error.code === 11000) {
