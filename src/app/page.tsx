@@ -5,6 +5,7 @@ import FeaturedProjects from "@/components/FeaturedProjects";
 import Link from "next/link";
 import { ArrowRight, UserPlus, Compass, BookOpen } from "lucide-react";
 import ClientSearch from "@/components/ClientSearch";
+import CTA from "@/components/CTA";
 
 export const revalidate = 60;
 
@@ -309,21 +310,7 @@ export default async function Home() {
       </section>
 
       {/* 7. CTA BANNER */}
-      <section className="bg-[#111] py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-8 flex flex-col md:flex-row items-center justify-between gap-8 relative z-10">
-          <div className="max-w-2xl text-white">
-            <p className="text-sm font-medium mb-3 opacity-90 text-[#D8C494]">Ready to publish?</p>
-            <h2 className="text-3xl md:text-5xl font-bold leading-tight">
-              Publish and <span className="italic font-playfair font-medium text-[#D8C494]">Discover</span> Peer-<br />Reviewed Research.
-            </h2>
-          </div>
-          <div>
-            <Link href="/register" className="inline-block bg-[#D8C494] text-[#111] font-bold px-8 py-4 rounded-xl shadow-lg hover:bg-white transition-all hover:scale-105 whitespace-nowrap">
-              Become a Scholar
-            </Link>
-          </div>
-        </div>
-      </section>
+      <CTA />
 
     </div>
   );
