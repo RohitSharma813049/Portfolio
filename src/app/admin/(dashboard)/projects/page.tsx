@@ -53,6 +53,26 @@ export default function AdminProjects() {
     }
   };
 
+  const handleToggleStatus = async (project: any) => {
+    const newStatus = project.status === "PUBLISHED" ? "DRAFT" : "PUBLISHED";
+    try {
+      const res = await fetch(`/api/projects/${project._id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ status: newStatus }),
+      });
+      const json = await res.json();
+      if (json.success) {
+        fetchProjects(); // Refresh the list
+      } else {
+        alert("Failed to update status: " + json.error);
+      }
+    } catch (error) {
+      console.error(error);
+      alert("An error occurred while updating the status.");
+    }
+  };
+
   // Extract unique categories
   const uniqueCategories = useMemo(() => {
     const cats = new Set<string>();
@@ -188,9 +208,12 @@ export default function AdminProjects() {
                 <tr key={project._id} className="border-b border-[#EAEAEA] hover:bg-[#fafafa] transition">
                   <td className="px-6 py-4 font-medium text-[#0B1B3D]">{project.name}</td>
                   <td className="px-6 py-4">
-                    <span className={`px-2 py-1 rounded-none-none text-xs font-semibold ${project.status === 'PUBLISHED' ? 'bg-green-100 text-green-700' : 'bg-amber-100 text-amber-700'}`}>
+                    <button 
+                      onClick={() => handleToggleStatus(project)}
+                      className={`px-3 py-1 rounded-none-none text-xs font-bold transition hover:opacity-80 ${project.status === 'PUBLISHED' ? 'bg-[#E8F5E9] text-[#2E7D32]' : 'bg-[#FFF3E0] text-[#E65100]'}`}
+                    >
                       {project.status}
-                    </span>
+                    </button>
                   </td>
                   <td className="px-6 py-4 text-[#16325C]">{project.categories?.join(', ') || '-'}</td>
                   <td className="px-6 py-4 flex items-center justify-end gap-3">

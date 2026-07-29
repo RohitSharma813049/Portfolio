@@ -76,15 +76,15 @@ export default function ImageUploader({ onUpload, defaultImage }: ImageUploaderP
       ) : (
         <div 
           onClick={() => fileInputRef.current?.click()}
-          className="w-full h-48 border-2 border-dashed border-[#444] rounded-xl flex flex-col items-center justify-center cursor-pointer hover:border-[#D8C494] hover:bg-[#D8C494]/5 transition-colors bg-[#111]"
+          className="w-full h-48 border-2 border-dashed border-[#EAEAEA] rounded-none-none flex flex-col items-center justify-center cursor-pointer hover:border-[#111111] hover:bg-[#fafafa] transition-colors bg-[#f4f4f4]"
         >
           {isUploading ? (
-            <div className="flex flex-col items-center text-[#D8C494]">
+            <div className="flex flex-col items-center text-[#111111]">
               <Loader2 className="w-8 h-8 animate-spin mb-2" />
               <span className="text-sm font-medium">Uploading...</span>
             </div>
           ) : (
-            <div className="flex flex-col items-center text-[#888] hover:text-[#D8C494] transition-colors">
+            <div className="flex flex-col items-center text-[#666666] hover:text-[#111111] transition-colors">
               <UploadCloud className="w-10 h-10 mb-3" />
               <span className="text-sm font-medium">Click or drag image to upload</span>
               <span className="text-xs opacity-70 mt-1">Supports JPG, PNG, WEBP</span>
