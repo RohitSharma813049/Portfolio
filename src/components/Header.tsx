@@ -1,7 +1,8 @@
 import Link from "next/link";
 import Image from "next/image";
-import { BookOpen, User, Menu } from "lucide-react";
+import { BookOpen, User } from "lucide-react";
 import NotificationBell from "./NotificationBell";
+import MobileMenu from "./MobileMenu";
 import { cookies } from "next/headers";
 
 export default async function Header() {
@@ -48,17 +49,11 @@ export default async function Header() {
             <Link href="/categories" className="text-[#D8C494] hover:text-[#16276B] px-3 py-2 text-sm font-medium transition-colors">
               Categories
             </Link>
-            <Link href="/real-time" className="text-[#D8C494] hover:text-[#16276B] px-3 py-2 text-sm font-medium transition-colors">
-              Real-Time
-            </Link>
-            <Link href="/data" className="text-[#D8C494] hover:text-[#16276B] px-3 py-2 text-sm font-medium transition-colors">
-              Data
-            </Link>
           </nav>
 
           {/* Right side buttons */}
           <div className="flex items-center space-x-4">
-            <NotificationBell />
+            {isLoggedIn && <NotificationBell />}
             {!isLoggedIn ? (
               <>
                 <Link 
@@ -84,35 +79,37 @@ export default async function Header() {
             )}
             
             {/* Mobile menu button */}
-            <button className="md:hidden p-2 rounded-none text-[#16276B] hover:bg-[#f4f4f4] transition-colors">
-              <Menu className="w-6 h-6" />
-            </button>
+            <MobileMenu isLoggedIn={isLoggedIn} dashboardLink={dashboardLink} />
           </div>
 
         </div>
       </div>
     </header>
 
-    {/* Secondary Sub-Navigation */}
-    <div className="w-full bg-white border-b border-[#EAEAEA]">
-      <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-center gap-6 overflow-x-auto text-[10px] font-bold tracking-widest text-[#0B1B3D]">
-        <div className="w-2 h-2 rotate-45 bg-[#C59D5F] flex-shrink-0"></div>
-        <span className="hover:text-[#C59D5F] cursor-pointer whitespace-nowrap transition-colors">BRAND</span>
-        <span className="text-[#C59D5F] font-light">|</span>
-        <span className="hover:text-[#C59D5F] cursor-pointer whitespace-nowrap transition-colors">POSITIONING</span>
-        <span className="text-[#C59D5F] font-light">|</span>
-        <span className="hover:text-[#C59D5F] cursor-pointer whitespace-nowrap transition-colors">QUALITY</span>
-        <span className="text-[#C59D5F] font-light">|</span>
-        <span className="hover:text-[#C59D5F] cursor-pointer whitespace-nowrap transition-colors">STRATEGY</span>
-        <span className="text-[#C59D5F] font-light">|</span>
-        <span className="hover:text-[#C59D5F] cursor-pointer whitespace-nowrap transition-colors">VALUE</span>
-        <span className="text-[#C59D5F] font-light">|</span>
-        <span className="hover:text-[#C59D5F] cursor-pointer whitespace-nowrap transition-colors">FOUNDERS</span>
-        <span className="text-[#C59D5F] font-light">|</span>
-        <span className="hover:text-[#C59D5F] cursor-pointer whitespace-nowrap transition-colors">STARTUPS</span>
-        <span className="text-[#C59D5F] font-light">|</span>
-        <span className="hover:text-[#C59D5F] cursor-pointer whitespace-nowrap transition-colors">BUSINESS</span>
-        <div className="w-2 h-2 rotate-45 bg-[#C59D5F] flex-shrink-0"></div>
+    {/* Secondary Sub-Navigation Marquee */}
+    <div className="w-full bg-white border-b border-[#EAEAEA] overflow-hidden">
+      <div className="flex w-max animate-marquee text-[10px] font-bold tracking-widest text-[#0B1B3D] py-3">
+        {/* We repeat the items twice to create a seamless loop effect */}
+        {[1, 2].map((_, i) => (
+          <div key={i} className="flex items-center gap-6 px-3">
+            <div className="w-2 h-2 rotate-45 bg-[#C59D5F] flex-shrink-0"></div>
+            <span className="hover:text-[#C59D5F] cursor-pointer whitespace-nowrap transition-colors">BRAND</span>
+            <span className="text-[#C59D5F] font-light">|</span>
+            <span className="hover:text-[#C59D5F] cursor-pointer whitespace-nowrap transition-colors">POSITIONING</span>
+            <span className="text-[#C59D5F] font-light">|</span>
+            <span className="hover:text-[#C59D5F] cursor-pointer whitespace-nowrap transition-colors">QUALITY</span>
+            <span className="text-[#C59D5F] font-light">|</span>
+            <span className="hover:text-[#C59D5F] cursor-pointer whitespace-nowrap transition-colors">STRATEGY</span>
+            <span className="text-[#C59D5F] font-light">|</span>
+            <span className="hover:text-[#C59D5F] cursor-pointer whitespace-nowrap transition-colors">VALUE</span>
+            <span className="text-[#C59D5F] font-light">|</span>
+            <span className="hover:text-[#C59D5F] cursor-pointer whitespace-nowrap transition-colors">FOUNDERS</span>
+            <span className="text-[#C59D5F] font-light">|</span>
+            <span className="hover:text-[#C59D5F] cursor-pointer whitespace-nowrap transition-colors">STARTUPS</span>
+            <span className="text-[#C59D5F] font-light">|</span>
+            <span className="hover:text-[#C59D5F] cursor-pointer whitespace-nowrap transition-colors">BUSINESS</span>
+          </div>
+        ))}
       </div>
     </div>
     </>

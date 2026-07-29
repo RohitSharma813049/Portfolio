@@ -2,7 +2,7 @@
 
 import { useState, useMemo } from "react";
 import Link from "next/link";
-import { Search, ChevronLeft, ChevronRight, SlidersHorizontal, LayoutGrid, List } from "lucide-react";
+import { Search, ChevronLeft, ChevronRight, SlidersHorizontal, LayoutGrid, List, ArrowRight } from "lucide-react";
 import WishlistButton from "./WishlistButton";
 import EnquiryButton from "./EnquiryButton";
 
@@ -97,18 +97,18 @@ export default function ProjectGrid({ initialProjects }: ProjectGridProps) {
     <div className="flex flex-col mb-16">
       
       {/* Top Search Bar (Spans full width like the screenshot) */}
-      <div className="w-full mb-10">
-        <div className="relative flex items-center group max-w-4xl">
-          <Search className="absolute left-6 w-6 h-6 text-[#16325C] group-focus-within:text-[#0B1B3D] transition-colors" />
+      <div className="w-full mb-10 animate-fade-in-up-delay-1">
+        <div className="relative flex items-center group max-w-4xl shadow-sm">
+          <Search className="absolute left-6 w-5 h-5 text-gray-400 group-focus-within:text-[#D8C494] transition-colors" />
           <input 
             type="text" 
             placeholder="Search projects, categories, subjects..." 
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-16 pr-32 py-5 rounded-none-none border border-[#EAEAEA] shadow-soft focus:shadow-hover focus:outline-none focus:border-[#C59D5F] transition-all text-[#0B1B3D] text-lg bg-white/50 backdrop-blur-sm"
+            className="w-full pl-16 pr-32 py-4 rounded-xl border border-[#EAEAEA] focus:outline-none focus:border-[#D8C494] transition-all text-[#111] bg-white"
           />
           <button 
-            className="absolute right-3 bg-[#C59D5F] hover:bg-[#A37B3E] text-white px-6 py-3 rounded-none-none font-semibold transition"
+            className="absolute right-2 bg-black hover:bg-[#D8C494] text-white px-6 py-2 rounded-lg font-medium transition-colors text-sm"
           >
             Search
           </button>
@@ -120,26 +120,26 @@ export default function ProjectGrid({ initialProjects }: ProjectGridProps) {
         {/* Mobile Filter Toggle */}
         <button 
           onClick={() => setIsMobileSidebarOpen(!isMobileSidebarOpen)}
-          className="lg:hidden flex items-center justify-center gap-2 w-full py-3 border border-[#EAEAEA] rounded-none-none text-[#0B1B3D] font-medium"
+          className="lg:hidden flex items-center justify-center gap-2 w-full py-3 border border-[#EAEAEA] rounded-xl text-[#111] font-medium bg-white"
         >
           <SlidersHorizontal className="w-5 h-5" /> Filters
         </button>
 
         {/* Sidebar Filters */}
-        <aside className={`w-full lg:w-72 flex-shrink-0 ${isMobileSidebarOpen ? 'block' : 'hidden lg:block'}`}>
-          <div className="sticky top-8 bg-white border border-[#EAEAEA] rounded-none-none p-6 shadow-sm">
-            <h3 className="font-bold text-lg mb-6 text-[#0B1B3D]">Filters</h3>
+        <aside className={`w-full lg:w-72 flex-shrink-0 animate-fade-in-up-delay-2 ${isMobileSidebarOpen ? 'block' : 'hidden lg:block'}`}>
+          <div className="sticky top-8 bg-white border border-[#EAEAEA] rounded-2xl p-6 shadow-sm">
+            <h3 className="font-bold text-lg mb-6 text-[#111]">Filters</h3>
             
             {/* Category Section (Publication Type in screenshot) */}
             <div className="mb-8">
-              <h4 className="text-xs font-bold uppercase tracking-wider text-[#16325C] mb-4">Categories</h4>
+              <h4 className="text-xs font-bold uppercase tracking-wider text-[#111] mb-4">Categories</h4>
               <div className="space-y-3">
                 {uniqueCategories.map(cat => (
                   <label key={cat} className="flex items-center gap-3 cursor-pointer group">
-                    <div className={`w-5 h-5 rounded-none border flex items-center justify-center transition-colors ${selectedCategories.includes(cat) ? 'bg-[#C59D5F] border-[#C59D5F]' : 'border-[#ccc] group-hover:border-[#C59D5F]'}`}>
+                    <div className={`w-5 h-5 rounded border flex items-center justify-center transition-colors ${selectedCategories.includes(cat) ? 'bg-[#D8C494] border-[#D8C494]' : 'border-[#ccc] group-hover:border-[#D8C494]'}`}>
                       {selectedCategories.includes(cat) && <span className="text-white text-xs">✓</span>}
                     </div>
-                    <span className={`text-sm ${selectedCategories.includes(cat) ? 'font-semibold text-[#0B1B3D]' : 'text-[#666] group-hover:text-[#0B1B3D]'}`}>{cat}</span>
+                    <span className={`text-sm ${selectedCategories.includes(cat) ? 'font-semibold text-[#111]' : 'text-[#666] group-hover:text-[#111]'}`}>{cat}</span>
                   </label>
                 ))}
               </div>
@@ -147,14 +147,14 @@ export default function ProjectGrid({ initialProjects }: ProjectGridProps) {
 
             {/* Tech Section (Subject Category in screenshot) */}
             <div>
-              <h4 className="text-xs font-bold uppercase tracking-wider text-[#16325C] mb-4">Technologies</h4>
+              <h4 className="text-xs font-bold uppercase tracking-wider text-[#111] mb-4">Technologies</h4>
               <div className="space-y-3">
                 {uniqueTech.map(tech => (
                   <label key={tech} className="flex items-center gap-3 cursor-pointer group">
-                    <div className={`w-5 h-5 rounded-none border flex items-center justify-center transition-colors ${selectedTechs.includes(tech) ? 'bg-[#C59D5F] border-[#C59D5F]' : 'border-[#ccc] group-hover:border-[#C59D5F]'}`}>
+                    <div className={`w-5 h-5 rounded border flex items-center justify-center transition-colors ${selectedTechs.includes(tech) ? 'bg-[#D8C494] border-[#D8C494]' : 'border-[#ccc] group-hover:border-[#D8C494]'}`}>
                       {selectedTechs.includes(tech) && <span className="text-white text-xs">✓</span>}
                     </div>
-                    <span className={`text-sm ${selectedTechs.includes(tech) ? 'font-semibold text-[#0B1B3D]' : 'text-[#666] group-hover:text-[#0B1B3D]'}`}>{tech}</span>
+                    <span className={`text-sm ${selectedTechs.includes(tech) ? 'font-semibold text-[#111]' : 'text-[#666] group-hover:text-[#111]'}`}>{tech}</span>
                   </label>
                 ))}
               </div>
@@ -182,7 +182,7 @@ export default function ProjectGrid({ initialProjects }: ProjectGridProps) {
               <select 
                 value={sortBy} 
                 onChange={(e) => setSortBy(e.target.value)}
-                className="border border-[#EAEAEA] rounded-none-none px-4 py-2 text-sm focus:outline-none focus:border-[#C59D5F] bg-white shadow-sm"
+                className="border border-[#EAEAEA] rounded-xl px-4 py-2 text-sm focus:outline-none focus:border-[#D8C494] bg-white shadow-sm"
               >
                 <option value="Newest">Latest First</option>
                 <option value="Oldest">Oldest First</option>
@@ -200,50 +200,51 @@ export default function ProjectGrid({ initialProjects }: ProjectGridProps) {
 
           {/* Project Grid */}
           {currentProjects.length === 0 ? (
-            <div className="text-center text-[#16325C] py-20 bg-white border border-[#EAEAEA] rounded-none-none">
+            <div className="text-center text-[#666] py-20 bg-white border border-[#EAEAEA] rounded-3xl">
               {initialProjects.length === 0 
                 ? "No published projects found. Log in to the Admin CMS to add some!"
                 : "No projects match your search and filters."}
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 animate-fade-in-up-delay-2">
               {currentProjects.map((project: any) => (
-                <div key={project._id.toString()} className="group rounded-none-none border border-[#EAEAEA] bg-white shadow-soft hover:shadow-hover hover:-translate-y-1 transition-all duration-300 overflow-hidden flex flex-col relative">
-                  <WishlistButton projectId={project._id.toString()} />
-                  <div className="aspect-[4/3] bg-[#f8f9fa] relative overflow-hidden flex items-center justify-center border-b border-[#EAEAEA]">
+                <div key={project._id.toString()} className="group bg-white rounded-3xl overflow-hidden border border-[#EAEAEA] shadow-sm hover:shadow-hover transition-all flex flex-col h-full relative">
+                  <div className="absolute top-4 right-4 z-20">
+                     <WishlistButton projectId={project._id.toString()} />
+                  </div>
+                  
+                  {/* Image */}
+                  <div className="relative h-48 bg-[#f4f4f4] overflow-hidden">
+                    <span className="absolute top-4 left-4 z-10 bg-[#0B1B3D]/80 backdrop-blur-sm text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full">
+                      {project.categories?.[0] || 'ARTICLE'}
+                    </span>
                     {project.featureImage ? (
-                      <img src={project.featureImage} alt={project.name} className="w-full h-full object-cover rounded-none-none group-hover:scale-105 transition-transform duration-500 shadow-sm" />
+                      <img src={project.featureImage} alt={project.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                     ) : (
-                      <div className="w-full h-full bg-gradient-to-br from-gray-50 to-gray-200 rounded-none-none flex items-center justify-center group-hover:scale-105 transition-transform duration-500">
-                        <span className="text-[#0B1B3D] font-bold text-center px-4">{project.name}</span>
+                      <div className="w-full h-full bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center group-hover:scale-105 transition-transform duration-700">
+                        <span className="text-[#0B1B3D]/20 font-bold text-xl px-4 text-center">{project.name}</span>
                       </div>
                     )}
                   </div>
                   
+                  {/* Content */}
                   <div className="p-6 flex flex-col flex-grow">
-                    <div className="flex gap-2 flex-wrap mb-4">
-                      {project.categories?.slice(0, 1).map((cat: string) => (
-                        <span key={cat} className="text-[10px] font-bold uppercase tracking-wider bg-gray-100 text-[#0B1B3D] px-2 py-1 rounded-none-none">{cat}</span>
-                      ))}
-                    </div>
-                    <div className="flex justify-between items-start mb-2">
-                      <h3 className="font-bold text-xl leading-tight text-[#0B1B3D]">{project.name}</h3>
-                    </div>
-                    <p className="text-sm text-[#16325C] line-clamp-2 mb-6 flex-grow">
-                      {project.shortDescription}
-                    </p>
+                    <h4 className="text-[10px] font-bold uppercase tracking-widest text-[#D8C494] mb-2">
+                       {project.technologies?.[0] || 'EDUCATION'}
+                    </h4>
+                    <h3 className="font-playfair text-xl font-medium text-[#111] mb-4 line-clamp-2">
+                       {project.name}
+                    </h3>
                     
-                    <div className="flex gap-3 mt-auto pt-4 border-t border-[#EAEAEA]">
-                      <Link 
-                        href={`/project/${project.slug}`} 
-                        className="flex-1 text-center text-sm font-semibold bg-[#f4f4f4] text-[#0B1B3D] hover:bg-[#EAEAEA] py-2 rounded-none transition"
-                      >
-                        View Details
+                    <p className="text-sm text-[#888] font-light line-clamp-2 mb-6 flex-grow">
+                       {project.shortDescription}
+                    </p>
+
+                    <div className="flex items-center justify-between border-t border-[#EAEAEA] pt-4 mt-auto group/link cursor-pointer">
+                      <Link href={`/project/${project.slug}`} className="text-sm font-semibold text-[#D8C494] flex items-center gap-2 group-hover/link:text-[#111] transition-colors">
+                        Read Full Publication <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" />
                       </Link>
-                      <EnquiryButton 
-                        projectId={project._id.toString()}
-                        projectName={project.name}
-                      />
+                      <span className="text-xs text-[#999]">{Math.floor(Math.random() * 50) + 1} reads</span>
                     </div>
                   </div>
                 </div>
@@ -267,10 +268,10 @@ export default function ProjectGrid({ initialProjects }: ProjectGridProps) {
                   <button
                     key={i}
                     onClick={() => setCurrentPage(i + 1)}
-                    className={`w-10 h-10 flex items-center justify-center rounded-none-none text-sm font-medium transition ${
+                    className={`w-10 h-10 flex items-center justify-center rounded-lg text-sm font-medium transition ${
                       currentPage === i + 1 
-                        ? "bg-[#C59D5F] text-white shadow-md" 
-                        : "bg-white text-[#16325C] border border-[#EAEAEA] hover:bg-[#f4f4f4]"
+                        ? "bg-[#D8C494] text-white shadow-sm" 
+                        : "bg-white text-[#111] border border-[#EAEAEA] hover:bg-[#f4f4f4]"
                     }`}
                   >
                     {i + 1}

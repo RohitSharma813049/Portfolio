@@ -1,14 +1,36 @@
 import connectToDatabase from "@/lib/mongodb";
 import Project from "@/models/Project";
+import Category from "@/models/Category";
 import FeaturedProjects from "@/components/FeaturedProjects";
 import Link from "next/link";
-import { Search, ArrowRight, UserPlus, Compass, BookOpen } from "lucide-react";
+import { ArrowRight, UserPlus, Compass, BookOpen } from "lucide-react";
+import ClientSearch from "@/components/ClientSearch";
 
 export const revalidate = 60;
 
 export default async function Home() {
   await connectToDatabase();
   const projects = await Project.find({}).sort({ createdAt: -1 }).lean();
+  const dbCategories = await Category.find({}).lean();
+  
+  const totalProjects = projects.length;
+  // Let's create dynamic category cards from the dbCategories, merging project counts
+  const categoryCards = dbCategories.map(cat => {
+    const count = projects.filter(p => p.categories && p.categories.includes(cat.name)).length;
+    return {
+      title: cat.name,
+      count: `${count} PUBLICATION${count === 1 ? '' : 'S'}`,
+      image: cat.coverImage || "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?q=80&w=800&auto=format&fit=crop"
+    };
+  });
+  
+  // If no DB categories exist yet, provide a default layout
+  const displayCategories = categoryCards.length > 0 ? categoryCards.slice(0, 4) : [
+    { title: "Research Articles", count: "3+ PAPERS", image: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?q=80&w=800&auto=format&fit=crop" },
+    { title: "eBooks", count: "3+ BOOKS", image: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?q=80&w=800&auto=format&fit=crop" },
+    { title: "Magazines", count: "0+ ISSUES", image: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?q=80&w=800&auto=format&fit=crop" },
+    { title: "Theses", count: "3+ PAPERS", image: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?q=80&w=800&auto=format&fit=crop" }
+  ];
 
   return (
     <div className="bg-white min-h-screen text-[#0B1B3D] font-sans">
@@ -17,14 +39,14 @@ export default async function Home() {
       <section className="relative flex flex-col lg:flex-row min-h-[85vh] border-b border-[#EAEAEA]">
         
         {/* Left Side: Content */}
-        <div className="w-full lg:w-[55%] flex flex-col justify-center px-8 sm:px-16 py-20 lg:py-0">
-          <div className="max-w-2xl">
-            <div className="flex items-center gap-4 mb-8 text-xs font-bold tracking-widest uppercase text-[#16276B]">
-              <span className="w-8 h-px bg-[#16276B]"></span>
+        <div className="w-full lg:w-[55%] flex flex-col justify-center px-6 sm:px-16 py-12 lg:py-0">
+          <div className="max-w-2xl animate-fade-in-up">
+            <div className="flex items-center gap-4 mb-8 text-xs font-bold tracking-widest uppercase text-[#D8C494]">
+              <span className="w-8 h-px bg-[#D8C494]"></span>
               Peer-Reviewed · Open Access · Global Impact
             </div>
             
-            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-playfair font-medium leading-[1.1] mb-6 text-[#111]">
+            <h1 className="text-4xl md:text-5xl lg:text-7xl font-playfair font-medium leading-[1.1] mb-6 text-[#111]">
               Building the Future<br />With Mega Project
             </h1>
             
@@ -33,17 +55,7 @@ export default async function Home() {
             </p>
             
             {/* Search Box */}
-            <div className="relative flex items-center w-full max-w-lg mb-8 shadow-sm">
-              <Search className="absolute left-4 w-5 h-5 text-gray-400" />
-              <input 
-                type="text" 
-                placeholder="Search projects, authors, categories..." 
-                className="w-full pl-12 pr-32 py-4 rounded-xl border border-[#EAEAEA] focus:outline-none focus:border-[#16276B] transition-all bg-white"
-              />
-              <button className="absolute right-2 bg-black hover:bg-[#16276B] text-white px-6 py-2 rounded-lg font-medium transition-colors text-sm">
-                Search
-              </button>
-            </div>
+            <ClientSearch />
             
             {/* Tags */}
             <div className="flex flex-wrap gap-2 mb-12">
@@ -55,11 +67,11 @@ export default async function Home() {
             </div>
             
             {/* Buttons */}
-            <div className="flex flex-wrap gap-4">
-              <Link href="#projects" className="flex items-center gap-2 bg-black hover:bg-[#16276B] text-white px-8 py-4 rounded-xl font-medium transition-colors">
+            <div className="flex flex-wrap gap-4 animate-fade-in-up-delay-1">
+              <Link href="#projects" className="flex items-center gap-2 bg-black hover:bg-[#D8C494] text-white px-8 py-4 rounded-xl font-medium transition-all hover:scale-105 duration-300 shadow-sm hover:shadow-hover">
                 Explore Projects <ArrowRight className="w-4 h-4" />
               </Link>
-              <Link href="/categories" className="flex items-center gap-2 bg-white border border-[#EAEAEA] text-[#111] hover:bg-[#f8f9fa] px-8 py-4 rounded-xl font-medium transition-colors">
+              <Link href="/categories" className="flex items-center gap-2 bg-white border border-[#EAEAEA] text-[#111] hover:border-[#D8C494] hover:text-[#D8C494] px-8 py-4 rounded-xl font-medium transition-all hover:scale-105 duration-300">
                 Meet Our Scholars
               </Link>
             </div>
@@ -90,35 +102,35 @@ export default async function Home() {
 
       {/* 2. STATS SECTION */}
       <section className="border-b border-[#EAEAEA] py-12 bg-white relative z-10 -mt-1 shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 flex flex-wrap justify-between items-center text-center divide-x divide-[#EAEAEA]">
-          <div className="w-1/2 md:w-1/4 py-4 flex flex-col">
-            <span className="font-playfair text-4xl text-[#111] font-medium mb-1">12</span>
+        <div className="max-w-7xl mx-auto px-4 grid grid-cols-2 md:grid-cols-4 text-center divide-x divide-y md:divide-y-0 divide-[#EAEAEA]">
+          <div className="py-6 flex flex-col">
+            <span className="font-playfair text-3xl md:text-4xl text-[#111] font-medium mb-1">{totalProjects}</span>
             <span className="text-[10px] uppercase tracking-widest text-[#666] font-bold">PROJECTS</span>
           </div>
-          <div className="w-1/2 md:w-1/4 py-4 flex flex-col">
-            <span className="font-playfair text-4xl text-[#111] font-medium mb-1">350+</span>
+          <div className="py-6 flex flex-col">
+            <span className="font-playfair text-3xl md:text-4xl text-[#111] font-medium mb-1">350+</span>
             <span className="text-[10px] uppercase tracking-widest text-[#666] font-bold">COMPONENTS</span>
           </div>
-          <div className="w-1/2 md:w-1/4 py-4 flex flex-col border-t md:border-t-0 border-[#EAEAEA]">
-            <span className="font-playfair text-4xl text-[#111] font-medium mb-1">9</span>
+          <div className="py-6 flex flex-col border-t md:border-t-0 border-[#EAEAEA]">
+            <span className="font-playfair text-3xl md:text-4xl text-[#111] font-medium mb-1">9</span>
             <span className="text-[10px] uppercase tracking-widest text-[#666] font-bold">DEVELOPERS</span>
           </div>
-          <div className="w-1/2 md:w-1/4 py-4 flex flex-col border-t md:border-t-0 border-[#EAEAEA]">
-            <span className="font-playfair text-4xl text-[#111] font-medium mb-1">80+</span>
+          <div className="py-6 flex flex-col border-t md:border-t-0 border-[#EAEAEA]">
+            <span className="font-playfair text-3xl md:text-4xl text-[#111] font-medium mb-1">80+</span>
             <span className="text-[10px] uppercase tracking-widest text-[#666] font-bold">COMPANIES</span>
           </div>
         </div>
       </section>
 
       {/* 3. CATEGORIES SECTION */}
-      <section className="py-24 px-4 sm:px-8 max-w-7xl mx-auto bg-white">
-        <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+      <section className="py-16 md:py-24 px-4 sm:px-8 max-w-7xl mx-auto bg-white">
+        <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
           <div className="max-w-2xl">
-            <div className="flex items-center gap-4 mb-4 text-xs font-bold tracking-widest uppercase text-[#16276B]">
-              <span className="w-8 h-px bg-[#16276B]"></span>
+            <div className="flex items-center gap-4 mb-4 text-xs font-bold tracking-widest uppercase text-[#D8C494]">
+              <span className="w-8 h-px bg-[#D8C494]"></span>
               BROWSE BY FORMAT
             </div>
-            <h2 className="text-5xl font-playfair font-medium text-[#111] mb-6">
+            <h2 className="text-4xl md:text-5xl font-playfair font-medium text-[#111] mb-6">
               Publication <span className="text-[#645CBB] italic">Categories</span>
             </h2>
             <p className="text-[#666] font-light text-lg">
@@ -131,16 +143,11 @@ export default async function Home() {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {[
-            { title: "Research Articles", count: "3+ PAPERS" },
-            { title: "eBooks", count: "3+ BOOKS" },
-            { title: "Magazines", count: "0+ ISSUES" },
-            { title: "Theses", count: "3+ PAPERS" }
-          ].map((cat, i) => (
+          {displayCategories.map((cat, i) => (
             <Link href={`/categories`} key={i} className="group relative h-96 rounded-3xl overflow-hidden shadow-soft flex flex-col justify-end p-8 text-white">
               <div className="absolute inset-0 bg-[#2D2A54] z-0" />
               <img 
-                src="https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?q=80&w=800&auto=format&fit=crop" 
+                src={cat.image} 
                 alt={cat.title} 
                 className="absolute inset-0 w-full h-full object-cover opacity-40 mix-blend-overlay group-hover:scale-105 transition-transform duration-700 z-0"
               />
@@ -210,17 +217,17 @@ export default async function Home() {
       </section>
 
       {/* 5. FEATURED RESEARCH SECTION */}
-      <section id="projects" className="py-24 px-4 sm:px-8 max-w-7xl mx-auto bg-white">
+      <section id="projects" className="py-16 md:py-24 px-4 sm:px-8 max-w-7xl mx-auto bg-white">
         <div className="flex flex-col mb-12">
-          <div className="flex items-center gap-4 mb-4 text-xs font-bold tracking-widest uppercase text-[#16276B]">
-            <span className="w-8 h-px bg-[#16276B]"></span>
+          <div className="flex items-center gap-4 mb-4 text-xs font-bold tracking-widest uppercase text-[#D8C494]">
+            <span className="w-8 h-px bg-[#D8C494]"></span>
             CURATED CONTENT
           </div>
           
           <div className="flex flex-col md:flex-row justify-between items-end gap-6 mb-12">
             <div>
-              <h2 className="text-5xl font-playfair font-medium text-[#111] mb-6">
-                Featured <span className="text-[#645CBB] italic">Research</span>
+              <h2 className="text-4xl md:text-5xl font-playfair font-medium text-[#111] mb-6">
+                Featured <span className="text-[#D8C494] italic">Research</span>
               </h2>
               <p className="text-[#666] font-light text-lg max-w-2xl">
                 A curated selection of distinguished research, eBooks and editorial work from scholars across 80 countries.
@@ -232,10 +239,10 @@ export default async function Home() {
           </div>
           
           {/* Tabs */}
-          <div className="flex gap-3 mb-10">
-            <span className="px-6 py-2 border border-[#16276B] text-[#16276B] rounded-full text-sm font-medium cursor-pointer">All</span>
-            <span className="px-6 py-2 border border-[#EAEAEA] text-[#666] rounded-full text-sm hover:border-[#16276B] hover:text-[#16276B] cursor-pointer transition-colors">Education</span>
-            <span className="px-6 py-2 border border-[#EAEAEA] text-[#666] rounded-full text-sm hover:border-[#16276B] hover:text-[#16276B] cursor-pointer transition-colors">Social Sciences</span>
+          <div className="flex flex-wrap gap-3 mb-10">
+            <span className="px-6 py-2 border border-[#D8C494] bg-[#D8C494]/10 text-[#D8C494] rounded-full text-sm font-medium cursor-pointer transition-colors">All</span>
+            <span className="px-6 py-2 border border-[#EAEAEA] text-[#666] rounded-full text-sm hover:border-[#D8C494] hover:text-[#D8C494] cursor-pointer transition-colors">Education</span>
+            <span className="px-6 py-2 border border-[#EAEAEA] text-[#666] rounded-full text-sm hover:border-[#D8C494] hover:text-[#D8C494] cursor-pointer transition-colors">Social Sciences</span>
           </div>
           
         </div>
@@ -302,16 +309,16 @@ export default async function Home() {
       </section>
 
       {/* 7. CTA BANNER */}
-      <section className="bg-gradient-to-r from-[#29145A] to-[#40237B] py-16">
+      <section className="bg-[#111] py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-8 flex flex-col md:flex-row items-center justify-between gap-8 relative z-10">
           <div className="max-w-2xl text-white">
-            <p className="text-sm font-medium mb-3 opacity-90">Ready to publish?</p>
-            <h2 className="text-4xl md:text-5xl font-bold leading-tight">
-              Publish and <span className="italic font-playfair font-medium">Discover</span> Peer-<br />Reviewed Research.
+            <p className="text-sm font-medium mb-3 opacity-90 text-[#D8C494]">Ready to publish?</p>
+            <h2 className="text-3xl md:text-5xl font-bold leading-tight">
+              Publish and <span className="italic font-playfair font-medium text-[#D8C494]">Discover</span> Peer-<br />Reviewed Research.
             </h2>
           </div>
           <div>
-            <Link href="/register" className="inline-block bg-white text-[#29145A] font-medium px-8 py-4 rounded-xl shadow-lg hover:bg-gray-100 transition-colors whitespace-nowrap">
+            <Link href="/register" className="inline-block bg-[#D8C494] text-[#111] font-bold px-8 py-4 rounded-xl shadow-lg hover:bg-white transition-all hover:scale-105 whitespace-nowrap">
               Become a Scholar
             </Link>
           </div>

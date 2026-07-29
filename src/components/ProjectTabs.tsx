@@ -12,32 +12,32 @@ export default function ProjectTabs({ project }: { project: any }) {
       <div className="flex gap-8 border-b border-[#EAEAEA] mb-8 overflow-x-auto pb-4">
         <button 
           onClick={() => setActiveTab("overview")}
-          className={`text-sm font-bold border-b-2 pb-2 whitespace-nowrap ${activeTab === 'overview' ? 'border-[#111111] text-[#0B1B3D]' : 'border-transparent text-[#16325C] hover:text-[#0B1B3D]'}`}
+          className={`text-sm font-bold border-b-2 pb-2 whitespace-nowrap ${activeTab === 'overview' ? 'border-[#D8C494] text-[#D8C494]' : 'border-transparent text-[#666] hover:text-[#111]'}`}
         >
           Overview
         </button>
         <button 
           onClick={() => setActiveTab("features")}
-          className={`text-sm font-bold border-b-2 pb-2 whitespace-nowrap ${activeTab === 'features' ? 'border-[#111111] text-[#0B1B3D]' : 'border-transparent text-[#16325C] hover:text-[#0B1B3D]'}`}
+          className={`text-sm font-bold border-b-2 pb-2 whitespace-nowrap ${activeTab === 'features' ? 'border-[#D8C494] text-[#D8C494]' : 'border-transparent text-[#666] hover:text-[#111]'}`}
         >
           Features
         </button>
         <button 
           onClick={() => setActiveTab("panels")}
-          className={`text-sm font-bold border-b-2 pb-2 whitespace-nowrap ${activeTab === 'panels' ? 'border-[#111111] text-[#0B1B3D]' : 'border-transparent text-[#16325C] hover:text-[#0B1B3D]'}`}
+          className={`text-sm font-bold border-b-2 pb-2 whitespace-nowrap ${activeTab === 'panels' ? 'border-[#D8C494] text-[#D8C494]' : 'border-transparent text-[#666] hover:text-[#111]'}`}
         >
           Panels
         </button>
         <button 
           onClick={() => setActiveTab("screenshots")}
-          className={`text-sm font-bold border-b-2 pb-2 whitespace-nowrap ${activeTab === 'screenshots' ? 'border-[#111111] text-[#0B1B3D]' : 'border-transparent text-[#16325C] hover:text-[#0B1B3D]'}`}
+          className={`text-sm font-bold border-b-2 pb-2 whitespace-nowrap ${activeTab === 'screenshots' ? 'border-[#D8C494] text-[#D8C494]' : 'border-transparent text-[#666] hover:text-[#111]'}`}
         >
           Screenshots
         </button>
         {project.videoUrl && (
           <button 
             onClick={() => setActiveTab("video")}
-            className={`text-sm font-bold border-b-2 pb-2 whitespace-nowrap ${activeTab === 'video' ? 'border-[#111111] text-[#0B1B3D]' : 'border-transparent text-[#16325C] hover:text-[#0B1B3D]'}`}
+            className={`text-sm font-bold border-b-2 pb-2 whitespace-nowrap ${activeTab === 'video' ? 'border-[#D8C494] text-[#D8C494]' : 'border-transparent text-[#666] hover:text-[#111]'}`}
           >
             Video Tour
           </button>
@@ -45,7 +45,7 @@ export default function ProjectTabs({ project }: { project: any }) {
         {project.credentials && project.credentials.length > 0 && (
           <button 
             onClick={() => setActiveTab("demo")}
-            className={`text-sm font-bold border-b-2 pb-2 whitespace-nowrap ${activeTab === 'demo' ? 'border-[#111111] text-[#0B1B3D]' : 'border-transparent text-[#16325C] hover:text-[#0B1B3D]'}`}
+            className={`text-sm font-bold border-b-2 pb-2 whitespace-nowrap ${activeTab === 'demo' ? 'border-[#D8C494] text-[#D8C494]' : 'border-transparent text-[#666] hover:text-[#111]'}`}
           >
             Demo Access
           </button>
@@ -69,7 +69,7 @@ export default function ProjectTabs({ project }: { project: any }) {
                   <h3 className="text-lg font-bold mb-4">Target Industries</h3>
                   <div className="flex flex-wrap gap-2">
                     {project.industries.map((ind: string) => (
-                      <span key={ind} className="text-sm bg-[#f4f4f4] px-4 py-2 rounded-none-none text-[#0B1B3D]">{ind}</span>
+                      <span key={ind} className="text-sm bg-[#f4f4f4] px-4 py-2 rounded-full text-[#111] font-medium">{ind}</span>
                     ))}
                   </div>
                 </div>
@@ -84,11 +84,11 @@ export default function ProjectTabs({ project }: { project: any }) {
               {project.features && project.features.length > 0 ? (
                 <ul className="space-y-4">
                   {project.features.map((feature: any, idx: number) => (
-                    <li key={idx} className="flex items-start gap-3 bg-[#fafafa] p-4 rounded-none-none border border-[#EAEAEA]">
-                      <ChevronRight className="w-5 h-5 text-[#0B1B3D] mt-0.5 flex-shrink-0" />
+                    <li key={idx} className="flex items-start gap-3 bg-[#f8f9fa] p-5 rounded-2xl border border-[#EAEAEA]">
+                      <ChevronRight className="w-5 h-5 text-[#D8C494] mt-0.5 flex-shrink-0" />
                       <div>
-                        <span className="font-bold text-[#0B1B3D] block mb-1">{feature.title}</span> 
-                        {feature.description && <span className="text-[#16325C] text-sm">{feature.description}</span>}
+                        <span className="font-bold text-[#111] block mb-1">{feature.title}</span> 
+                        {feature.description && <span className="text-[#666] text-sm">{feature.description}</span>}
                       </div>
                     </li>
                   ))}
@@ -106,9 +106,9 @@ export default function ProjectTabs({ project }: { project: any }) {
               {project.panels && project.panels.length > 0 ? (
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {project.panels.map((panel: any, idx: number) => (
-                    <div key={idx} className="bg-white border border-[#EAEAEA] p-5 rounded-none-none shadow-sm">
-                      <h4 className="font-bold mb-2 text-[#0B1B3D]">{panel.name}</h4>
-                      {panel.description && <p className="text-sm text-[#16325C]">{panel.description}</p>}
+                    <div key={idx} className="bg-white border border-[#EAEAEA] p-6 rounded-2xl shadow-sm">
+                      <h4 className="font-bold mb-2 text-[#111]">{panel.name}</h4>
+                      {panel.description && <p className="text-sm text-[#666]">{panel.description}</p>}
                     </div>
                   ))}
                 </div>
@@ -125,9 +125,9 @@ export default function ProjectTabs({ project }: { project: any }) {
               {project.screenshots && project.screenshots.length > 0 ? (
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {project.screenshots.map((shot: any, idx: number) => (
-                    <div key={idx} className="bg-[#f8f9fa] border border-[#EAEAEA] rounded-none-none overflow-hidden aspect-video relative">
-                       <img src={shot.url} alt={`Screenshot ${idx+1}`} className="w-full h-full object-cover" />
-                       <span className="absolute bottom-2 right-2 bg-black/60 text-white text-[10px] uppercase px-2 py-1 rounded-none backdrop-blur-md">
+                    <div key={idx} className="bg-[#f8f9fa] border border-[#EAEAEA] rounded-2xl overflow-hidden aspect-video relative group">
+                       <img src={shot.url} alt={`Screenshot ${idx+1}`} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                       <span className="absolute bottom-2 right-2 bg-black/80 text-white text-[10px] uppercase px-3 py-1.5 rounded-full backdrop-blur-md font-medium tracking-wider">
                          {shot.type}
                        </span>
                     </div>
@@ -145,7 +145,7 @@ export default function ProjectTabs({ project }: { project: any }) {
           {activeTab === "video" && project.videoUrl && (
             <div className="animate-in fade-in slide-in-from-bottom-2 duration-300">
               <h3 className="text-xl font-bold mb-4">Video Tour</h3>
-              <div className="aspect-video bg-black rounded-none-none overflow-hidden">
+              <div className="aspect-video bg-black rounded-3xl overflow-hidden shadow-sm">
                 <iframe 
                   src={project.videoUrl.replace("watch?v=", "embed/")} 
                   title="Video Tour" 
@@ -164,18 +164,18 @@ export default function ProjectTabs({ project }: { project: any }) {
               <p className="text-[#16325C] mb-6">Use the following credentials to test the live preview panels of this project.</p>
               <div className="space-y-4">
                 {project.credentials.map((cred: any, idx: number) => (
-                  <div key={idx} className="bg-[#f8f9fa] border border-[#EAEAEA] p-6 flex flex-col md:flex-row gap-6 items-start md:items-center">
+                  <div key={idx} className="bg-white border border-[#EAEAEA] rounded-2xl p-6 flex flex-col md:flex-row gap-6 items-start md:items-center shadow-sm">
                     <div className="flex-1">
-                      <h4 className="font-bold text-[#0B1B3D] text-lg mb-1">{cred.role} Panel</h4>
+                      <h4 className="font-bold text-[#111] text-lg mb-1">{cred.role} Panel</h4>
                     </div>
-                    <div className="flex-2 space-y-2">
-                      <div className="flex justify-between bg-white px-4 py-2 border border-[#EAEAEA] text-sm font-mono">
+                    <div className="flex-2 space-y-2 w-full md:w-auto">
+                      <div className="flex justify-between bg-[#f8f9fa] rounded-lg px-4 py-3 border border-[#EAEAEA] text-sm font-mono">
                         <span className="text-[#666]">Email:</span>
-                        <span className="text-[#0B1B3D] font-bold">{cred.email}</span>
+                        <span className="text-[#111] font-bold">{cred.email}</span>
                       </div>
-                      <div className="flex justify-between bg-white px-4 py-2 border border-[#EAEAEA] text-sm font-mono">
+                      <div className="flex justify-between bg-[#f8f9fa] rounded-lg px-4 py-3 border border-[#EAEAEA] text-sm font-mono">
                         <span className="text-[#666]">Password:</span>
-                        <span className="text-[#0B1B3D] font-bold">{cred.password || 'N/A'}</span>
+                        <span className="text-[#111] font-bold">{cred.password || 'N/A'}</span>
                       </div>
                     </div>
                   </div>
@@ -183,8 +183,8 @@ export default function ProjectTabs({ project }: { project: any }) {
               </div>
               
               {project.livePreviewUrl && (
-                <div className="mt-8">
-                  <a href={project.livePreviewUrl} target="_blank" rel="noreferrer" className="bg-[#1E3A8A] text-white px-8 py-3 rounded-none inline-block font-semibold hover:bg-[#152960] transition">
+                <div className="mt-8 text-center md:text-left">
+                  <a href={project.livePreviewUrl} target="_blank" rel="noreferrer" className="bg-black text-white px-8 py-3.5 rounded-full inline-block font-semibold hover:bg-[#D8C494] transition-colors shadow-sm hover:scale-105 duration-300">
                     Open Live Preview
                   </a>
                 </div>
@@ -196,22 +196,22 @@ export default function ProjectTabs({ project }: { project: any }) {
 
         {/* Sidebar Info Cards */}
         <div className="space-y-6">
-          <div className="p-6 rounded-none-none border border-[#EAEAEA] bg-[#fafafa]">
-            <h4 className="font-bold text-sm uppercase tracking-wider mb-4">Quick Information</h4>
+          <div className="p-6 rounded-3xl border border-[#EAEAEA] bg-white shadow-sm">
+            <h4 className="font-bold text-sm uppercase tracking-wider mb-6 text-[#111]">Quick Information</h4>
             <ul className="space-y-4 text-sm">
-              <li className="flex justify-between border-b border-[#EAEAEA] pb-2"><span className="text-[#16325C]">Platform</span><span className="font-medium">Web</span></li>
-              <li className="flex justify-between border-b border-[#EAEAEA] pb-2"><span className="text-[#16325C]">White Label</span><span className="font-medium">{project.isWhiteLabel ? 'Yes' : 'No'}</span></li>
-              <li className="flex justify-between border-b border-[#EAEAEA] pb-2"><span className="text-[#16325C]">Subscription</span><span className="font-medium">{project.hasSubscription ? 'Available' : 'No'}</span></li>
-              <li className="flex justify-between pb-2"><span className="text-[#16325C]">Source Code</span><span className="font-medium">{project.hasSourceCode ? 'Available' : 'No'}</span></li>
+              <li className="flex justify-between border-b border-[#EAEAEA] pb-3"><span className="text-[#666]">Platform</span><span className="font-medium text-[#111]">Web</span></li>
+              <li className="flex justify-between border-b border-[#EAEAEA] pb-3"><span className="text-[#666]">White Label</span><span className="font-medium text-[#111]">{project.isWhiteLabel ? 'Yes' : 'No'}</span></li>
+              <li className="flex justify-between border-b border-[#EAEAEA] pb-3"><span className="text-[#666]">Subscription</span><span className="font-medium text-[#111]">{project.hasSubscription ? 'Available' : 'No'}</span></li>
+              <li className="flex justify-between pb-1"><span className="text-[#666]">Source Code</span><span className="font-medium text-[#111]">{project.hasSourceCode ? 'Available' : 'No'}</span></li>
             </ul>
           </div>
           
           {project.technologies && project.technologies.length > 0 && (
-            <div className="p-6 rounded-none-none border border-[#EAEAEA] bg-[#fafafa]">
-              <h4 className="font-bold text-sm uppercase tracking-wider mb-4">Tech Stack</h4>
+            <div className="p-6 rounded-3xl border border-[#EAEAEA] bg-white shadow-sm">
+              <h4 className="font-bold text-sm uppercase tracking-wider mb-6 text-[#111]">Tech Stack</h4>
               <div className="flex flex-wrap gap-2">
                 {project.technologies.map((tech: string) => (
-                  <span key={tech} className="text-xs bg-white border border-[#EAEAEA] px-3 py-1.5 rounded-none-none shadow-sm">{tech}</span>
+                  <span key={tech} className="text-xs bg-[#f4f4f4] text-[#111] font-medium px-4 py-2 rounded-full">{tech}</span>
                 ))}
               </div>
             </div>

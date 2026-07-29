@@ -33,7 +33,7 @@ export default function EditProject() {
   });
   
   const [features, setFeatures] = useState([{ title: "", description: "" }]);
-  const [panels, setPanels] = useState([{ name: "", description: "" }]);
+  const [panels, setPanels] = useState([{ name: "", description: "", image: "" }]);
   const [screenshots, setScreenshots] = useState([{ url: "", type: "DESKTOP" }]);
   const [credentials, setCredentials] = useState([{ role: "", email: "", password: "" }]);
 
@@ -129,7 +129,11 @@ export default function EditProject() {
       
       if (json.success) {
         if (isArray && index !== undefined) {
-            handleArrayChange(setScreenshots, screenshots, index, "url", json.url);
+            if (fieldName === "panels") {
+               handleArrayChange(setPanels, panels, index, "image", json.url);
+            } else {
+               handleArrayChange(setScreenshots, screenshots, index, "url", json.url);
+            }
         } else {
             setFormData(prev => ({ ...prev, [fieldName]: json.url }));
         }
@@ -380,7 +384,7 @@ export default function EditProject() {
         <div className="p-8 border-t border-[#EAEAEA] bg-white">
           <div className="flex justify-between items-center border-b border-[#EAEAEA] pb-2 mb-6">
              <h2 className="font-bold text-lg">Panels</h2>
-             <button type="button" onClick={() => addArrayItem(setPanels, panels, {name: "", description: ""})} className="text-sm font-medium flex items-center gap-1 text-[#0B1B3D] hover:text-blue-800">
+             <button type="button" onClick={() => addArrayItem(setPanels, panels, {name: "", description: "", image: ""})} className="text-sm font-medium flex items-center gap-1 text-[#0B1B3D] hover:text-blue-800">
                <Plus className="w-4 h-4" /> Add Panel
              </button>
           </div>
@@ -403,6 +407,19 @@ export default function EditProject() {
                     className="w-full px-4 py-2 rounded-none-none border border-[#EAEAEA] focus:outline-none focus:border-[#111111] transition text-sm"
                     placeholder="Panel Description (Optional)"
                   />
+                  <div className="flex gap-2 w-full">
+                    <input 
+                      type="text" 
+                      value={panel.image || ""}
+                      onChange={(e) => handleArrayChange(setPanels, panels, index, "image", e.target.value)}
+                      className="flex-1 px-4 py-2 rounded-none-none border border-[#EAEAEA] focus:outline-none focus:border-[#111111] transition text-sm"
+                      placeholder="Panel Image URL or upload..."
+                    />
+                    <label className="flex items-center justify-center bg-[#f4f4f4] hover:bg-[#eaeaea] text-[#0B1B3D] px-3 py-2 rounded-none-none cursor-pointer transition">
+                      <UploadCloud className="w-4 h-4" />
+                      <input type="file" className="hidden" accept="image/*" onChange={(e) => handleFileUpload(e, "panels", true, index)} />
+                    </label>
+                  </div>
                 </div>
                 <button type="button" onClick={() => removeArrayItem(setPanels, panels, index)} className="p-2 text-red-500 hover:bg-red-50 rounded-none-none transition">
                   <Trash2 className="w-5 h-5" />

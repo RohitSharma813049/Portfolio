@@ -25,57 +25,58 @@ export default async function ProjectDetails({ params }: { params: Promise<{ slu
 
 
       {/* Hero Section */}
-      <section className="max-w-5xl mx-auto px-8 pt-16 pb-12 border-b border-[#EAEAEA]">
-        <div className="flex flex-col md:flex-row gap-12 items-start">
+      <section className="max-w-6xl mx-auto px-8 pt-20 pb-16 border-b border-[#EAEAEA] animate-fade-in-up">
+        <div className="flex flex-col md:flex-row gap-16 items-center">
           <div className="flex-1">
             {project.categories && project.categories.length > 0 && (
-              <span className="inline-block py-1 px-3 rounded-none-none bg-[#f4f4f4] text-xs font-semibold uppercase tracking-wider mb-4 text-[#16325C]">
+              <span className="inline-block py-1.5 px-4 rounded-full bg-gray-100 text-[10px] font-bold uppercase tracking-widest mb-6 text-[#D8C494]">
                 {project.categories[0]}
               </span>
             )}
-            <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-4 leading-tight">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-playfair font-medium tracking-tight mb-6 leading-tight text-[#111]">
               {project.name}
             </h1>
-            <p className="text-lg text-[#16325C] mb-8">
+            <p className="text-lg text-[#666] font-light mb-8 leading-relaxed max-w-xl">
               {project.shortDescription}
             </p>
             
-            <div className="flex flex-wrap gap-4 mb-8">
+            <div className="flex flex-wrap gap-4 mb-10">
               {project.technologies?.slice(0,2).map((tech: string) => (
-                <span key={tech} className="flex items-center gap-2 text-sm font-medium"><CheckCircle2 className="w-4 h-4 text-green-600" /> {tech}</span>
+                <span key={tech} className="flex items-center gap-2 text-sm font-medium text-[#111]"><CheckCircle2 className="w-4 h-4 text-[#D8C494]" /> {tech}</span>
               ))}
               {project.isWhiteLabel && (
-                <span className="flex items-center gap-2 text-sm font-medium"><CheckCircle2 className="w-4 h-4 text-green-600" /> White Label</span>
+                <span className="flex items-center gap-2 text-sm font-medium text-[#111]"><CheckCircle2 className="w-4 h-4 text-[#D8C494]" /> White Label</span>
               )}
               {project.hasSubscription && (
-                <span className="flex items-center gap-2 text-sm font-medium"><CheckCircle2 className="w-4 h-4 text-green-600" /> Subscription</span>
+                <span className="flex items-center gap-2 text-sm font-medium text-[#111]"><CheckCircle2 className="w-4 h-4 text-[#D8C494]" /> Subscription</span>
               )}
             </div>
 
             <div className="flex flex-wrap gap-4">
-              <a href={project.bookDemoUrl || "#"} className="bg-[#111111] text-white px-6 py-3 rounded-none-none text-sm font-medium hover:bg-[#333] transition shadow-soft">
+              <a href={project.bookDemoUrl || "#"} className="bg-black text-white px-8 py-3.5 rounded-full text-sm font-medium hover:bg-[#D8C494] transition-colors shadow-sm hover:scale-105 duration-300">
                 Book Demo
               </a>
               <EnquiryButton 
                 projectId={project._id.toString()}
                 projectName={project.name}
-                className="border border-[#EAEAEA] px-6 py-3 rounded-none-none text-sm font-medium hover:bg-[#f4f4f4] transition"
+                className="border border-[#EAEAEA] px-8 py-3.5 rounded-full text-sm font-medium hover:border-[#D8C494] hover:text-[#D8C494] transition-colors bg-white hover:scale-105 duration-300"
                 buttonText="Enquiry for Cost"
               />
               {project.livePreviewUrl && (
-                <a href={project.livePreviewUrl} target="_blank" rel="noreferrer" className="border border-[#EAEAEA] px-6 py-3 rounded-none-none text-sm font-medium hover:bg-[#f4f4f4] transition">
+                <a href={project.livePreviewUrl} target="_blank" rel="noreferrer" className="border border-[#EAEAEA] px-8 py-3.5 rounded-full text-sm font-medium hover:border-[#D8C494] hover:text-[#D8C494] transition-colors bg-white hover:scale-105 duration-300">
                   Live Preview
                 </a>
               )}
             </div>
           </div>
           
-          <div className="w-full md:w-1/3 aspect-square bg-[#f8f9fa] rounded-none-none border border-[#EAEAEA] flex items-center justify-center p-8 overflow-hidden">
+          <div className="w-full md:w-5/12 aspect-[4/5] bg-[#f8f9fa] rounded-3xl border border-[#EAEAEA] flex items-center justify-center p-2 overflow-hidden shadow-sm relative">
+            <div className="absolute inset-0 bg-gradient-to-tr from-[#f4f4f4] to-white z-0" />
             {project.featureImage ? (
-               <img src={project.featureImage} alt={project.name} className="w-full h-full object-cover rounded-none-none" />
+               <img src={project.featureImage} alt={project.name} className="w-full h-full object-cover rounded-2xl relative z-10" />
             ) : (
-               <div className="w-full h-full bg-gradient-to-br from-indigo-50 to-blue-100 rounded-none-none flex items-center justify-center">
-                  <span className="text-indigo-900 font-bold text-xl text-center">No Image</span>
+               <div className="w-full h-full bg-gradient-to-br from-gray-50 to-gray-200 rounded-2xl flex items-center justify-center relative z-10">
+                  <span className="text-[#999] font-playfair text-2xl text-center">No Image</span>
                </div>
             )}
           </div>
@@ -87,12 +88,12 @@ export default async function ProjectDetails({ params }: { params: Promise<{ slu
       
       {/* Bottom CTA */}
       <section className="max-w-4xl mx-auto px-8 mt-24 text-center">
-        <h2 className="text-3xl font-bold mb-4">Interested in this project?</h2>
-        <p className="text-[#16325C] mb-8">Book a demo or request pricing to get started with your deployment.</p>
+        <h2 className="text-4xl font-playfair font-medium mb-4 text-[#111]">Interested in this publication?</h2>
+        <p className="text-[#666] font-light mb-10 max-w-xl mx-auto">Book a demo or request pricing to get started with your deployment and access the full source material.</p>
         <EnquiryButton 
           projectId={project._id.toString()}
           projectName={project.name}
-          className="bg-[#111111] inline-block text-white px-8 py-4 rounded-none-none font-medium hover:bg-[#333] transition shadow-soft"
+          className="bg-black inline-block text-white px-10 py-4 rounded-full font-medium hover:bg-[#D8C494] transition-colors shadow-sm hover:scale-105 duration-300"
           buttonText="Talk to an Expert"
         />
       </section>

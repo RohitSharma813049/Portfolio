@@ -9,6 +9,7 @@ export interface IFeature {
 export interface IPanel {
   name: string;
   description?: string;
+  image?: string;
 }
 
 export interface IScreenshot {
@@ -68,6 +69,7 @@ const FeatureSchema = new Schema<IFeature>({
 const PanelSchema = new Schema<IPanel>({
   name: { type: String, required: true },
   description: { type: String },
+  image: { type: String },
 });
 
 const ScreenshotSchema = new Schema<IScreenshot>({

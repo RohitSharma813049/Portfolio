@@ -27,12 +27,12 @@ export default async function CategoriesPage() {
 
 
       {/* Hero Section */}
-      <section className="max-w-7xl mx-auto px-8 pt-24 pb-16 text-center">
-        <h1 className="text-5xl md:text-6xl font-extrabold tracking-tight mb-6 max-w-4xl mx-auto leading-tight">
-          Browse by Category
+      <section className="max-w-7xl mx-auto px-8 pt-24 pb-16 text-center animate-fade-in-up">
+        <h1 className="text-5xl md:text-6xl lg:text-7xl font-playfair font-medium tracking-tight mb-6 max-w-4xl mx-auto leading-tight text-[#111]">
+          Browse by <span className="text-[#D8C494] italic">Category</span>
         </h1>
-        <p className="text-lg text-[#16325C] max-w-2xl mx-auto mb-10">
-          Find exactly what you're looking for by browsing our curated categories of premium software solutions.
+        <p className="text-lg text-[#666] font-light max-w-2xl mx-auto mb-10">
+          Find exactly what you're looking for by browsing our curated categories of peer-reviewed research and premium publications.
         </p>
       </section>
 

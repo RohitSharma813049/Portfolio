@@ -37,15 +37,15 @@ export default async function CategoryFilteredPage({ params }: { params: Promise
 
 
       {/* Hero Section */}
-      <section className="max-w-7xl mx-auto px-8 pt-24 pb-16 text-center">
-        <Link href="/categories" className="inline-block py-1 px-3 rounded-none-none bg-[#f4f4f4] text-xs font-semibold uppercase tracking-wider mb-6 text-[#16325C] hover:bg-[#eaeaea] transition">
-          &larr; All Categories
+      <section className="max-w-7xl mx-auto px-8 pt-24 pb-16 text-center animate-fade-in-up">
+        <Link href="/categories" className="inline-block py-1 px-4 rounded-full bg-black text-[10px] font-bold uppercase tracking-widest mb-6 text-white hover:bg-[#D8C494] transition-colors">
+          &larr; Back to Categories
         </Link>
-        <h1 className="text-5xl md:text-6xl font-extrabold tracking-tight mb-6 max-w-4xl mx-auto leading-tight">
+        <h1 className="text-5xl md:text-6xl lg:text-7xl font-playfair font-medium tracking-tight mb-6 max-w-4xl mx-auto leading-tight text-[#111]">
           {categoryName}
         </h1>
-        <p className="text-lg text-[#16325C] max-w-2xl mx-auto mb-10">
-          Showing {projects.length} {projects.length === 1 ? "project" : "projects"} in the {categoryName} category.
+        <p className="text-lg text-[#666] font-light max-w-2xl mx-auto mb-10">
+          Showing {projects.length} {projects.length === 1 ? "publication" : "publications"} in the {categoryName} category.
         </p>
       </section>
 

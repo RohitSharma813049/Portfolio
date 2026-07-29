@@ -49,18 +49,18 @@ export default function CategoryGrid({ initialCategories }: CategoryGridProps) {
     <div className="flex flex-col mb-16">
       
       {/* Top Search Bar */}
-      <div className="w-full mb-10">
-        <div className="relative flex items-center group max-w-4xl">
-          <Search className="absolute left-6 w-6 h-6 text-[#16325C] group-focus-within:text-[#0B1B3D] transition-colors" />
+      <div className="w-full mb-10 animate-fade-in-up-delay-1">
+        <div className="relative flex items-center group max-w-4xl shadow-sm">
+          <Search className="absolute left-6 w-5 h-5 text-gray-400 group-focus-within:text-[#D8C494] transition-colors" />
           <input 
             type="text" 
             placeholder="Search categories..." 
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-16 pr-32 py-5 rounded-none-none border border-[#EAEAEA] shadow-soft focus:shadow-hover focus:outline-none focus:border-[#C59D5F] transition-all text-[#0B1B3D] text-lg bg-white/50 backdrop-blur-sm"
+            className="w-full pl-16 pr-32 py-4 rounded-xl border border-[#EAEAEA] focus:outline-none focus:border-[#D8C494] transition-all text-[#111] bg-white"
           />
           <button 
-            className="absolute right-3 bg-[#C59D5F] hover:bg-[#A37B3E] text-white px-6 py-3 rounded-none-none font-semibold transition"
+            className="absolute right-2 bg-black hover:bg-[#D8C494] text-white px-6 py-2 rounded-lg font-medium transition-colors text-sm"
           >
             Search
           </button>
@@ -72,15 +72,15 @@ export default function CategoryGrid({ initialCategories }: CategoryGridProps) {
         {/* Mobile Filter Toggle */}
         <button 
           onClick={() => setIsMobileSidebarOpen(!isMobileSidebarOpen)}
-          className="lg:hidden flex items-center justify-center gap-2 w-full py-3 border border-[#EAEAEA] rounded-none-none text-[#0B1B3D] font-medium"
+          className="lg:hidden flex items-center justify-center gap-2 w-full py-3 border border-[#EAEAEA] rounded-xl text-[#111] font-medium bg-white"
         >
           <SlidersHorizontal className="w-5 h-5" /> Filters
         </button>
 
         {/* Sidebar */}
-        <aside className={`w-full lg:w-72 flex-shrink-0 ${isMobileSidebarOpen ? 'block' : 'hidden lg:block'}`}>
-          <div className="sticky top-8 bg-white border border-[#EAEAEA] rounded-none-none p-6 shadow-sm">
-            <h3 className="font-bold text-lg mb-6 text-[#0B1B3D]">Filters</h3>
+        <aside className={`w-full lg:w-72 flex-shrink-0 animate-fade-in-up-delay-2 ${isMobileSidebarOpen ? 'block' : 'hidden lg:block'}`}>
+          <div className="sticky top-8 bg-white border border-[#EAEAEA] rounded-2xl p-6 shadow-sm">
+            <h3 className="font-bold text-lg mb-6 text-[#111]">Filters</h3>
             
             <div>
               <h4 className="text-xs font-bold uppercase tracking-wider text-[#16325C] mb-4">Sort Categories</h4>
@@ -121,11 +121,11 @@ export default function CategoryGrid({ initialCategories }: CategoryGridProps) {
 
           {/* Grid */}
           {currentCategories.length === 0 ? (
-            <div className="text-center text-[#16325C] py-20 bg-white border border-[#EAEAEA] rounded-none-none">
+            <div className="text-center text-[#666] py-20 bg-white border border-[#EAEAEA] rounded-3xl">
               No categories match your search.
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 animate-fade-in-up-delay-2">
               {currentCategories.map((cat: any) => {
                 const categorySlug = cat._id.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)+/g, "");
                 
@@ -133,26 +133,27 @@ export default function CategoryGrid({ initialCategories }: CategoryGridProps) {
                   <Link 
                     href={`/category/${categorySlug}`} 
                     key={cat._id}
-                    className="group flex flex-col rounded-none-none border border-[#EAEAEA] bg-white shadow-soft hover:shadow-hover hover:-translate-y-1 transition-all duration-300 overflow-hidden"
+                    className="group flex flex-col rounded-3xl border border-[#EAEAEA] bg-white shadow-sm hover:shadow-hover hover:-translate-y-1 transition-all duration-300 overflow-hidden"
                   >
                     {cat.featureImage ? (
-                      <div className="w-full h-40 overflow-hidden border-b border-[#EAEAEA]">
+                      <div className="relative h-48 bg-[#f4f4f4] overflow-hidden">
                         <img 
                           src={cat.featureImage} 
                           alt={`${cat._id} category`} 
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                          className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 z-0"
                         />
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#111]/80 via-[#111]/10 to-transparent z-10" />
                       </div>
                     ) : (
-                      <div className="w-full h-40 bg-[#f8f9fa] border-b border-[#EAEAEA] flex items-center justify-center text-[#16325C]">
-                        <Folder className="w-8 h-8 opacity-20" />
+                      <div className="w-full h-48 bg-[#f4f4f4] flex items-center justify-center text-[#999] group-hover:scale-105 transition-transform duration-700">
+                        <Folder className="w-8 h-8 opacity-40" />
                       </div>
                     )}
                     
                     <div className="p-6">
-                      <h3 className="font-bold text-xl mb-1 text-[#0B1B3D]">{cat._id}</h3>
-                      <p className="text-sm text-[#16325C] font-medium">
-                        {cat.count} {cat.count === 1 ? 'Project' : 'Projects'}
+                      <h3 className="font-playfair text-2xl font-medium mb-1 text-[#111]">{cat._id}</h3>
+                      <p className="text-sm text-[#D8C494] font-medium tracking-widest uppercase text-[10px]">
+                        {cat.count} {cat.count === 1 ? 'PUBLICATION' : 'PUBLICATIONS'}
                       </p>
                     </div>
                   </Link>
@@ -177,10 +178,10 @@ export default function CategoryGrid({ initialCategories }: CategoryGridProps) {
                   <button
                     key={i}
                     onClick={() => setCurrentPage(i + 1)}
-                    className={`w-10 h-10 flex items-center justify-center rounded-none-none text-sm font-medium transition ${
+                    className={`w-10 h-10 flex items-center justify-center rounded-lg text-sm font-medium transition ${
                       currentPage === i + 1 
-                        ? "bg-[#C59D5F] text-white shadow-md" 
-                        : "bg-white text-[#16325C] border border-[#EAEAEA] hover:bg-[#f4f4f4]"
+                        ? "bg-[#D8C494] text-white shadow-sm" 
+                        : "bg-white text-[#111] border border-[#EAEAEA] hover:bg-[#f4f4f4]"
                     }`}
                   >
                     {i + 1}
