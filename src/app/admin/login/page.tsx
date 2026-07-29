@@ -4,7 +4,9 @@ import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 
-export default function AdminLoginPage() {
+import { Suspense } from "react";
+
+function AdminLoginForm() {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -86,5 +88,13 @@ export default function AdminLoginPage() {
         </p>
       </div>
     </div>
+  );
+}
+
+export default function AdminLoginPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center bg-gray-50"><p>Loading...</p></div>}>
+      <AdminLoginForm />
+    </Suspense>
   );
 }

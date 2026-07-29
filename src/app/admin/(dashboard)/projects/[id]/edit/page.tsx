@@ -26,7 +26,6 @@ export default function EditProject() {
     livePreviewUrl: "",
     bookDemoUrl: "",
     enquiryUrl: "",
-    enquiryUrl: "",
     requestCostUrl: "",
     videoUrl: "",
     featureImage: "",

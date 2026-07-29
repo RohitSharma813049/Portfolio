@@ -5,8 +5,8 @@ import { ChevronLeft, ChevronRight, PlayCircle } from "lucide-react";
 
 interface ProjectGalleryProps {
   featureImage: string;
-  screenshots?: { url: string; type: string }[];
-  panels?: { image: string; name: string }[];
+  screenshots?: { url?: string; type: string }[];
+  panels?: { image?: string; name: string }[];
   videoUrl?: string;
   projectName: string;
 }

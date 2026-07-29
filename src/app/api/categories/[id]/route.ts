@@ -3,7 +3,7 @@ import connectToDatabase from "@/lib/mongodb";
 import Category from "@/models/Category";
 import { cookies } from "next/headers";
 
-export async function DELETE(req: Request, { params }: { params: { id: string } }) {
+export async function DELETE(req: Request, { params }: { params: Promise<{ id: string }> }) {
   try {
     const cookieStore = await cookies();
     if (!cookieStore.has("admin_token")) {
@@ -11,7 +11,8 @@ export async function DELETE(req: Request, { params }: { params: { id: string } 
     }
 
     await connectToDatabase();
-    const deletedCategory = await Category.findByIdAndDelete(params.id);
+    const { id } = await params;
+    const deletedCategory = await Category.findByIdAndDelete(id);
     
     if (!deletedCategory) {
       return NextResponse.json({ success: false, error: "Category not found" }, { status: 404 });
@@ -23,7 +24,7 @@ export async function DELETE(req: Request, { params }: { params: { id: string } 
   }
 }
 
-export async function PUT(req: Request, { params }: { params: { id: string } }) {
+export async function PUT(req: Request, { params }: { params: Promise<{ id: string }> }) {
   try {
     const cookieStore = await cookies();
     if (!cookieStore.has("admin_token")) {
@@ -37,8 +38,10 @@ export async function PUT(req: Request, { params }: { params: { id: string } }) 
       return NextResponse.json({ success: false, error: "Name is required" }, { status: 400 });
     }
 
+    const { id } = await params;
+
     const updatedCategory = await Category.findByIdAndUpdate(
-      params.id,
+      id,
       { name: body.name, coverImage: body.coverImage || "" },
       { new: true, runValidators: true }
     );
