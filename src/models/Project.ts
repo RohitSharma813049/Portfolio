@@ -35,6 +35,7 @@ export interface IProject extends Document {
   bookDemoUrl?: string;
   requestCostUrl?: string;
   enquiryUrl?: string;
+  videoUrl?: string;
   
   hasSourceCode: boolean;
   isWhiteLabel: boolean;
@@ -94,6 +95,7 @@ const ProjectSchema = new Schema<IProject>(
     bookDemoUrl: { type: String },
     requestCostUrl: { type: String },
     enquiryUrl: { type: String },
+    videoUrl: { type: String },
     
     hasSourceCode: { type: Boolean, default: false },
     isWhiteLabel: { type: Boolean, default: false },

@@ -2,12 +2,12 @@
 
 @theme {
   --color-background: #ffffff;
-  --color-foreground: #111111;
-  --color-secondary: #666666;
+  --color-foreground: #1E3A8A;
+  --color-secondary: #4169E1;
   --color-border: #eaeaea;
   
-  --radius-card: 20px;
-  --radius-button: 8px;
+  --radius-card: 0px;
+  --radius-button: 0px;
 }
 
 :root {
@@ -40,4 +40,32 @@ body {
   .shadow-hover {
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
   }
+  .bg-grid-pattern {
+    background-size: 40px 40px;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+                      linear-gradient(to bottom, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+  }
+  .animate-fade-in-up {
+    animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  .animate-fade-in-up-delay-1 {
+    animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
+    opacity: 0;
+  }
+  .animate-fade-in-up-delay-2 {
+    animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
+    opacity: 0;
+  }
 }
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
