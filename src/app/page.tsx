@@ -1,60 +1,323 @@
 import connectToDatabase from "@/lib/mongodb";
 import Project from "@/models/Project";
-import ProjectGrid from "@/components/ProjectGrid";
-import HeroCarousel from "@/components/HeroCarousel";
+import FeaturedProjects from "@/components/FeaturedProjects";
 import Link from "next/link";
+import { Search, ArrowRight, UserPlus, Compass, BookOpen } from "lucide-react";
 
-// Revalidate the page every 60 seconds (ISR) or leave it dynamic
 export const revalidate = 60;
 
 export default async function Home() {
   await connectToDatabase();
-  
-  // Fetch only the projects that are published (or all, depending on your logic)
   const projects = await Project.find({}).sort({ createdAt: -1 }).lean();
 
   return (
-    <div className="bg-white min-h-screen text-[#1E3A8A] font-sans">
+    <div className="bg-white min-h-screen text-[#0B1B3D] font-sans">
       
-      {/* Hero Section */}
-      <section className="relative pt-32 pb-20 px-4 overflow-hidden border-b border-[#EAEAEA]">
-        <div className="absolute inset-0 bg-grid-pattern opacity-50 pointer-events-none" />
-        <div className="max-w-5xl mx-auto text-center relative z-10">
-          <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight mb-8 leading-tight animate-fade-in-up">
-            Building the Future <br className="hidden md:block"/> 
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#1E3A8A] to-[#4169E1]">With Mega Project</span>
-          </h1>
-          <p className="text-lg md:text-xl text-[#4169E1] max-w-3xl mx-auto mb-12 animate-fade-in-up-delay-1">
-            We deliver implementation-ready, highly accessible UI components and design systems for construction companies. Explore our portfolio of work below.
-          </p>
+      {/* 1. SPLIT HERO SECTION */}
+      <section className="relative flex flex-col lg:flex-row min-h-[85vh] border-b border-[#EAEAEA]">
+        
+        {/* Left Side: Content */}
+        <div className="w-full lg:w-[55%] flex flex-col justify-center px-8 sm:px-16 py-20 lg:py-0">
+          <div className="max-w-2xl">
+            <div className="flex items-center gap-4 mb-8 text-xs font-bold tracking-widest uppercase text-[#16276B]">
+              <span className="w-8 h-px bg-[#16276B]"></span>
+              Peer-Reviewed · Open Access · Global Impact
+            </div>
+            
+            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-playfair font-medium leading-[1.1] mb-6 text-[#111]">
+              Building the Future<br />With Mega Project
+            </h1>
+            
+            <p className="text-lg text-[#666] leading-relaxed mb-12 max-w-xl font-light">
+              We deliver implementation-ready, highly accessible UI components and design systems for construction companies. Explore our portfolio of work below.
+            </p>
+            
+            {/* Search Box */}
+            <div className="relative flex items-center w-full max-w-lg mb-8 shadow-sm">
+              <Search className="absolute left-4 w-5 h-5 text-gray-400" />
+              <input 
+                type="text" 
+                placeholder="Search projects, authors, categories..." 
+                className="w-full pl-12 pr-32 py-4 rounded-xl border border-[#EAEAEA] focus:outline-none focus:border-[#16276B] transition-all bg-white"
+              />
+              <button className="absolute right-2 bg-black hover:bg-[#16276B] text-white px-6 py-2 rounded-lg font-medium transition-colors text-sm">
+                Search
+              </button>
+            </div>
+            
+            {/* Tags */}
+            <div className="flex flex-wrap gap-2 mb-12">
+              <span className="px-4 py-1.5 border border-black rounded-full text-xs font-medium cursor-pointer">All</span>
+              <span className="px-4 py-1.5 border border-[#EAEAEA] text-[#666] rounded-full text-xs hover:border-black cursor-pointer transition-colors">Agriculture</span>
+              <span className="px-4 py-1.5 border border-[#EAEAEA] text-[#666] rounded-full text-xs hover:border-black cursor-pointer transition-colors">Computer Science</span>
+              <span className="px-4 py-1.5 border border-[#EAEAEA] text-[#666] rounded-full text-xs hover:border-black cursor-pointer transition-colors">Business</span>
+              <span className="px-4 py-1.5 border border-[#EAEAEA] text-[#666] rounded-full text-xs hover:border-black cursor-pointer transition-colors">Scholars</span>
+            </div>
+            
+            {/* Buttons */}
+            <div className="flex flex-wrap gap-4">
+              <Link href="#projects" className="flex items-center gap-2 bg-black hover:bg-[#16276B] text-white px-8 py-4 rounded-xl font-medium transition-colors">
+                Explore Projects <ArrowRight className="w-4 h-4" />
+              </Link>
+              <Link href="/categories" className="flex items-center gap-2 bg-white border border-[#EAEAEA] text-[#111] hover:bg-[#f8f9fa] px-8 py-4 rounded-xl font-medium transition-colors">
+                Meet Our Scholars
+              </Link>
+            </div>
+          </div>
+        </div>
+        
+        {/* Right Side: Image */}
+        <div className="w-full lg:w-[45%] bg-[#1E1B38] relative min-h-[50vh] lg:min-h-full overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-tr from-[#1E1B38] to-[#2D2A54] opacity-90 mix-blend-multiply z-10" />
+          <img 
+            src="https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?q=80&w=2000&auto=format&fit=crop" 
+            alt="Library Book" 
+            className="absolute inset-0 w-full h-full object-cover"
+          />
           
-          {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-in-up-delay-2 mb-16">
-            <Link href="#projects" className="w-full sm:w-auto bg-[#4169E1] text-white px-8 py-4 rounded-none font-semibold hover:bg-[#1E3A8A] transition-colors shadow-sm">
-              Explore Projects
-            </Link>
-            <Link href="/categories" className="w-full sm:w-auto bg-white border border-[#EAEAEA] text-[#1E3A8A] px-8 py-4 rounded-none font-semibold hover:bg-[#f4f4f4] transition-colors shadow-sm">
-              View Categories
-            </Link>
+          <div className="absolute top-8 right-8 z-20">
+            <span className="flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 text-white px-4 py-2 rounded-full text-xs font-medium">
+              <span className="w-2 h-2 rounded-full bg-green-400"></span>
+              Open Access 2026
+            </span>
           </div>
           
-          <HeroCarousel projects={JSON.parse(JSON.stringify(projects))} />
+          <div className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none">
+             <h2 className="text-white/20 font-playfair font-bold text-[15rem] leading-none tracking-tighter mix-blend-overlay select-none">AI</h2>
+          </div>
         </div>
       </section>
 
-      {/* Projects Section */}
-      <section id="projects" className="py-24 px-4 bg-[#f8f9fa]">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16 animate-fade-in-up">
-            <h2 className="text-4xl font-extrabold text-[#1E3A8A] mb-4">Our Portfolio</h2>
-            <p className="text-[#4169E1] max-w-2xl mx-auto">
-              Browse through our recent projects. Use the search and filters to find exactly what you're looking for.
-            </p>
+      {/* 2. STATS SECTION */}
+      <section className="border-b border-[#EAEAEA] py-12 bg-white relative z-10 -mt-1 shadow-sm">
+        <div className="max-w-7xl mx-auto px-4 flex flex-wrap justify-between items-center text-center divide-x divide-[#EAEAEA]">
+          <div className="w-1/2 md:w-1/4 py-4 flex flex-col">
+            <span className="font-playfair text-4xl text-[#111] font-medium mb-1">12</span>
+            <span className="text-[10px] uppercase tracking-widest text-[#666] font-bold">PROJECTS</span>
           </div>
-          
-          <ProjectGrid initialProjects={JSON.parse(JSON.stringify(projects))} />
+          <div className="w-1/2 md:w-1/4 py-4 flex flex-col">
+            <span className="font-playfair text-4xl text-[#111] font-medium mb-1">350+</span>
+            <span className="text-[10px] uppercase tracking-widest text-[#666] font-bold">COMPONENTS</span>
+          </div>
+          <div className="w-1/2 md:w-1/4 py-4 flex flex-col border-t md:border-t-0 border-[#EAEAEA]">
+            <span className="font-playfair text-4xl text-[#111] font-medium mb-1">9</span>
+            <span className="text-[10px] uppercase tracking-widest text-[#666] font-bold">DEVELOPERS</span>
+          </div>
+          <div className="w-1/2 md:w-1/4 py-4 flex flex-col border-t md:border-t-0 border-[#EAEAEA]">
+            <span className="font-playfair text-4xl text-[#111] font-medium mb-1">80+</span>
+            <span className="text-[10px] uppercase tracking-widest text-[#666] font-bold">COMPANIES</span>
+          </div>
         </div>
       </section>
+
+      {/* 3. CATEGORIES SECTION */}
+      <section className="py-24 px-4 sm:px-8 max-w-7xl mx-auto bg-white">
+        <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+          <div className="max-w-2xl">
+            <div className="flex items-center gap-4 mb-4 text-xs font-bold tracking-widest uppercase text-[#16276B]">
+              <span className="w-8 h-px bg-[#16276B]"></span>
+              BROWSE BY FORMAT
+            </div>
+            <h2 className="text-5xl font-playfair font-medium text-[#111] mb-6">
+              Publication <span className="text-[#645CBB] italic">Categories</span>
+            </h2>
+            <p className="text-[#666] font-light text-lg">
+              Explore scholarly work across theses, research articles, eBooks and magazines — curated from 350+ peer-reviewed journals.
+            </p>
+          </div>
+          <Link href="/categories" className="flex items-center gap-2 font-medium text-sm hover:opacity-70 transition-opacity whitespace-nowrap">
+            View All Categories <ArrowRight className="w-4 h-4" />
+          </Link>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {[
+            { title: "Research Articles", count: "3+ PAPERS" },
+            { title: "eBooks", count: "3+ BOOKS" },
+            { title: "Magazines", count: "0+ ISSUES" },
+            { title: "Theses", count: "3+ PAPERS" }
+          ].map((cat, i) => (
+            <Link href={`/categories`} key={i} className="group relative h-96 rounded-3xl overflow-hidden shadow-soft flex flex-col justify-end p-8 text-white">
+              <div className="absolute inset-0 bg-[#2D2A54] z-0" />
+              <img 
+                src="https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?q=80&w=800&auto=format&fit=crop" 
+                alt={cat.title} 
+                className="absolute inset-0 w-full h-full object-cover opacity-40 mix-blend-overlay group-hover:scale-105 transition-transform duration-700 z-0"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#111]/90 via-[#111]/20 to-transparent z-10" />
+              
+              <div className="relative z-20">
+                <p className="text-[10px] font-bold tracking-widest uppercase mb-2 text-white/80">{cat.count}</p>
+                <h3 className="font-playfair text-3xl font-medium mb-6 group-hover:-translate-y-2 transition-transform duration-300">{cat.title}</h3>
+                
+                <div className="w-10 h-10 rounded-full border border-white/30 flex items-center justify-center group-hover:bg-white group-hover:text-[#111] transition-all">
+                  <ArrowRight className="w-4 h-4 -rotate-45" />
+                </div>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      {/* 4. HOW IT WORKS SECTION */}
+      <section className="py-24 bg-[#FAFAFA] border-y border-[#EAEAEA]">
+        <div className="max-w-6xl mx-auto px-4 text-center">
+          <div className="text-[10px] font-bold tracking-widest uppercase text-[#645CBB] mb-4">SIMPLE PROCESS</div>
+          <h2 className="text-4xl font-playfair font-medium text-[#111] mb-16">How It Works</h2>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
+            <div className="bg-white rounded-2xl p-10 shadow-sm border border-[#EAEAEA] relative z-10">
+              <div className="w-12 h-12 bg-[#F3F2F9] text-[#645CBB] rounded-full flex items-center justify-center mx-auto mb-6">
+                <UserPlus className="w-5 h-5" />
+              </div>
+              <h3 className="font-bold text-lg mb-4 text-[#111]">Sign Up</h3>
+              <p className="text-[#666] text-sm leading-relaxed">
+                Create your account in seconds and join our global community of scholars.
+              </p>
+            </div>
+            
+            {/* Arrow between 1 and 2 */}
+            <div className="hidden md:block absolute top-1/2 left-[30%] text-[#ccc] -translate-y-1/2 z-0">
+               <ArrowRight className="w-6 h-6" />
+            </div>
+
+            <div className="bg-white rounded-2xl p-10 shadow-sm border border-[#EAEAEA] relative z-10">
+              <div className="w-12 h-12 bg-[#F3F2F9] text-[#645CBB] rounded-full flex items-center justify-center mx-auto mb-6">
+                <Compass className="w-5 h-5" />
+              </div>
+              <h3 className="font-bold text-lg mb-4 text-[#111]">Explore or Apply</h3>
+              <p className="text-[#666] text-sm leading-relaxed">
+                Browse thousands of research papers, thesis, and publications or apply to become a publisher.
+              </p>
+            </div>
+            
+            {/* Arrow between 2 and 3 */}
+            <div className="hidden md:block absolute top-1/2 right-[30%] text-[#ccc] -translate-y-1/2 z-0">
+               <ArrowRight className="w-6 h-6" />
+            </div>
+
+            <div className="bg-white rounded-2xl p-10 shadow-sm border border-[#EAEAEA] relative z-10">
+              <div className="w-12 h-12 bg-[#F3F2F9] text-[#645CBB] rounded-full flex items-center justify-center mx-auto mb-6">
+                <BookOpen className="w-5 h-5" />
+              </div>
+              <h3 className="font-bold text-lg mb-4 text-[#111]">Publish & Read</h3>
+              <p className="text-[#666] text-sm leading-relaxed">
+                Share your research with the world or read groundbreaking publications from peers.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 5. FEATURED RESEARCH SECTION */}
+      <section id="projects" className="py-24 px-4 sm:px-8 max-w-7xl mx-auto bg-white">
+        <div className="flex flex-col mb-12">
+          <div className="flex items-center gap-4 mb-4 text-xs font-bold tracking-widest uppercase text-[#16276B]">
+            <span className="w-8 h-px bg-[#16276B]"></span>
+            CURATED CONTENT
+          </div>
+          
+          <div className="flex flex-col md:flex-row justify-between items-end gap-6 mb-12">
+            <div>
+              <h2 className="text-5xl font-playfair font-medium text-[#111] mb-6">
+                Featured <span className="text-[#645CBB] italic">Research</span>
+              </h2>
+              <p className="text-[#666] font-light text-lg max-w-2xl">
+                A curated selection of distinguished research, eBooks and editorial work from scholars across 80 countries.
+              </p>
+            </div>
+            <Link href="/categories" className="flex items-center gap-2 font-medium text-sm hover:opacity-70 transition-opacity whitespace-nowrap">
+              View All Publications <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
+          
+          {/* Tabs */}
+          <div className="flex gap-3 mb-10">
+            <span className="px-6 py-2 border border-[#16276B] text-[#16276B] rounded-full text-sm font-medium cursor-pointer">All</span>
+            <span className="px-6 py-2 border border-[#EAEAEA] text-[#666] rounded-full text-sm hover:border-[#16276B] hover:text-[#16276B] cursor-pointer transition-colors">Education</span>
+            <span className="px-6 py-2 border border-[#EAEAEA] text-[#666] rounded-full text-sm hover:border-[#16276B] hover:text-[#16276B] cursor-pointer transition-colors">Social Sciences</span>
+          </div>
+          
+        </div>
+        
+        <FeaturedProjects projects={JSON.parse(JSON.stringify(projects))} />
+        
+      </section>
+
+      {/* 6. TESTIMONIALS SECTION */}
+      <section className="py-24 bg-[#FAFAFA] border-t border-[#EAEAEA]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-8 text-center">
+          <div className="text-[10px] font-bold tracking-widest uppercase text-[#645CBB] mb-4">SUCCESS STORIES</div>
+          <h2 className="text-4xl font-playfair font-medium text-[#111] mb-16">What Scholars Say</h2>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-left">
+            {[
+              {
+                quote: "Publishing my thesis was seamless. Global Scholar made it easy to share my work with the academic community.",
+                name: "James Wilson",
+                role: "PhD Candidate",
+                img: "https://ui-avatars.com/api/?name=James+Wilson&background=random"
+              },
+              {
+                quote: "The community here is incredible. Collaborating with peers from different countries has expanded my research horizons.",
+                name: "Dr. Emily Roberts",
+                role: "Quantum Physics",
+                img: "https://ui-avatars.com/api/?name=Emily+Roberts&background=random"
+              },
+              {
+                quote: "I've discovered breakthrough papers I would have never found otherwise. This platform is invaluable for my work.",
+                name: "Prof. Michael Chen",
+                role: "Environmental Scientist",
+                img: "https://ui-avatars.com/api/?name=Michael+Chen&background=random"
+              },
+              {
+                quote: "Global Scholar transformed how I share my research. The platform is intuitive and reaches scholars worldwide.",
+                name: "Dr. Sarah Johnson",
+                role: "Neuroscience Researcher",
+                img: "https://ui-avatars.com/api/?name=Sarah+Johnson&background=random"
+              }
+            ].map((testimonial, i) => (
+              <div key={i} className="bg-white p-8 rounded-2xl shadow-sm border border-[#EAEAEA] flex flex-col">
+                <div className="flex gap-1 mb-4 text-[#F59E0B]">
+                  {[1,2,3,4,5].map(star => (
+                    <svg key={star} className="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>
+                  ))}
+                </div>
+                <p className="text-[#444] italic leading-relaxed mb-8 flex-grow">
+                  "{testimonial.quote}"
+                </p>
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 rounded-full overflow-hidden flex-shrink-0 bg-gray-200">
+                    <img src={testimonial.img} alt={testimonial.name} className="w-full h-full object-cover" />
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-[#111] text-sm">{testimonial.name}</h4>
+                    <p className="text-xs text-[#888]">{testimonial.role}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 7. CTA BANNER */}
+      <section className="bg-gradient-to-r from-[#29145A] to-[#40237B] py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-8 flex flex-col md:flex-row items-center justify-between gap-8 relative z-10">
+          <div className="max-w-2xl text-white">
+            <p className="text-sm font-medium mb-3 opacity-90">Ready to publish?</p>
+            <h2 className="text-4xl md:text-5xl font-bold leading-tight">
+              Publish and <span className="italic font-playfair font-medium">Discover</span> Peer-<br />Reviewed Research.
+            </h2>
+          </div>
+          <div>
+            <Link href="/register" className="inline-block bg-white text-[#29145A] font-medium px-8 py-4 rounded-xl shadow-lg hover:bg-gray-100 transition-colors whitespace-nowrap">
+              Become a Scholar
+            </Link>
+          </div>
+        </div>
+      </section>
+
     </div>
   );
 }

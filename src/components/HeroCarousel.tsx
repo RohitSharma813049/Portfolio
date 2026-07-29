@@ -39,7 +39,7 @@ export default function HeroCarousel({ projects }: { projects: any[] }) {
                 <img src={project.featureImage} alt={project.name} className="w-full h-full object-cover" />
               ) : (
                 <div className="w-full h-full bg-gradient-to-r from-blue-100 to-blue-50 flex items-center justify-center">
-                   <span className="text-4xl font-bold text-[#1E3A8A] opacity-50">{project.name}</span>
+                   <span className="text-4xl font-bold text-[#16276B] opacity-50">{project.name}</span>
                 </div>
               )}
               {/* Overlay */}
@@ -53,7 +53,7 @@ export default function HeroCarousel({ projects }: { projects: any[] }) {
                     <span key={t} className="px-2 py-1 bg-white/20 backdrop-blur-sm rounded-none text-white text-xs font-semibold">{t}</span>
                   ))}
                 </div>
-                <Link href={`/project/${project.slug}`} className="bg-[#4169E1] hover:bg-[#1E3A8A] text-white px-6 py-2 rounded-none-none font-medium transition-colors inline-block">
+                <Link href={`/project/${project.slug}`} className="bg-[#D8C494] hover:bg-[#16276B] text-white px-6 py-2 rounded-none-none font-medium transition-colors inline-block">
                   View Details
                 </Link>
               </div>

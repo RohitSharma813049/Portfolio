@@ -9,10 +9,10 @@ export async function GET(req: Request) {
     const cookieStore = await cookies();
     const token = cookieStore.get("client_token")?.value;
     
-    if (!token) return NextResponse.json({ success: false, error: "Unauthorized" }, { status: 401 });
+    if (!token) return NextResponse.json({ success: true, data: [] }, { status: 200 });
     
     const decoded = await verifyToken(token);
-    if (!decoded || !decoded.userId) return NextResponse.json({ success: false, error: "Invalid token" }, { status: 401 });
+    if (!decoded || !decoded.userId) return NextResponse.json({ success: true, data: [] }, { status: 200 });
 
     await connectToDatabase();
     const user = await User.findById(decoded.userId).populate("wishlist");
