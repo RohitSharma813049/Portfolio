@@ -42,48 +42,67 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4">
-      <div className="w-full max-w-md bg-white rounded-none-none shadow-soft p-8 border border-[#EAEAEA]">
-        <h1 className="text-3xl font-bold text-center mb-2">Welcome Back</h1>
-        <p className="text-[#4169E1] text-center mb-8">Log in to your account</p>
-        
-        {error && <div className="bg-red-50 text-red-600 p-4 rounded-none-none mb-6 text-sm font-medium">{error}</div>}
-        
-        <form onSubmit={handleSubmit} className="space-y-5">
-          <div>
-            <label className="block text-sm font-semibold mb-2">Email Address</label>
-            <input 
-              type="email" 
-              required 
-              value={formData.email}
-              onChange={e => setFormData({...formData, email: e.target.value})}
-              className="w-full border border-[#EAEAEA] rounded-none-none px-4 py-3 focus:outline-none focus:border-[#4169E1] transition"
-              placeholder="john@example.com"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-semibold mb-2">Password</label>
-            <input 
-              type="password" 
-              required 
-              value={formData.password}
-              onChange={e => setFormData({...formData, password: e.target.value})}
-              className="w-full border border-[#EAEAEA] rounded-none-none px-4 py-3 focus:outline-none focus:border-[#4169E1] transition"
-              placeholder="••••••••"
-            />
-          </div>
-          <button 
-            type="submit" 
-            disabled={loading}
-            className="w-full bg-[#4169E1] text-white font-bold py-3 rounded-none-none hover:bg-[#1E3A8A] transition disabled:opacity-50"
-          >
-            {loading ? "Logging in..." : "Log In"}
-          </button>
-        </form>
-        
-        <p className="text-center text-sm text-[#4169E1] mt-6">
-          Don't have an account? <Link href="/signup" className="text-[#1E3A8A] font-semibold hover:underline">Sign Up</Link>
-        </p>
+  return (
+    <div className="min-h-screen flex flex-col md:flex-row bg-[#111]">
+      {/* Left Info Section */}
+      <div className="w-full md:w-1/2 p-12 md:p-24 flex flex-col justify-center relative overflow-hidden bg-[#111]">
+        <div className="absolute top-[-20%] left-[-10%] w-[60%] h-[60%] bg-[#D8C494] opacity-5 blur-[120px] rounded-full pointer-events-none" />
+        <div className="relative z-10 animate-fade-in-up">
+          <Link href="/" className="inline-block text-[#D8C494] font-bold tracking-widest text-sm uppercase mb-12 hover:opacity-80 transition-opacity">
+            &larr; Back to Home
+          </Link>
+          <h1 className="text-5xl md:text-6xl font-playfair font-medium text-white mb-6 leading-tight">
+            Welcome <span className="text-[#D8C494] italic">Back</span>.
+          </h1>
+          <p className="text-lg text-[#999] font-light max-w-md leading-relaxed">
+            Log in to manage your saved projects, access premium resources, and view your active deployments.
+          </p>
+        </div>
+      </div>
+
+      {/* Right Form Section */}
+      <div className="w-full md:w-1/2 bg-[#0a0a0a] border-l border-[#222] p-8 md:p-24 flex flex-col justify-center animate-fade-in-up shadow-2xl">
+        <div className="w-full max-w-sm mx-auto">
+          <h2 className="text-3xl font-playfair font-medium text-white mb-8">Log In</h2>
+          
+          {error && <div className="bg-red-900/20 border border-red-900 text-red-400 p-4 rounded-xl mb-8 text-sm">{error}</div>}
+          
+          <form onSubmit={handleSubmit} className="space-y-5">
+            <div>
+              <label className="block text-xs font-semibold text-[#888] uppercase tracking-wider mb-2">Email Address</label>
+              <input 
+                type="email" 
+                required 
+                value={formData.email}
+                onChange={e => setFormData({...formData, email: e.target.value})}
+                className="w-full bg-[#111] border border-[#333] text-white rounded-xl px-4 py-3.5 focus:outline-none focus:border-[#D8C494] transition-colors placeholder-[#444]"
+                placeholder="john@example.com"
+              />
+            </div>
+            <div>
+              <label className="block text-xs font-semibold text-[#888] uppercase tracking-wider mb-2">Password</label>
+              <input 
+                type="password" 
+                required 
+                value={formData.password}
+                onChange={e => setFormData({...formData, password: e.target.value})}
+                className="w-full bg-[#111] border border-[#333] text-white rounded-xl px-4 py-3.5 focus:outline-none focus:border-[#D8C494] transition-colors placeholder-[#444]"
+                placeholder="••••••••"
+              />
+            </div>
+            <button 
+              type="submit" 
+              disabled={loading}
+              className="w-full bg-[#D8C494] text-black font-semibold py-4 rounded-full mt-6 hover:bg-[#c2ae7c] transition-colors shadow-[0_0_20px_rgba(216,196,148,0.3)] disabled:opacity-50 disabled:shadow-none hover:scale-[1.02] duration-300"
+            >
+              {loading ? "Logging in..." : "Log In"}
+            </button>
+          </form>
+          
+          <p className="text-center text-sm text-[#777] mt-8">
+            Don't have an account? <Link href="/signup" className="text-[#D8C494] font-semibold hover:underline">Sign Up</Link>
+          </p>
+        </div>
       </div>
     </div>
   );
