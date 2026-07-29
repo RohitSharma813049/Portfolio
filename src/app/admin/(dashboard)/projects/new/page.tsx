@@ -59,6 +59,40 @@ export default function NewProject() {
     setter(newArray);
   };
 
+  const addArrayItem = (setter: any, array: any, emptyItem: any) => {
+    setter([...array, emptyItem]);
+  };
+
+  const removeArrayItem = (setter: any, array: any, index: number) => {
+    const newArray = [...array];
+    newArray.splice(index, 1);
+    setter(newArray);
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+
+    try {
+      const payload = {
+        ...formData,
+        categories: formData.categories ? formData.categories.split(",").map(c => c.trim()).filter(Boolean) : [],
+        technologies: formData.technologies ? formData.technologies.split(",").map(c => c.trim()) : [],
+        industries: formData.industries ? formData.industries.split(",").map(c => c.trim()) : [],
+        features: features.filter(f => f.title.trim() !== ""), 
+        panels: panels.filter(p => p.name.trim() !== ""),
+        screenshots: screenshots.filter(s => s.url.trim() !== ""),
+        credentials: credentials.filter(c => c.role.trim() !== "" && c.email.trim() !== ""),
+      };
+
+      const res = await fetch("/api/projects", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      const json = await res.json();
+      if (json.success) {
         router.push("/admin/projects");
       } else {
         alert("Error: " + json.error);

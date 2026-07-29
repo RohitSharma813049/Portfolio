@@ -42,7 +42,6 @@ export default function LoginPage() {
   };
 
   return (
-  return (
     <div className="min-h-screen flex flex-col md:flex-row bg-[#111]">
       {/* Left Info Section */}
       <div className="w-full md:w-1/2 p-12 md:p-24 flex flex-col justify-center relative overflow-hidden bg-[#111]">

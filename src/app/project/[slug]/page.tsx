@@ -5,6 +5,7 @@ import connectToDatabase from "@/lib/mongodb";
 import Project from "@/models/Project";
 import ProjectTabs from "@/components/ProjectTabs";
 import EnquiryButton from "@/components/EnquiryButton";
+import ProjectGallery from "@/components/ProjectGallery";
 
 export const revalidate = 60; // ISR
 
@@ -70,15 +71,15 @@ export default async function ProjectDetails({ params }: { params: Promise<{ slu
             </div>
           </div>
           
-          <div className="w-full md:w-5/12 aspect-[4/5] bg-[#f8f9fa] rounded-3xl border border-[#EAEAEA] flex items-center justify-center p-2 overflow-hidden shadow-sm relative">
-            <div className="absolute inset-0 bg-gradient-to-tr from-[#f4f4f4] to-white z-0" />
-            {project.featureImage ? (
-               <img src={project.featureImage} alt={project.name} className="w-full h-full object-cover rounded-2xl relative z-10" />
-            ) : (
-               <div className="w-full h-full bg-gradient-to-br from-gray-50 to-gray-200 rounded-2xl flex items-center justify-center relative z-10">
-                  <span className="text-[#999] font-playfair text-2xl text-center">No Image</span>
-               </div>
-            )}
+          <div className="w-full md:w-6/12 bg-[#f8f9fa] rounded-3xl border border-[#EAEAEA] flex items-center justify-center p-2 shadow-sm relative min-h-[500px] lg:min-h-[600px]">
+            <div className="absolute inset-0 bg-gradient-to-tr from-[#f4f4f4] to-white z-0 rounded-3xl" />
+            <ProjectGallery 
+              featureImage={project.featureImage}
+              screenshots={project.screenshots}
+              panels={project.panels}
+              videoUrl={project.videoUrl}
+              projectName={project.name}
+            />
           </div>
         </div>
       </section>

@@ -2,18 +2,18 @@ import { NextResponse } from "next/server";
 import connectToDatabase from "@/lib/mongodb";
 import User from "@/models/User";
 import { cookies } from "next/headers";
-import jwt from "jsonwebtoken";
+import { jwtVerify } from "jose";
 
 const JWT_SECRET = process.env.JWT_SECRET || "default_secret";
 
 // Middleware-like function to verify admin
 async function verifyAdmin() {
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
   const token = cookieStore.get("admin_token")?.value;
   if (!token) return false;
   try {
-    const decoded: any = jwt.verify(token, JWT_SECRET);
-    return decoded.role === "admin";
+    const { payload } = await jwtVerify(token, new TextEncoder().encode(JWT_SECRET));
+    return payload.role === "admin";
   } catch {
     return false;
   }
