@@ -9,7 +9,7 @@ export default function LogoutButton({ isCollapsed }: { isCollapsed?: boolean })
   const handleLogout = async () => {
     try {
       await fetch("/api/auth/logout", { method: "POST" });
-      router.push("/admin/login");
+      router.push("/login");
       router.refresh();
     } catch (e) {
       console.error(e);
