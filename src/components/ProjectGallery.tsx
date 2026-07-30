@@ -101,7 +101,7 @@ export default function ProjectGallery({ featureImage, screenshots = [], panels 
       )}
 
       {/* Main Display */}
-      <div className="flex-1 relative rounded-2xl overflow-hidden bg-black z-10 group shadow-sm border border-[#EAEAEA] aspect-[4/5] md:aspect-auto h-[400px] md:h-full">
+      <div className="flex-1 relative rounded-2xl overflow-hidden bg-black z-10 group shadow-sm border border-[#EAEAEA] w-full min-h-[300px] sm:min-h-[400px] md:h-full">
         {activeItem.type === "image" ? (
            <img 
              src={activeItem.url} 

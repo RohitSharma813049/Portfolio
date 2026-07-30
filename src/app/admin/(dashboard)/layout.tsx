@@ -44,9 +44,9 @@ export default function AdminLayout({
   return (
     <div className="min-h-screen bg-[var(--color-background)] flex font-inter text-[var(--color-text-primary)]">
       
-      {/* Sidebar - Full Height on Left */}
+      {/* Sidebar */}
       <aside 
-        className={`${isSidebarOpen ? 'w-64' : 'w-20'} bg-[var(--color-surface)] border-r border-[var(--color-border)] flex flex-col h-screen sticky top-0 transition-all duration-300 z-30`}
+        className={`${isSidebarOpen ? 'translate-x-0 w-64' : '-translate-x-full w-0 md:w-20 md:translate-x-0'} fixed md:sticky top-0 left-0 bg-[var(--color-surface)] border-r border-[var(--color-border)] flex flex-col h-screen transition-all duration-300 z-40`}
       >
         <div className="h-16 flex items-center justify-between px-5 border-b border-[var(--color-border)]">
           {isSidebarOpen && (
@@ -149,8 +149,15 @@ export default function AdminLayout({
       <main className="flex-1 flex flex-col min-w-0 h-screen overflow-hidden relative">
         
         {/* Top Navigation */}
-        <header className="h-16 bg-[var(--color-surface)] border-b border-[var(--color-border)] flex items-center justify-between px-8 shrink-0 z-20 sticky top-0">
-          <div className="flex items-center flex-1">
+        <header className="h-16 bg-[var(--color-surface)] border-b border-[var(--color-border)] flex items-center justify-between px-4 md:px-8 shrink-0 z-20 sticky top-0">
+          <div className="flex items-center flex-1 gap-4">
+            {/* Mobile Sidebar Toggle */}
+            <button 
+              onClick={() => setSidebarOpen(!isSidebarOpen)}
+              className="md:hidden text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition p-2 hover:bg-[#F8FAFC] rounded-[var(--radius-button)]"
+            >
+              <Menu className="w-5 h-5" />
+            </button>
             {/* Global Search */}
             <div className="relative w-full max-w-md hidden md:block group">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -251,7 +258,7 @@ export default function AdminLayout({
         </header>
 
         {/* Scrollable Content */}
-        <div className="flex-1 overflow-y-auto bg-[var(--color-background)] p-8">
+        <div className="flex-1 overflow-y-auto bg-[var(--color-background)] p-4 md:p-8">
           <div className="max-w-7xl mx-auto">
             {children}
           </div>

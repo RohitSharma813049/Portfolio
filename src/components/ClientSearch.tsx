@@ -24,7 +24,7 @@ export default function ClientSearch() {
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
-        placeholder="Search projects, authors, categories..." 
+        placeholder="Search projects" 
         className="w-full pl-12 pr-32 py-4 rounded-xl border border-[#EAEAEA] focus:outline-none focus:border-[#D8C494] transition-all bg-white"
       />
       <button 

@@ -30,7 +30,7 @@ export interface IProject extends Document {
   fullDescription?: string;
   featureImage?: string;
   bannerImage?: string;
-  status: "DRAFT" | "PUBLISHED";
+  status: "DRAFT" | "PUBLISHED" | "BUY" | "CUSTOMIZE" | "UPCOMING";
   
   livePreviewUrl?: string;
   bookDemoUrl?: string;
@@ -91,7 +91,7 @@ const ProjectSchema = new Schema<IProject>(
     fullDescription: { type: String },
     featureImage: { type: String },
     bannerImage: { type: String },
-    status: { type: String, enum: ["DRAFT", "PUBLISHED"], default: "DRAFT" },
+    status: { type: String, enum: ["DRAFT", "PUBLISHED", "BUY", "CUSTOMIZE", "UPCOMING"], default: "DRAFT" },
     
     livePreviewUrl: { type: String },
     bookDemoUrl: { type: String },

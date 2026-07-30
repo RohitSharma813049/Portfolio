@@ -43,10 +43,10 @@ export default async function Header() {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex space-x-8">
-            <Link href="/" className="text-[#D8C494] hover:text-[#16276B] px-3 py-2 text-sm font-medium transition-colors">
+            <Link href="/" className="text-[#16276B] hover:text-[#0B1B3D] px-3 py-2 text-sm font-medium transition-colors">
               Home
             </Link>
-            <Link href="/categories" className="text-[#D8C494] hover:text-[#16276B] px-3 py-2 text-sm font-medium transition-colors">
+            <Link href="/categories" className="text-[#16276B] hover:text-[#0B1B3D] px-3 py-2 text-sm font-medium transition-colors">
               Categories
             </Link>
           </nav>

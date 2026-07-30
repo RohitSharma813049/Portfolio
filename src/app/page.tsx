@@ -43,11 +43,10 @@ export default async function Home() {
         <div className="w-full lg:w-[55%] flex flex-col justify-center px-6 sm:px-16 py-12 lg:py-0">
           <div className="max-w-2xl animate-fade-in-up">
             <div className="flex items-center gap-4 mb-8 text-xs font-bold tracking-widest uppercase text-[#D8C494]">
-              <span className="w-8 h-px bg-[#D8C494]"></span>
               Peer-Reviewed · Open Access · Global Impact
             </div>
             
-            <h1 className="text-4xl md:text-5xl lg:text-7xl font-playfair font-medium leading-[1.1] mb-6 text-[#111]">
+            <h1 className="text-4xl md:text-5xl lg:text-7xl font-playfair font-medium leading-[1.1] mb-6 text-[#16276B]">
               Building the Future<br />With Mega Project
             </h1>
             
@@ -131,7 +130,7 @@ export default async function Home() {
               <span className="w-8 h-px bg-[#D8C494]"></span>
               BROWSE BY FORMAT
             </div>
-            <h2 className="text-4xl md:text-5xl font-playfair font-medium text-[#111] mb-6">
+            <h2 className="text-4xl md:text-5xl font-playfair font-medium text-[#16276B] mb-6">
               Publication <span className="text-[#645CBB] italic">Categories</span>
             </h2>
             <p className="text-[#666] font-light text-lg">
@@ -143,9 +142,9 @@ export default async function Home() {
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="flex gap-6 overflow-x-auto snap-x snap-mandatory pb-8 scrollbar-hide" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
           {displayCategories.map((cat, i) => (
-            <Link href={`/categories`} key={i} className="group relative h-96 rounded-3xl overflow-hidden shadow-soft flex flex-col justify-end p-8 text-white">
+            <Link href={`/categories`} key={i} className="group relative h-96 min-w-[280px] md:min-w-[320px] lg:min-w-[380px] snap-start shrink-0 rounded-3xl overflow-hidden shadow-soft flex flex-col justify-end p-8 text-white">
               <div className="absolute inset-0 bg-[#2D2A54] z-0" />
               <img 
                 src={cat.image} 
@@ -171,7 +170,7 @@ export default async function Home() {
       <section className="py-24 bg-[#FAFAFA] border-y border-[#EAEAEA]">
         <div className="max-w-6xl mx-auto px-4 text-center">
           <div className="text-[10px] font-bold tracking-widest uppercase text-[#645CBB] mb-4">SIMPLE PROCESS</div>
-          <h2 className="text-4xl font-playfair font-medium text-[#111] mb-16">How It Works</h2>
+          <h2 className="text-4xl font-playfair font-medium text-[#16276B] mb-16">How It Works</h2>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
             <div className="bg-white rounded-2xl p-10 shadow-sm border border-[#EAEAEA] relative z-10">
@@ -227,7 +226,7 @@ export default async function Home() {
           
           <div className="flex flex-col md:flex-row justify-between items-end gap-6 mb-12">
             <div>
-              <h2 className="text-4xl md:text-5xl font-playfair font-medium text-[#111] mb-6">
+              <h2 className="text-4xl md:text-5xl font-playfair font-medium text-[#16276B] mb-6">
                 Featured <span className="text-[#D8C494] italic">Research</span>
               </h2>
               <p className="text-[#666] font-light text-lg max-w-2xl">
@@ -256,9 +255,9 @@ export default async function Home() {
       <section className="py-24 bg-[#FAFAFA] border-t border-[#EAEAEA]">
         <div className="max-w-7xl mx-auto px-4 sm:px-8 text-center">
           <div className="text-[10px] font-bold tracking-widest uppercase text-[#645CBB] mb-4">SUCCESS STORIES</div>
-          <h2 className="text-4xl font-playfair font-medium text-[#111] mb-16">What Scholars Say</h2>
+          <h2 className="text-4xl font-playfair font-medium text-[#16276B] mb-16">What Scholars Say</h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-left">
+          <div className="flex gap-6 overflow-x-auto snap-x snap-mandatory pb-8 scrollbar-hide" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
             {[
               {
                 quote: "Publishing my thesis was seamless. Global Scholar made it easy to share my work with the academic community.",
@@ -285,7 +284,7 @@ export default async function Home() {
                 img: "https://ui-avatars.com/api/?name=Sarah+Johnson&background=random"
               }
             ].map((testimonial, i) => (
-              <div key={i} className="bg-white p-8 rounded-2xl shadow-sm border border-[#EAEAEA] flex flex-col">
+              <div key={i} className="bg-white p-8 rounded-2xl shadow-sm border border-[#EAEAEA] flex flex-col min-w-[300px] md:min-w-[400px] lg:min-w-[500px] snap-start shrink-0">
                 <div className="flex gap-1 mb-4 text-[#F59E0B]">
                   {[1,2,3,4,5].map(star => (
                     <svg key={star} className="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>

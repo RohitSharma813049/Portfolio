@@ -94,7 +94,7 @@ function LoginForm() {
             <button 
               type="submit" 
               disabled={loading}
-              className="w-full bg-[#D8C494] text-black font-semibold py-4 rounded-full mt-6 hover:bg-[#c2ae7c] transition-colors shadow-[0_0_20px_rgba(216,196,148,0.3)] disabled:opacity-50 disabled:shadow-none hover:scale-[1.02] duration-300"
+              className="w-full bg-[#16276B] text-white font-semibold py-4 rounded-full mt-6 hover:bg-[#111b4a] transition-colors shadow-[0_0_20px_rgba(22,39,107,0.3)] disabled:opacity-50 disabled:shadow-none hover:scale-[1.02] duration-300"
             >
               {loading ? "Logging in..." : "Log In"}
             </button>

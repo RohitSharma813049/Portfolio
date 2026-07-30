@@ -71,7 +71,7 @@ export default async function ProjectDetails({ params }: { params: Promise<{ slu
             </div>
           </div>
           
-          <div className="w-full md:w-6/12 bg-[#f8f9fa] rounded-3xl border border-[#EAEAEA] flex items-center justify-center p-2 shadow-sm relative min-h-[500px] lg:min-h-[600px]">
+          <div className="w-full md:w-6/12 bg-[#f8f9fa] rounded-3xl border border-[#EAEAEA] flex items-center justify-center p-2 shadow-sm relative min-h-[350px] md:min-h-[500px] lg:min-h-[600px]">
             <div className="absolute inset-0 bg-gradient-to-tr from-[#f4f4f4] to-white z-0 rounded-3xl" />
             <ProjectGallery 
               featureImage={project.featureImage || ""}

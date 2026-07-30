@@ -123,8 +123,8 @@ export default function CategoriesPage() {
   };
 
   return (
-    <div className="p-8 max-w-5xl mx-auto animate-fade-in-up">
-      <div className="flex justify-between items-center mb-8">
+    <div className="p-4 md:p-8 max-w-5xl mx-auto animate-fade-in-up">
+      <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-4 mb-8">
         <div>
           <h1 className="text-3xl font-playfair font-medium flex items-center gap-3 text-white">
             <Tag className="w-8 h-8 text-[#D8C494]" /> Categories
@@ -142,7 +142,7 @@ export default function CategoriesPage() {
       </div>
 
       {showCreateForm && (
-        <div className="bg-[#111] border border-[#333] rounded-2xl shadow-2xl overflow-hidden mb-8 p-8">
+        <div className="bg-[#111] border border-[#333] rounded-2xl shadow-2xl overflow-hidden mb-8 p-5 md:p-8 w-full max-w-full">
           <div className="flex justify-between items-center mb-6">
             <h2 className="font-playfair font-medium text-2xl text-white">Create New Category</h2>
             <button onClick={() => setShowCreateForm(false)} className="text-[#666] hover:text-white transition">
@@ -188,7 +188,7 @@ export default function CategoriesPage() {
         ) : (
           <ul className="divide-y divide-[#333]">
             {categories.map((cat) => (
-              <li key={cat._id} className="p-6 transition hover:bg-[#0a0a0a]">
+              <li key={cat._id} className="p-4 md:p-6 transition hover:bg-[#0a0a0a] w-full max-w-full overflow-hidden">
                 {editingId === cat._id ? (
                   <div className="space-y-6 animate-fade-in-up">
                     <div className="flex justify-between items-center">
@@ -225,9 +225,9 @@ export default function CategoriesPage() {
                     </div>
                   </div>
                 ) : (
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-6">
-                      <div className="w-20 h-20 rounded-xl overflow-hidden bg-[#222] border border-[#333] flex-shrink-0">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 w-full max-w-full overflow-hidden">
+                    <div className="flex items-center gap-4 sm:gap-6 min-w-0">
+                      <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl overflow-hidden bg-[#222] border border-[#333] flex-shrink-0">
                         {cat.coverImage ? (
                           <img src={cat.coverImage} alt={cat.name} className="w-full h-full object-cover" />
                         ) : (
@@ -236,14 +236,14 @@ export default function CategoriesPage() {
                           </div>
                         )}
                       </div>
-                      <div>
-                        <span className="font-medium text-white text-lg">{cat.name}</span>
-                        <p className="text-xs text-[#666] mt-1 uppercase tracking-wider">
+                      <div className="min-w-0 flex-1">
+                        <span className="font-medium text-white text-base sm:text-lg truncate block">{cat.name}</span>
+                        <p className="text-[10px] sm:text-xs text-[#666] mt-1 uppercase tracking-wider truncate block">
                           Created {new Date(cat.createdAt).toLocaleDateString()}
                         </p>
                       </div>
                     </div>
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2 self-end sm:self-auto flex-shrink-0">
                       <button 
                         onClick={() => startEdit(cat)}
                         className="p-2.5 text-[#888] hover:text-[#D8C494] bg-[#222] hover:bg-[#333] rounded-full transition"
