@@ -140,7 +140,10 @@ export default function NewProject() {
                 className="w-full px-4 py-3 rounded-none-none border border-[#EAEAEA] focus:outline-none focus:border-[#111111] transition bg-white"
               >
                 <option value="DRAFT">Draft</option>
+                <option value="BUY">Buy</option>
+                <option value="CUSTOMIZE">Customize</option>
                 <option value="PUBLISHED">Published</option>
+                <option value="UPCOMING">Upcoming</option>
               </select>
             </div>
           </div>

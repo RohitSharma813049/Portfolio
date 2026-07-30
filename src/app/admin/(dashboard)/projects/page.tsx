@@ -3,12 +3,14 @@
 import { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 import { Plus, Pencil, Trash2, Search, SlidersHorizontal, ChevronLeft, ChevronRight } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 const ITEMS_PER_PAGE = 8;
 
 export default function AdminProjects() {
   const [projects, setProjects] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const router = useRouter();
 
   // Filters & Pagination State
   const [searchQuery, setSearchQuery] = useState("");
@@ -205,11 +207,11 @@ export default function AdminProjects() {
               </tr>
             ) : (
               currentProjects.map((project: any) => (
-                <tr key={project._id} className="border-b border-[#EAEAEA] hover:bg-[#fafafa] transition">
+                <tr key={project._id} onClick={() => router.push(`/admin/projects/${project._id}/edit`)} className="border-b border-[#EAEAEA] hover:bg-[#fafafa] transition cursor-pointer">
                   <td className="px-6 py-4 font-medium text-[#0B1B3D]">{project.name}</td>
                   <td className="px-6 py-4">
                     <button 
-                      onClick={() => handleToggleStatus(project)}
+                      onClick={(e) => { e.stopPropagation(); handleToggleStatus(project); }}
                       className={`px-3 py-1 rounded-none-none text-xs font-bold transition hover:opacity-80 ${project.status === 'PUBLISHED' ? 'bg-[#E8F5E9] text-[#2E7D32]' : 'bg-[#FFF3E0] text-[#E65100]'}`}
                     >
                       {project.status}
@@ -217,10 +219,10 @@ export default function AdminProjects() {
                   </td>
                   <td className="px-6 py-4 text-[#16325C]">{project.categories?.join(', ') || '-'}</td>
                   <td className="px-6 py-4 flex items-center justify-end gap-3">
-                    <Link href={`/admin/projects/${project._id}/edit`} className="text-[#0B1B3D] hover:bg-[#FCF9F2] p-2 rounded-none-none transition">
+                    <Link href={`/admin/projects/${project._id}/edit`} onClick={(e) => e.stopPropagation()} className="text-[#0B1B3D] hover:bg-[#FCF9F2] p-2 rounded-none-none transition">
                       <Pencil className="w-4 h-4" />
                     </Link>
-                    <button onClick={() => handleDelete(project._id)} className="text-red-500 hover:bg-red-50 p-2 rounded-none-none transition">
+                    <button onClick={(e) => { e.stopPropagation(); handleDelete(project._id); }} className="text-red-500 hover:bg-red-50 p-2 rounded-none-none transition">
                       <Trash2 className="w-4 h-4" />
                     </button>
                   </td>

@@ -53,18 +53,18 @@ export default async function ProjectDetails({ params }: { params: Promise<{ slu
               )}
             </div>
 
-            <div className="flex flex-wrap gap-4">
-              <a href={project.bookDemoUrl || "#"} className="bg-black text-white px-8 py-3.5 rounded-full text-sm font-medium hover:bg-[#D8C494] transition-colors shadow-sm hover:scale-105 duration-300">
+            <div className="flex flex-wrap gap-2">
+              <a href={project.bookDemoUrl || "#"} className="bg-black text-white px-5 py-2.5 rounded-full text-sm font-medium hover:bg-[#D8C494] transition-colors shadow-sm hover:scale-105 duration-300">
                 Book Demo
               </a>
               <EnquiryButton 
                 projectId={project._id.toString()}
                 projectName={project.name}
-                className="border border-[#EAEAEA] px-8 py-3.5 rounded-full text-sm font-medium hover:border-[#D8C494] hover:text-[#D8C494] transition-colors bg-white hover:scale-105 duration-300"
+                className="border border-[#EAEAEA] px-5 py-2.5 rounded-full text-sm font-medium hover:border-[#D8C494] hover:text-[#D8C494] transition-colors bg-white hover:scale-105 duration-300"
                 buttonText="Enquiry for Cost"
               />
               {project.livePreviewUrl && (
-                <a href={project.livePreviewUrl} target="_blank" rel="noreferrer" className="border border-[#EAEAEA] px-8 py-3.5 rounded-full text-sm font-medium hover:border-[#D8C494] hover:text-[#D8C494] transition-colors bg-white hover:scale-105 duration-300">
+                <a href={project.livePreviewUrl} target="_blank" rel="noreferrer" className="border border-[#EAEAEA] px-5 py-2.5 rounded-full text-sm font-medium hover:border-[#D8C494] hover:text-[#D8C494] transition-colors bg-white hover:scale-105 duration-300">
                   Live Preview
                 </a>
               )}
