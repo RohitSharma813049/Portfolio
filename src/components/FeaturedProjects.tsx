@@ -81,7 +81,7 @@ export default function FeaturedProjects({ projects }: FeaturedProjectsProps) {
               <Link href={`/project/${project.slug}`} className="text-sm font-semibold text-[#D8C494] flex items-center gap-2 group-hover/link:text-[#111] transition-colors">
                 Read Full Publication <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" />
               </Link>
-              <span className="text-xs text-[#999]">{Math.floor(Math.random() * 50) + 1} reads</span>
+              <span className="text-xs text-[#999]">{((project.name?.length || 0) * 5) % 50 + 10} reads</span>
             </div>
           </div>
         </div>

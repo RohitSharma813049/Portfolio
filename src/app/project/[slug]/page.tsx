@@ -75,8 +75,8 @@ export default async function ProjectDetails({ params }: { params: Promise<{ slu
             <div className="absolute inset-0 bg-gradient-to-tr from-[#f4f4f4] to-white z-0 rounded-3xl" />
             <ProjectGallery 
               featureImage={project.featureImage || ""}
-              screenshots={project.screenshots}
-              panels={project.panels}
+              screenshots={project.screenshots ? JSON.parse(JSON.stringify(project.screenshots)) : []}
+              panels={project.panels ? JSON.parse(JSON.stringify(project.panels)) : []}
               videoUrl={project.videoUrl}
               projectName={project.name}
             />
