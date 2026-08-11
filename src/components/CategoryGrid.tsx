@@ -153,7 +153,7 @@ export default function CategoryGrid({ initialCategories }: CategoryGridProps) {
                     <div className="p-6">
                       <h3 className="font-playfair text-2xl font-medium mb-1 text-[#111]">{cat._id}</h3>
                       <p className="text-sm text-[#D8C494] font-medium tracking-widest uppercase text-[10px]">
-                        {cat.count} {cat.count === 1 ? 'PUBLICATION' : 'PUBLICATIONS'}
+                        {cat.count} {cat.count === 1 ? 'PROJECT' : 'PROJECTS'}
                       </p>
                     </div>
                   </Link>

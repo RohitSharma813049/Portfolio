@@ -9,7 +9,7 @@ export async function GET(
   try {
     const { id } = await params;
     await connectToDatabase();
-    const project = await Project.findById(id);
+    const project = await Project.findById(id).populate("similarProjects", "name slug featureImage shortDescription categories status");
     
     if (!project) {
       return NextResponse.json({ success: false, error: "Project not found" }, { status: 404 });

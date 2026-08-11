@@ -45,7 +45,7 @@ export default async function CategoryFilteredPage({ params }: { params: Promise
           {categoryName}
         </h1>
         <p className="text-lg text-[#666] font-light max-w-2xl mx-auto mb-10">
-          Showing {projects.length} {projects.length === 1 ? "publication" : "publications"} in the {categoryName} category.
+          Showing {projects.length} {projects.length === 1 ? "project" : "projects"} in the {categoryName} category.
         </p>
       </section>
 

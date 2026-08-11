@@ -32,7 +32,7 @@ export default async function CategoriesPage() {
           Browse by <span className="text-[#D8C494] italic">Category</span>
         </h1>
         <p className="text-lg text-[#666] font-light max-w-2xl mx-auto mb-10">
-          Find exactly what you're looking for by browsing our curated categories of peer-reviewed research and premium publications.
+          Find exactly what you're looking for by browsing our curated categories of software applications and digital platforms.
         </p>
       </section>
 

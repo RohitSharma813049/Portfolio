@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { ChevronRight, PlayCircle } from "lucide-react";
+import { getVideoEmbedInfo } from "@/lib/videoUtils";
 
 export default function ProjectTabs({ project }: { project: any }) {
   const [activeTab, setActiveTab] = useState("overview");
@@ -142,20 +143,27 @@ export default function ProjectTabs({ project }: { project: any }) {
           )}
 
           {/* Video Tab */}
-          {activeTab === "video" && project.videoUrl && (
-            <div className="animate-in fade-in slide-in-from-bottom-2 duration-300">
-              <h3 className="text-xl font-bold mb-4">Video Tour</h3>
-              <div className="aspect-video bg-black rounded-3xl overflow-hidden shadow-sm">
-                <iframe 
-                  src={project.videoUrl.replace("watch?v=", "embed/")} 
-                  title="Video Tour" 
-                  className="w-full h-full border-0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                  allowFullScreen
-                ></iframe>
+          {activeTab === "video" && project.videoUrl && (() => {
+            const videoInfo = getVideoEmbedInfo(project.videoUrl);
+            return (
+              <div className="animate-in fade-in slide-in-from-bottom-2 duration-300">
+                <h3 className="text-xl font-bold mb-4">Video Tour</h3>
+                <div className="aspect-video bg-black rounded-3xl overflow-hidden shadow-sm flex items-center justify-center">
+                  {videoInfo.isVideoFile ? (
+                    <video src={videoInfo.embedUrl} controls className="w-full h-full object-cover" />
+                  ) : (
+                    <iframe 
+                      src={videoInfo.embedUrl} 
+                      title="Video Tour" 
+                      className="w-full h-full border-0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                      allowFullScreen
+                    ></iframe>
+                  )}
+                </div>
               </div>
-            </div>
-          )}
+            );
+          })()}
 
           {/* Demo Credentials Tab */}
           {activeTab === "demo" && project.credentials && project.credentials.length > 0 && (
@@ -199,10 +207,11 @@ export default function ProjectTabs({ project }: { project: any }) {
           <div className="p-6 rounded-3xl border border-[#EAEAEA] bg-white shadow-sm">
             <h4 className="font-bold text-sm uppercase tracking-wider mb-6 text-[#111]">Quick Information</h4>
             <ul className="space-y-4 text-sm">
-              <li className="flex justify-between border-b border-[#EAEAEA] pb-3"><span className="text-[#666]">Platform</span><span className="font-medium text-[#111]">Web</span></li>
+              <li className="flex justify-between border-b border-[#EAEAEA] pb-3"><span className="text-[#666]">Platform</span><span className="font-medium text-[#111]">{project.platform || "Web"}</span></li>
               <li className="flex justify-between border-b border-[#EAEAEA] pb-3"><span className="text-[#666]">White Label</span><span className="font-medium text-[#111]">{project.isWhiteLabel ? 'Yes' : 'No'}</span></li>
               <li className="flex justify-between border-b border-[#EAEAEA] pb-3"><span className="text-[#666]">Subscription</span><span className="font-medium text-[#111]">{project.hasSubscription ? 'Available' : 'No'}</span></li>
-              <li className="flex justify-between pb-1"><span className="text-[#666]">Source Code</span><span className="font-medium text-[#111]">{project.hasSourceCode ? 'Available' : 'No'}</span></li>
+              <li className="flex justify-between border-b border-[#EAEAEA] pb-3"><span className="text-[#666]">Source Code</span><span className="font-medium text-[#111]">{project.hasSourceCode ? 'Available' : 'No'}</span></li>
+              <li className="flex justify-between pb-1"><span className="text-[#666]">Customizable</span><span className="font-medium text-[#111]">{project.isCustomizable ? 'Yes' : 'No'}</span></li>
             </ul>
           </div>
           

@@ -176,7 +176,7 @@ export default function ProjectGrid({ initialProjects }: ProjectGridProps) {
           {/* Top Bar above grid */}
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
             <div className="text-sm text-[#16325C] font-medium">
-              <span className="font-bold text-[#0B1B3D]">{filteredAndSortedProjects.length}</span> publications found
+              <span className="font-bold text-[#0B1B3D]">{filteredAndSortedProjects.length}</span> projects found
             </div>
             <div className="flex items-center gap-4">
               <select 
@@ -216,7 +216,7 @@ export default function ProjectGrid({ initialProjects }: ProjectGridProps) {
                   {/* Image */}
                   <div className="relative h-48 bg-[#f4f4f4] overflow-hidden">
                     <span className="absolute top-4 left-4 z-10 bg-[#0B1B3D]/80 backdrop-blur-sm text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full">
-                      {project.categories?.[0] || 'ARTICLE'}
+                      {project.categories?.[0] || 'PROJECT'}
                     </span>
                     {project.featureImage ? (
                       <img src={project.featureImage} alt={project.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
@@ -230,7 +230,7 @@ export default function ProjectGrid({ initialProjects }: ProjectGridProps) {
                   {/* Content */}
                   <div className="p-6 flex flex-col flex-grow">
                     <h4 className="text-[10px] font-bold uppercase tracking-widest text-[#D8C494] mb-2">
-                       {project.technologies?.[0] || 'EDUCATION'}
+                       {project.technologies?.[0] || 'FULL STACK'}
                     </h4>
                     <h3 className="font-playfair text-xl font-medium text-[#111] mb-4 line-clamp-2">
                        {project.name}
@@ -242,9 +242,8 @@ export default function ProjectGrid({ initialProjects }: ProjectGridProps) {
 
                     <div className="flex items-center justify-between border-t border-[#EAEAEA] pt-4 mt-auto group/link cursor-pointer">
                       <Link href={`/project/${project.slug}`} className="text-sm font-semibold text-[#D8C494] flex items-center gap-2 group-hover/link:text-[#111] transition-colors">
-                        Read Full Publication <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" />
+                        View Project Details <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" />
                       </Link>
-                      <span className="text-xs text-[#999]">{Math.floor(Math.random() * 50) + 1} reads</span>
                     </div>
                   </div>
                 </div>

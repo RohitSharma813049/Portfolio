@@ -38,6 +38,7 @@ export interface IProject extends Document {
   enquiryUrl?: string;
   videoUrl?: string;
   
+  platform?: string;
   hasSourceCode: boolean;
   isWhiteLabel: boolean;
   isCustomizable: boolean;
@@ -50,6 +51,7 @@ export interface IProject extends Document {
   categories: string[];
   technologies: string[];
   industries: string[];
+  similarProjects?: (mongoose.Types.ObjectId | string | IProject)[];
   
   features: IFeature[];
   panels: IPanel[];
@@ -99,6 +101,7 @@ const ProjectSchema = new Schema<IProject>(
     enquiryUrl: { type: String },
     videoUrl: { type: String },
     
+    platform: { type: String, default: "Web" },
     hasSourceCode: { type: Boolean, default: false },
     isWhiteLabel: { type: Boolean, default: false },
     isCustomizable: { type: Boolean, default: false },
@@ -111,6 +114,7 @@ const ProjectSchema = new Schema<IProject>(
     categories: [{ type: String }],
     technologies: [{ type: String }],
     industries: [{ type: String }],
+    similarProjects: [{ type: Schema.Types.ObjectId, ref: "Project" }],
     
     features: [FeatureSchema],
     panels: [PanelSchema],

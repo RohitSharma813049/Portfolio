@@ -11,7 +11,7 @@ export async function sendNotificationMail(to: string, subject: string, text: st
     });
 
     const mailOptions = {
-      from: `"Global Scholar Publications" <${process.env.Gmail}>`,
+      from: `"Sahab Portfolio" <${process.env.Gmail}>`,
       to,
       subject,
       text,

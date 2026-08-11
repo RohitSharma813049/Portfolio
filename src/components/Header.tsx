@@ -17,11 +17,11 @@ export default async function Header() {
       <div className="hidden md:flex bg-white border-b border-[#EAEAEA] text-xs py-1.5 px-4 items-center gap-6 overflow-hidden whitespace-nowrap">
         <div className="bg-[#0B1B3D] text-white px-3 py-1 font-bold text-[10px] uppercase tracking-wider">LATEST</div>
         <div className="flex gap-8 text-[#666]">
-          <span><strong className="text-[#0B1B3D] font-semibold">Sustainable Finance</strong> — Dr. Priya Nair-Kapoor</span>
+          <span><strong className="text-[#0B1B3D] font-semibold">Travel & Hotel Booking System</strong> — Web & Mobile Platform</span>
           <span className="text-[#EAEAEA]">|</span>
-          <span><strong className="text-[#0B1B3D] font-semibold">Featured:</strong> GCC Economic Diversification — Prof. Khalid Al-Mansouri</span>
+          <span><strong className="text-[#0B1B3D] font-semibold">Featured:</strong> E-Commerce SaaS Solution — Full Stack Suite</span>
           <span className="text-[#EAEAEA]">|</span>
-          <span><strong className="text-[#0B1B3D] font-semibold">Open Access:</strong> Decolonising Knowledge Systems — Dr. Ngozi Adeyemi</span>
+          <span><strong className="text-[#0B1B3D] font-semibold">Custom Development:</strong> Enterprise Dashboard & Analytics</span>
         </div>
       </div>
       <header className="sticky top-0 z-50 w-full bg-white border-b border-[#EAEAEA] shadow-sm">
@@ -33,7 +33,7 @@ export default async function Header() {
             <Link href="/" className="flex items-center gap-2 group">
               <Image 
                 src="/images/IMG_1301 (2).PNG" 
-                alt="Global Scholar Publications Logo" 
+                alt="Sahab Portfolio Logo" 
                 width={280} 
                 height={80} 
                 className="object-contain max-h-20 w-auto" 
@@ -48,6 +48,15 @@ export default async function Header() {
             </Link>
             <Link href="/categories" className="text-[#16276B] hover:text-[#0B1B3D] px-3 py-2 text-sm font-medium transition-colors">
               Categories
+            </Link>
+            <Link href="/projects" className="text-[#16276B] hover:text-[#0B1B3D] px-3 py-2 text-sm font-medium transition-colors">
+              All Projects
+            </Link>
+            <Link href="/about" className="text-[#16276B] hover:text-[#0B1B3D] px-3 py-2 text-sm font-medium transition-colors">
+              About
+            </Link>
+            <Link href="/connect" className="text-[#16276B] hover:text-[#0B1B3D] px-3 py-2 text-sm font-medium transition-colors">
+              Connect
             </Link>
           </nav>
 

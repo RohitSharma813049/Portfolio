@@ -23,8 +23,11 @@ export default function MobileMenu({ isLoggedIn, dashboardLink }: MobileMenuProp
 
       {isOpen && (
         <div className="absolute top-[64px] left-0 w-full bg-white border-b border-[#EAEAEA] shadow-lg flex flex-col p-4 z-50 animate-fade-in-up">
-          <Link onClick={() => setIsOpen(false)} href="/" className="px-4 py-3 text-[#D8C494] font-medium border-b border-[#f4f4f4]">Home</Link>
-          <Link onClick={() => setIsOpen(false)} href="/categories" className="px-4 py-3 text-[#D8C494] font-medium border-b border-[#f4f4f4]">Categories</Link>          
+          <Link onClick={() => setIsOpen(false)} href="/" className="px-4 py-3 text-[#0B1B3D] font-medium border-b border-[#f4f4f4] hover:text-[#D8C494]">Home</Link>
+          <Link onClick={() => setIsOpen(false)} href="/categories" className="px-4 py-3 text-[#0B1B3D] font-medium border-b border-[#f4f4f4] hover:text-[#D8C494]">Categories</Link>
+          <Link onClick={() => setIsOpen(false)} href="/projects" className="px-4 py-3 text-[#0B1B3D] font-medium border-b border-[#f4f4f4] hover:text-[#D8C494]">All Projects</Link>
+          <Link onClick={() => setIsOpen(false)} href="/about" className="px-4 py-3 text-[#0B1B3D] font-medium border-b border-[#f4f4f4] hover:text-[#D8C494]">About</Link>
+          <Link onClick={() => setIsOpen(false)} href="/connect" className="px-4 py-3 text-[#0B1B3D] font-medium border-b border-[#f4f4f4] hover:text-[#D8C494]">Connect</Link>          
           <div className="pt-4 flex flex-col gap-3">
             {!isLoggedIn ? (
               <>

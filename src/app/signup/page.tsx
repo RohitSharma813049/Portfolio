@@ -45,7 +45,7 @@ export default function SignupPage() {
             &larr; Back to Home
           </Link>
           <h1 className="text-5xl md:text-6xl font-playfair font-medium text-white mb-6 leading-tight">
-            Become a <span className="text-[#D8C494] italic">Scholar</span>.
+            Join <span className="text-[#D8C494] italic">Sahab Portfolio</span>.
           </h1>
           <p className="text-lg text-[#999] font-light max-w-md leading-relaxed">
             Create an account to save projects, access exclusive resources, and manage your dashboard deployments.
