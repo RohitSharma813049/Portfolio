@@ -8,7 +8,7 @@ import ImageUploader from "@/components/ImageUploader";
 export default function CategoriesPage() {
   const [categories, setCategories] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  
+
   // Create state
   const [name, setName] = useState("");
   const [coverImage, setCoverImage] = useState("");
@@ -51,7 +51,7 @@ export default function CategoriesPage() {
         body: JSON.stringify({ name: name.trim(), coverImage }),
       });
       const json = await res.json();
-      
+
       if (json.success) {
         setName("");
         setCoverImage("");
@@ -90,7 +90,7 @@ export default function CategoriesPage() {
         body: JSON.stringify({ name: editName.trim(), coverImage: editCoverImage }),
       });
       const json = await res.json();
-      
+
       if (json.success) {
         setEditingId(null);
         fetchCategories();
@@ -112,7 +112,7 @@ export default function CategoriesPage() {
         method: "DELETE",
       });
       const json = await res.json();
-      
+
       if (json.success) {
         fetchCategories();
       } else {
@@ -127,10 +127,10 @@ export default function CategoriesPage() {
     <div className="p-4 md:p-8 max-w-5xl mx-auto animate-fade-in-up">
       <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-4 mb-8">
         <div>
-          <h1 className="text-3xl font-playfair font-medium flex items-center gap-3 text-white">
+          <h1 className="text-3xl font-playfair font-medium flex items-center gap-3 text-[#111]">
             <Tag className="w-8 h-8 text-[#D8C494]" /> Categories
           </h1>
-          <p className="text-[#999] text-sm mt-2 font-light tracking-wide">Manage software project categories</p>
+          <p className="text-[#666] text-sm mt-1 font-light tracking-wide">Manage software project categories</p>
         </div>
         {!showCreateForm && (
           <Link
@@ -143,34 +143,34 @@ export default function CategoriesPage() {
       </div>
 
       {showCreateForm && (
-        <div className="bg-[#111] border border-[#333] rounded-2xl shadow-2xl overflow-hidden mb-8 p-5 md:p-8 w-full max-w-full">
+        <div className="bg-white border border-[#EAEAEA] rounded-2xl shadow-sm overflow-hidden mb-8 p-5 md:p-8 w-full max-w-full">
           <div className="flex justify-between items-center mb-6">
-            <h2 className="font-playfair font-medium text-2xl text-white">Create New Category</h2>
-            <button onClick={() => setShowCreateForm(false)} className="text-[#666] hover:text-white transition">
+            <h2 className="font-playfair font-medium text-2xl text-[#111]">Create New Category</h2>
+            <button onClick={() => setShowCreateForm(false)} className="text-[#666] hover:text-[#111] transition">
               <X className="w-6 h-6" />
             </button>
           </div>
           <form onSubmit={handleCreate} className="space-y-6">
             <div>
-              <label className="block text-xs font-semibold text-[#888] uppercase tracking-wider mb-2">Category Name</label>
-              <input 
-                type="text" 
+              <label className="block text-xs font-semibold text-[#111] uppercase tracking-wider mb-2">Category Name</label>
+              <input
+                type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="e.g., Quantum Computing"
-                className="w-full px-4 py-3 bg-[#0a0a0a] rounded-xl border border-[#333] focus:outline-none focus:border-[#D8C494] text-white transition placeholder-[#444]"
+                className="w-full px-4 py-3 bg-white rounded-xl border border-[#EAEAEA] focus:outline-none focus:border-black text-[#111] transition placeholder-[#999]"
                 required
               />
             </div>
             <div>
-              <label className="block text-xs font-semibold text-[#888] uppercase tracking-wider mb-2">Cover Image</label>
+              <label className="block text-xs font-semibold text-[#111] uppercase tracking-wider mb-2">Cover Image</label>
               <ImageUploader onUpload={setCoverImage} defaultImage={coverImage} />
             </div>
             <div className="flex justify-end pt-4">
-              <button 
-                type="submit" 
+              <button
+                type="submit"
                 disabled={creating}
-                className="bg-[#D8C494] text-black px-8 py-3 rounded-full text-sm font-semibold hover:bg-[#c2ae7c] transition shadow-[0_0_20px_rgba(216,196,148,0.2)] disabled:opacity-50 flex items-center gap-2"
+                className="bg-[#D8C494] text-black px-8 py-3 rounded-full text-sm font-semibold hover:bg-[#c2ae7c] transition shadow-sm disabled:opacity-50 flex items-center gap-2 cursor-pointer"
               >
                 {creating ? "Saving..." : "Save Category"}
               </button>
@@ -180,41 +180,41 @@ export default function CategoriesPage() {
       )}
 
       {categories.length === 0 ? (
-        <div className="bg-[#111] border border-[#333] rounded-2xl p-12 text-center text-[#666]">
+        <div className="bg-white border border-[#EAEAEA] rounded-2xl p-12 text-center text-[#666] shadow-sm">
           No categories found. Create one above!
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {categories.map((cat) => (
-            <div key={cat._id} className="bg-[#111] border border-[#333] rounded-2xl p-5 flex flex-col justify-between hover:border-[#D8C494]/50 transition-all shadow-xl group">
+            <div key={cat._id} className="bg-white border border-[#EAEAEA] rounded-2xl p-5 flex flex-col justify-between hover:border-[#D8C494] transition-all shadow-sm hover:shadow-md group">
               {editingId === cat._id ? (
                 <div className="space-y-4 animate-fade-in-up">
-                  <h3 className="font-playfair font-medium text-lg text-white">Edit Category</h3>
+                  <h3 className="font-playfair font-medium text-lg text-[#111]">Edit Category</h3>
                   <div>
-                    <label className="block text-xs font-semibold text-[#888] uppercase tracking-wider mb-2">Category Name</label>
-                    <input 
-                      type="text" 
+                    <label className="block text-xs font-semibold text-[#111] uppercase tracking-wider mb-2">Category Name</label>
+                    <input
+                      type="text"
                       value={editName}
                       onChange={(e) => setEditName(e.target.value)}
-                      className="w-full px-4 py-2.5 bg-[#0a0a0a] rounded-xl border border-[#333] focus:outline-none focus:border-[#D8C494] text-white text-sm transition"
+                      className="w-full px-4 py-2.5 bg-white rounded-xl border border-[#EAEAEA] focus:outline-none focus:border-black text-[#111] text-sm transition"
                       required
                     />
                   </div>
                   <div>
-                    <label className="block text-xs font-semibold text-[#888] uppercase tracking-wider mb-2">Cover Image</label>
+                    <label className="block text-xs font-semibold text-[#111] uppercase tracking-wider mb-2">Cover Image</label>
                     <ImageUploader onUpload={setEditCoverImage} defaultImage={editCoverImage} />
                   </div>
                   <div className="flex justify-end gap-2 pt-2">
-                    <button 
+                    <button
                       onClick={cancelEdit}
-                      className="px-4 py-2 rounded-full text-xs font-semibold text-[#888] hover:text-white transition"
+                      className="px-4 py-2 rounded-full text-xs font-semibold text-[#666] hover:text-[#111] transition"
                     >
                       Cancel
                     </button>
-                    <button 
+                    <button
                       onClick={() => handleSaveEdit(cat._id)}
                       disabled={savingEdit}
-                      className="bg-[#D8C494] text-black px-5 py-2 rounded-full text-xs font-semibold hover:bg-[#c2ae7c] transition flex items-center gap-1.5 disabled:opacity-50"
+                      className="bg-[#D8C494] text-black px-5 py-2 rounded-full text-xs font-semibold hover:bg-[#c2ae7c] transition flex items-center gap-1.5 disabled:opacity-50 cursor-pointer"
                     >
                       <Save className="w-3.5 h-3.5" /> {savingEdit ? "Saving..." : "Save"}
                     </button>
@@ -224,35 +224,35 @@ export default function CategoriesPage() {
                 <>
                   <div>
                     {/* Card Cover Image */}
-                    <div className="w-full h-44 rounded-xl overflow-hidden bg-[#222] border border-[#333] mb-4 relative">
+                    <div className="w-full h-44 rounded-xl overflow-hidden bg-gray-100 border border-[#EAEAEA] mb-4 relative">
                       {cat.coverImage ? (
                         <img src={cat.coverImage} alt={cat.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                       ) : (
-                        <div className="w-full h-full flex items-center justify-center text-[#555] bg-gradient-to-br from-[#1a1a1a] to-[#0a0a0a]">
-                          <Tag className="w-10 h-10 opacity-30 text-[#D8C494]" />
+                        <div className="w-full h-full flex items-center justify-center text-[#999] bg-gradient-to-br from-gray-50 to-gray-200">
+                          <Tag className="w-10 h-10 opacity-40 text-[#D8C494]" />
                         </div>
                       )}
                     </div>
 
                     {/* Category Title & Info */}
-                    <h3 className="font-playfair font-medium text-white text-xl mb-1 line-clamp-1">{cat.name}</h3>
+                    <h3 className="font-playfair font-medium text-[#111] text-xl mb-1 line-clamp-1">{cat.name}</h3>
                     <p className="text-[11px] text-[#666] uppercase tracking-wider mb-4">
                       Created {new Date(cat.createdAt).toLocaleDateString()}
                     </p>
                   </div>
 
                   {/* Actions */}
-                  <div className="flex items-center justify-end gap-2 pt-3 border-t border-[#222] mt-2">
-                    <button 
+                  <div className="flex items-center justify-end gap-2 pt-3 border-t border-[#EAEAEA] mt-2">
+                    <button
                       onClick={() => startEdit(cat)}
-                      className="p-2.5 text-[#888] hover:text-[#D8C494] bg-[#1a1a1a] hover:bg-[#252525] rounded-full transition"
+                      className="p-2.5 text-[#666] hover:text-[#111] bg-gray-100 hover:bg-gray-200 rounded-full transition cursor-pointer"
                       title="Edit Category"
                     >
                       <Edit2 className="w-4 h-4" />
                     </button>
-                    <button 
+                    <button
                       onClick={() => handleDelete(cat._id)}
-                      className="p-2.5 text-[#888] hover:text-red-400 bg-[#1a1a1a] hover:bg-red-900/30 rounded-full transition"
+                      className="p-2.5 text-red-500 hover:text-red-700 bg-red-50 hover:bg-red-100 rounded-full transition cursor-pointer"
                       title="Delete Category"
                     >
                       <Trash2 className="w-4 h-4" />

@@ -30,7 +30,7 @@ function ProjectCardComponent({
 }: ProjectCardProps) {
   const projectId = project._id?.toString() || project._id;
   const categoryTag = project.categories?.[0];
-  const techTag = project.technologies?.[0] || "FULL STACK";
+  const techTag = project.technologies?.[0];
 
   return (
     <div className={containerClass}>

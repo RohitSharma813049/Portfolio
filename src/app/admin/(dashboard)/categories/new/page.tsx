@@ -46,28 +46,28 @@ export default function NewCategoryPage() {
       <div className="mb-6">
         <Link
           href="/admin/categories"
-          className="inline-flex items-center gap-2 text-sm text-[#888] hover:text-white transition-colors mb-4"
+          className="inline-flex items-center gap-2 text-sm text-[#666] hover:text-[#111] transition-colors mb-4"
         >
           <ArrowLeft className="w-4 h-4" /> Back to Categories
         </Link>
-        <h1 className="text-3xl font-playfair font-medium flex items-center gap-3 text-white">
+        <h1 className="text-3xl font-playfair font-medium flex items-center gap-3 text-[#111]">
           <Tag className="w-8 h-8 text-[#D8C494]" /> Create New Category
         </h1>
-        <p className="text-[#999] text-sm mt-2 font-light tracking-wide">
+        <p className="text-[#666] text-sm mt-1 font-light tracking-wide">
           Add a new project category to display on your portfolio workspace
         </p>
       </div>
 
       {error && (
-        <div className="bg-red-900/40 border border-red-500/50 text-red-200 p-4 rounded-xl mb-6 text-sm">
+        <div className="bg-red-50 border border-red-200 text-red-700 p-4 rounded-xl mb-6 text-sm">
           {error}
         </div>
       )}
 
-      <div className="bg-[#111] border border-[#333] rounded-2xl shadow-2xl p-6 md:p-8">
+      <div className="bg-white border border-[#EAEAEA] rounded-2xl shadow-sm p-6 md:p-8">
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label className="block text-xs font-semibold text-[#888] uppercase tracking-wider mb-2">
+            <label className="block text-xs font-semibold text-[#111] uppercase tracking-wider mb-2">
               Category Name
             </label>
             <input
@@ -75,29 +75,29 @@ export default function NewCategoryPage() {
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="e.g. Tour & Travel, E-Commerce, Healthcare"
-              className="w-full px-4 py-3 bg-[#0a0a0a] rounded-xl border border-[#333] focus:outline-none focus:border-[#D8C494] text-white transition placeholder-[#444]"
+              className="w-full px-4 py-3 bg-white rounded-xl border border-[#EAEAEA] focus:outline-none focus:border-black text-[#111] transition placeholder-[#999]"
               required
             />
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-[#888] uppercase tracking-wider mb-2">
+            <label className="block text-xs font-semibold text-[#111] uppercase tracking-wider mb-2">
               Cover Image
             </label>
             <ImageUploader onUpload={setCoverImage} defaultImage={coverImage} />
           </div>
 
-          <div className="flex justify-end gap-3 pt-4 border-t border-[#222]">
+          <div className="flex justify-end gap-3 pt-4 border-t border-[#EAEAEA]">
             <Link
               href="/admin/categories"
-              className="px-6 py-3 rounded-full text-sm font-semibold text-[#888] hover:text-white transition"
+              className="px-6 py-3 rounded-full text-sm font-semibold text-[#666] hover:text-[#111] transition"
             >
               Cancel
             </Link>
             <button
               type="submit"
               disabled={creating}
-              className="bg-[#D8C494] text-black px-8 py-3 rounded-full text-sm font-semibold hover:bg-[#c2ae7c] transition shadow-[0_0_20px_rgba(216,196,148,0.2)] disabled:opacity-50 flex items-center gap-2"
+              className="bg-[#D8C494] text-black px-8 py-3 rounded-full text-sm font-semibold hover:bg-[#c2ae7c] transition shadow-sm disabled:opacity-50 flex items-center gap-2 cursor-pointer"
             >
               <Save className="w-4 h-4" />
               {creating ? "Saving..." : "Save Category"}

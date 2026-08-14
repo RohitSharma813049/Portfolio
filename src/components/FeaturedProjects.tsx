@@ -13,21 +13,16 @@ function FeaturedProjectsComponent({ projects, categories }: FeaturedProjectsPro
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
   const scrollRef = useRef<HTMLDivElement>(null);
 
-  // Collect available category options dynamically
+  // Collect available category options dynamically from actual projects
   const categoryOptions = useMemo(() => {
     const set = new Set<string>();
-    if (categories && categories.length > 0) {
-      categories.forEach((c) => {
-        if (c) set.add(c);
-      });
-    }
     projects.forEach((p) => {
       p.categories?.forEach((c: string) => {
-        if (c) set.add(c);
+        if (c && c.trim()) set.add(c.trim());
       });
     });
     return ["All", ...Array.from(set)];
-  }, [projects, categories]);
+  }, [projects]);
 
   // Filter projects by selected category
   const filteredProjects = useMemo(() => {

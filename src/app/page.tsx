@@ -37,37 +37,12 @@ export default async function Home() {
     };
   });
 
-  // Default fallback presets if database has no categories created yet
-  const defaultCategoryPresets = [
-    {
-      title: "Web Applications",
-      slug: "web-applications",
-      count: "5+ PROJECTS",
-      image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=800&auto=format&fit=crop",
-    },
-    {
-      title: "Mobile Apps",
-      slug: "mobile-apps",
-      count: "4+ PROJECTS",
-      image: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?q=80&w=800&auto=format&fit=crop",
-    },
-    {
-      title: "Enterprise Solutions",
-      slug: "enterprise-solutions",
-      count: "3+ PROJECTS",
-      image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=800&auto=format&fit=crop",
-    },
-    {
-      title: "AI & Cloud Platforms",
-      slug: "ai-cloud-platforms",
-      count: "4+ PROJECTS",
-      image: "https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=800&auto=format&fit=crop",
-    },
-  ];
+  // Dynamic hero tags from actual project technologies in DB
+  const heroTechTags = Array.from(
+    new Set(projects.flatMap((p: any) => p.technologies || []))
+  ).slice(0, 5);
 
-  // Show ONLY real database categories created by user in Admin panel. If none exist, show presets.
-  const displayCategories =
-    categoryCards.length > 0 ? categoryCards : defaultCategoryPresets;
+  const displayCategories = categoryCards;
 
   return (
     <div className="bg-white min-h-screen text-[#0B1B3D] font-sans">
@@ -91,24 +66,22 @@ export default async function Home() {
             {/* Search Box */}
             <ClientSearch />
 
-            {/* Tags */}
-            <div className="flex flex-wrap gap-2 mb-12">
-              <span className="px-4 py-1.5 border border-black rounded-full text-xs font-medium cursor-pointer">
-                All
-              </span>
-              <span className="px-4 py-1.5 border border-[#EAEAEA] text-[#666] rounded-full text-xs hover:border-black cursor-pointer transition-colors">
-                Next.js
-              </span>
-              <span className="px-4 py-1.5 border border-[#EAEAEA] text-[#666] rounded-full text-xs hover:border-black cursor-pointer transition-colors">
-                React Native
-              </span>
-              <span className="px-4 py-1.5 border border-[#EAEAEA] text-[#666] rounded-full text-xs hover:border-black cursor-pointer transition-colors">
-                Node.js & MongoDB
-              </span>
-              <span className="px-4 py-1.5 border border-[#EAEAEA] text-[#666] rounded-full text-xs hover:border-black cursor-pointer transition-colors">
-                Cloud Architecture
-              </span>
-            </div>
+            {/* Dynamic Tags */}
+            {heroTechTags.length > 0 && (
+              <div className="flex flex-wrap gap-2 mb-10">
+                <span className="px-4 py-1.5 border border-black rounded-full text-xs font-medium cursor-pointer">
+                  All
+                </span>
+                {heroTechTags.map((tech: any) => (
+                  <span
+                    key={tech}
+                    className="px-4 py-1.5 border border-[#EAEAEA] text-[#666] rounded-full text-xs hover:border-black cursor-pointer transition-colors"
+                  >
+                    {tech}
+                  </span>
+                ))}
+              </div>
+            )}
 
             {/* Buttons */}
             <div className="flex flex-wrap gap-4 animate-fade-in-up-delay-1">

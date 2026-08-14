@@ -61,13 +61,13 @@ export default function ImageUploader({ onUpload, defaultImage }: ImageUploaderP
       {error && <div className="text-red-500 text-sm mb-2">{error}</div>}
       
       {image ? (
-        <div className="relative w-full h-48 rounded-xl overflow-hidden group border border-[#333]">
+        <div className="relative w-full h-48 rounded-2xl overflow-hidden group border border-[#EAEAEA] shadow-sm">
           <img src={image} alt="Uploaded" className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
             <button 
               type="button"
               onClick={clearImage}
-              className="bg-red-500 hover:bg-red-600 text-white p-2 rounded-full transition"
+              className="bg-red-500 hover:bg-red-600 text-white p-2 rounded-full transition cursor-pointer"
             >
               <X className="w-5 h-5" />
             </button>
@@ -76,18 +76,18 @@ export default function ImageUploader({ onUpload, defaultImage }: ImageUploaderP
       ) : (
         <div 
           onClick={() => fileInputRef.current?.click()}
-          className="w-full h-48 border-2 border-dashed border-[#EAEAEA] rounded-none-none flex flex-col items-center justify-center cursor-pointer hover:border-[#111111] hover:bg-[#fafafa] transition-colors bg-[#f4f4f4]"
+          className="w-full h-48 border-2 border-dashed border-gray-300 rounded-2xl flex flex-col items-center justify-center cursor-pointer hover:border-[#111111] hover:bg-white transition-colors bg-gray-50"
         >
           {isUploading ? (
             <div className="flex flex-col items-center text-[#111111]">
-              <Loader2 className="w-8 h-8 animate-spin mb-2" />
+              <Loader2 className="w-8 h-8 animate-spin mb-2 text-[#D8C494]" />
               <span className="text-sm font-medium">Uploading...</span>
             </div>
           ) : (
             <div className="flex flex-col items-center text-[#666666] hover:text-[#111111] transition-colors">
-              <UploadCloud className="w-10 h-10 mb-3" />
-              <span className="text-sm font-medium">Click or drag image to upload</span>
-              <span className="text-xs opacity-70 mt-1">Supports JPG, PNG, WEBP</span>
+              <UploadCloud className="w-10 h-10 mb-3 text-[#D8C494]" />
+              <span className="text-sm font-medium text-[#111111]">Click or drag image to upload</span>
+              <span className="text-xs text-[#888888] mt-1">Supports JPG, PNG, WEBP</span>
             </div>
           )}
         </div>
