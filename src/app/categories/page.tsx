@@ -11,7 +11,6 @@ export default async function CategoriesPage() {
     if (process.env.MONGODB_URI) {
       await connectToDatabase();
       categoriesData = await Project.aggregate([
-        { $match: { status: { $ne: "DRAFT" } } },
         { $unwind: "$categories" },
         { $sort: { createdAt: -1 } },
         {

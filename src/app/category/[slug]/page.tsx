@@ -10,9 +10,9 @@ export default async function CategoryFilteredPage({ params }: { params: Promise
   await connectToDatabase();
   const { slug } = await params;
 
-  // Fetch all projects except DRAFT
+  // Fetch all projects unconditionally
   const allProjects = await Project.find(
-    { status: { $ne: "DRAFT" } },
+    {},
     "name slug shortDescription featureImage categories technologies status createdAt purchaseOption livePreviewUrl bookDemoUrl"
   )
     .sort({ createdAt: -1 })
@@ -20,7 +20,7 @@ export default async function CategoryFilteredPage({ params }: { params: Promise
 
   const normalizedSlug = slug.toLowerCase().trim();
 
-  // Filter projects by matching category slug or string
+  // Filter projects by matching category slug or category string
   const projects = allProjects.filter((project: any) => {
     if (!project.categories || project.categories.length === 0) return false;
     return project.categories.some((cat: string) => {

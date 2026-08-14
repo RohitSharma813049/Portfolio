@@ -11,7 +11,7 @@ export default async function AllProjectsPage() {
     if (process.env.MONGODB_URI) {
       await connectToDatabase();
       projects = await Project.find(
-        { status: { $ne: "DRAFT" } },
+        {},
         "name slug shortDescription featureImage categories technologies status createdAt purchaseOption livePreviewUrl bookDemoUrl"
       )
         .sort({ createdAt: -1 })
