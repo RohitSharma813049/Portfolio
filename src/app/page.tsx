@@ -23,11 +23,13 @@ export default async function Home() {
   }
 
   const totalProjects = projects.length;
-  // Create dynamic category cards from dbCategories, merging project counts
+  // Create dynamic category cards from dbCategories
   const categoryCards = dbCategories.map((cat) => {
     const count = projects.filter((p) => p.categories && p.categories.includes(cat.name)).length;
+    const slug = cat.slug || cat.name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)+/g, "");
     return {
       title: cat.name,
+      slug: slug,
       count: `${count} PROJECT${count === 1 ? "" : "S"}`,
       image:
         cat.coverImage ||
@@ -35,36 +37,37 @@ export default async function Home() {
     };
   });
 
-  // Default fallback presets for categories
+  // Default fallback presets if database has no categories created yet
   const defaultCategoryPresets = [
     {
       title: "Web Applications",
+      slug: "web-applications",
       count: "5+ PROJECTS",
       image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=800&auto=format&fit=crop",
     },
     {
       title: "Mobile Apps",
+      slug: "mobile-apps",
       count: "4+ PROJECTS",
       image: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?q=80&w=800&auto=format&fit=crop",
     },
     {
       title: "Enterprise Solutions",
+      slug: "enterprise-solutions",
       count: "3+ PROJECTS",
       image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=800&auto=format&fit=crop",
     },
     {
       title: "AI & Cloud Platforms",
+      slug: "ai-cloud-platforms",
       count: "4+ PROJECTS",
       image: "https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=800&auto=format&fit=crop",
     },
   ];
 
-  // Merge database categories with default presets so there are always at least 4 category cards filled
-  const existingTitles = new Set(categoryCards.map((c) => c.title.toLowerCase()));
-  const extraPresets = defaultCategoryPresets.filter(
-    (preset) => !existingTitles.has(preset.title.toLowerCase())
-  );
-  const displayCategories = [...categoryCards, ...extraPresets].slice(0, 4);
+  // Show ONLY real database categories created by user in Admin panel. If none exist, show presets.
+  const displayCategories =
+    categoryCards.length > 0 ? categoryCards : defaultCategoryPresets;
 
   return (
     <div className="bg-white min-h-screen text-[#0B1B3D] font-sans">
@@ -209,7 +212,17 @@ export default async function Home() {
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div
+          className={`grid gap-6 ${
+            displayCategories.length === 1
+              ? "grid-cols-1 max-w-md"
+              : displayCategories.length === 2
+              ? "grid-cols-1 sm:grid-cols-2 max-w-3xl"
+              : displayCategories.length === 3
+              ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 max-w-5xl"
+              : "grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 w-full"
+          }`}
+        >
           {displayCategories.map((cat, i) => (
             <Link
               href={`/categories`}

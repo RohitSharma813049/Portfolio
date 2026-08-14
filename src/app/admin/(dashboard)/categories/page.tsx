@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Link from "next/link";
 import { Plus, Trash2, Tag, Edit2, X, Save } from "lucide-react";
 import ImageUploader from "@/components/ImageUploader";
 
@@ -132,12 +133,12 @@ export default function CategoriesPage() {
           <p className="text-[#999] text-sm mt-2 font-light tracking-wide">Manage software project categories</p>
         </div>
         {!showCreateForm && (
-          <button 
-            onClick={() => setShowCreateForm(true)}
+          <Link
+            href="/admin/categories/new"
             className="bg-[#D8C494] text-black px-6 py-3 rounded-full text-sm font-semibold hover:bg-[#c2ae7c] transition-colors shadow-sm flex items-center gap-2"
           >
             <Plus className="w-4 h-4" /> Add Category
-          </button>
+          </Link>
         )}
       </div>
 
