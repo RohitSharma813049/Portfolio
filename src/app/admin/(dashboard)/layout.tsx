@@ -81,17 +81,21 @@ export default function AdminLayout({
 
       {/* Sidebar */}
       <aside 
-        className={`${isSidebarOpen ? 'translate-x-0 w-64' : '-translate-x-full w-0 md:w-20 md:translate-x-0'} fixed md:sticky top-0 left-0 bg-[var(--color-surface)] border-r border-[var(--color-border)] flex flex-col h-screen transition-all duration-300 z-40 shadow-xl md:shadow-none`}
+        className={`${
+          isSidebarOpen 
+            ? 'translate-x-0 w-64' 
+            : '-translate-x-full w-0 pointer-events-none md:pointer-events-auto md:w-20 md:translate-x-0'
+        } fixed md:sticky top-0 left-0 bg-[var(--color-surface)] border-r border-[var(--color-border)] flex flex-col h-screen transition-all duration-300 z-40 shadow-xl md:shadow-none overflow-hidden`}
       >
-        <div className="h-16 flex items-center justify-between px-5 border-b border-[var(--color-border)]">
+        <div className="h-16 flex items-center justify-between px-5 border-b border-[var(--color-border)] shrink-0">
           {isSidebarOpen && (
             <div className="flex items-center gap-3 overflow-hidden">
-              <div className="w-8 h-8 rounded-[var(--radius-button)] bg-[var(--color-primary)] text-white flex items-center justify-center font-bold text-lg shadow-sm">P</div>
+              <div className="w-8 h-8 rounded-[var(--radius-button)] bg-[var(--color-primary)] text-white flex items-center justify-center font-bold text-lg shadow-sm shrink-0">P</div>
               <h2 className="font-bold text-base tracking-tight whitespace-nowrap text-[var(--color-text-primary)]">PortfolioCMS</h2>
             </div>
           )}
           {!isSidebarOpen && (
-            <div className="w-8 h-8 rounded-[var(--radius-button)] bg-[var(--color-primary)] text-white flex items-center justify-center font-bold text-lg mx-auto shadow-sm">P</div>
+            <div className="w-8 h-8 rounded-[var(--radius-button)] bg-[var(--color-primary)] text-white flex items-center justify-center font-bold text-lg mx-auto shadow-sm shrink-0 hidden md:flex">P</div>
           )}
         </div>
         
@@ -100,14 +104,14 @@ export default function AdminLayout({
           
           <Link href="/admin" onClick={handleNavClick} className={`flex items-center justify-between px-3 py-2 rounded-[var(--radius-button)] text-sm font-medium transition group ${isActive("/admin", true) ? "bg-[#F1F5F9] text-[var(--color-primary)]" : "hover:bg-[#F8FAFC] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]"}`}>
             <div className="flex items-center gap-3">
-              <LayoutDashboard className={`w-5 h-5 transition ${isActive("/admin", true) ? "text-[var(--color-primary)]" : "text-[var(--color-text-secondary)] group-hover:text-[var(--color-text-primary)]"}`} /> 
+              <LayoutDashboard className={`w-5 h-5 shrink-0 transition ${isActive("/admin", true) ? "text-[var(--color-primary)]" : "text-[var(--color-text-secondary)] group-hover:text-[var(--color-text-primary)]"}`} /> 
               {isSidebarOpen && "Dashboard"}
             </div>
           </Link>
           
           <Link href="/admin/projects" onClick={handleNavClick} className={`flex items-center justify-between px-3 py-2 rounded-[var(--radius-button)] text-sm font-medium transition group ${isActive("/admin/projects") && !pathname?.includes("status=DRAFT") ? "bg-[#F1F5F9] text-[var(--color-primary)]" : "hover:bg-[#F8FAFC] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]"}`}>
             <div className="flex items-center gap-3">
-              <FolderKanban className={`w-5 h-5 transition ${isActive("/admin/projects") && !pathname?.includes("status=DRAFT") ? "text-[var(--color-primary)]" : "text-[var(--color-text-secondary)] group-hover:text-[var(--color-text-primary)]"}`} /> 
+              <FolderKanban className={`w-5 h-5 shrink-0 transition ${isActive("/admin/projects") && !pathname?.includes("status=DRAFT") ? "text-[var(--color-primary)]" : "text-[var(--color-text-secondary)] group-hover:text-[var(--color-text-primary)]"}`} /> 
               {isSidebarOpen && "Projects"}
             </div>
             {isSidebarOpen && (
@@ -119,7 +123,7 @@ export default function AdminLayout({
           
           <Link href="/admin/projects?status=DRAFT" onClick={handleNavClick} className={`flex items-center justify-between px-3 py-2 rounded-[var(--radius-button)] text-sm font-medium transition group ${pathname?.includes("status=DRAFT") ? "bg-[#F1F5F9] text-[var(--color-primary)]" : "hover:bg-[#F8FAFC] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]"}`}>
             <div className="flex items-center gap-3">
-              <div className="w-5 flex justify-center"><span className="w-2 h-2 rounded-full bg-[var(--color-warning)]"></span></div>
+              <div className="w-5 flex justify-center shrink-0"><span className="w-2 h-2 rounded-full bg-[var(--color-warning)]"></span></div>
               {isSidebarOpen && "Drafts"}
             </div>
             {isSidebarOpen && (
@@ -131,7 +135,7 @@ export default function AdminLayout({
 
           <Link href="/admin/categories" onClick={handleNavClick} className={`flex items-center justify-between px-3 py-2 rounded-[var(--radius-button)] text-sm font-medium transition group ${isActive("/admin/categories") ? "bg-[#F1F5F9] text-[var(--color-primary)]" : "hover:bg-[#F8FAFC] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]"}`}>
             <div className="flex items-center gap-3">
-              <Tag className={`w-5 h-5 transition ${isActive("/admin/categories") ? "text-[var(--color-primary)]" : "text-[var(--color-text-secondary)] group-hover:text-[var(--color-text-primary)]"}`} /> 
+              <Tag className={`w-5 h-5 shrink-0 transition ${isActive("/admin/categories") ? "text-[var(--color-primary)]" : "text-[var(--color-text-secondary)] group-hover:text-[var(--color-text-primary)]"}`} /> 
               {isSidebarOpen && "Categories"}
             </div>
           </Link>
@@ -140,14 +144,14 @@ export default function AdminLayout({
 
           <Link href="/admin/settings" onClick={handleNavClick} className={`flex items-center justify-between px-3 py-2 rounded-[var(--radius-button)] text-sm font-medium transition group ${isActive("/admin/settings") ? "bg-[#F1F5F9] text-[var(--color-primary)]" : "hover:bg-[#F8FAFC] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]"}`}>
             <div className="flex items-center gap-3">
-              <Settings className={`w-5 h-5 transition ${isActive("/admin/settings") ? "text-[var(--color-primary)]" : "text-[var(--color-text-secondary)] group-hover:text-[var(--color-text-primary)]"}`} /> 
+              <Settings className={`w-5 h-5 shrink-0 transition ${isActive("/admin/settings") ? "text-[var(--color-primary)]" : "text-[var(--color-text-secondary)] group-hover:text-[var(--color-text-primary)]"}`} /> 
               {isSidebarOpen && "Settings"}
             </div>
           </Link>
           
         </nav>
         
-        <div className="p-4 border-t border-[var(--color-border)]">
+        <div className="p-4 border-t border-[var(--color-border)] shrink-0">
            {isSidebarOpen ? (
              <div className="flex flex-col gap-2">
                <div className="flex items-center gap-3 px-2 mb-2">
@@ -170,7 +174,7 @@ export default function AdminLayout({
                </button>
              </div>
            ) : (
-             <div className="flex flex-col gap-4 items-center">
+             <div className="hidden md:flex flex-col gap-4 items-center">
                <LogoutButton isCollapsed={true} />
                <button onClick={() => setSidebarOpen(true)} className="flex justify-center text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition p-2 hover:bg-[#F8FAFC] rounded-[var(--radius-button)]">
                  <Menu className="w-5 h-5" />
