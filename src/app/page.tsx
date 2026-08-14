@@ -35,32 +35,36 @@ export default async function Home() {
     };
   });
 
-  // Default fallback layout for categories
-  const displayCategories =
-    categoryCards.length > 0
-      ? categoryCards.slice(0, 4)
-      : [
-          {
-            title: "Web Applications",
-            count: "5+ PROJECTS",
-            image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=800&auto=format&fit=crop",
-          },
-          {
-            title: "Mobile Apps",
-            count: "4+ PROJECTS",
-            image: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?q=80&w=800&auto=format&fit=crop",
-          },
-          {
-            title: "Enterprise Solutions",
-            count: "3+ PROJECTS",
-            image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=800&auto=format&fit=crop",
-          },
-          {
-            title: "AI & Cloud Platforms",
-            count: "4+ PROJECTS",
-            image: "https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=800&auto=format&fit=crop",
-          },
-        ];
+  // Default fallback presets for categories
+  const defaultCategoryPresets = [
+    {
+      title: "Web Applications",
+      count: "5+ PROJECTS",
+      image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=800&auto=format&fit=crop",
+    },
+    {
+      title: "Mobile Apps",
+      count: "4+ PROJECTS",
+      image: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?q=80&w=800&auto=format&fit=crop",
+    },
+    {
+      title: "Enterprise Solutions",
+      count: "3+ PROJECTS",
+      image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=800&auto=format&fit=crop",
+    },
+    {
+      title: "AI & Cloud Platforms",
+      count: "4+ PROJECTS",
+      image: "https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=800&auto=format&fit=crop",
+    },
+  ];
+
+  // Merge database categories with default presets so there are always at least 4 category cards filled
+  const existingTitles = new Set(categoryCards.map((c) => c.title.toLowerCase()));
+  const extraPresets = defaultCategoryPresets.filter(
+    (preset) => !existingTitles.has(preset.title.toLowerCase())
+  );
+  const displayCategories = [...categoryCards, ...extraPresets].slice(0, 4);
 
   return (
     <div className="bg-white min-h-screen text-[#0B1B3D] font-sans">
@@ -205,33 +209,29 @@ export default async function Home() {
           </Link>
         </div>
 
-        <div
-          className="flex gap-6 overflow-x-auto snap-x snap-mandatory pb-8 scrollbar-hide"
-          style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
-        >
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {displayCategories.map((cat, i) => (
             <Link
               href={`/categories`}
               key={i}
-              className="group relative h-96 min-w-[280px] md:min-w-[320px] lg:min-w-[380px] snap-start shrink-0 rounded-3xl overflow-hidden shadow-soft flex flex-col justify-end p-8 text-white"
+              className="group relative h-96 rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-end p-8 text-white bg-[#1E1B38]"
             >
-              <div className="absolute inset-0 bg-[#2D2A54] z-0" />
               <img
                 src={cat.image}
                 alt={cat.title}
-                className="absolute inset-0 w-full h-full object-cover opacity-40 mix-blend-overlay group-hover:scale-105 transition-transform duration-700 z-0"
+                className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 z-0"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#111]/90 via-[#111]/20 to-transparent z-10" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#0B1B3D]/95 via-[#0B1B3D]/40 to-transparent z-10" />
 
               <div className="relative z-20">
-                <p className="text-[10px] font-bold tracking-widest uppercase mb-2 text-white/80">
+                <p className="text-[10px] font-bold tracking-widest uppercase mb-2 text-[#D8C494]">
                   {cat.count}
                 </p>
-                <h3 className="font-playfair text-3xl font-medium mb-6 group-hover:-translate-y-2 transition-transform duration-300">
+                <h3 className="font-playfair text-2xl md:text-3xl font-medium mb-6 group-hover:-translate-y-2 transition-transform duration-300">
                   {cat.title}
                 </h3>
 
-                <div className="w-10 h-10 rounded-full border border-white/30 flex items-center justify-center group-hover:bg-white group-hover:text-[#111] transition-all">
+                <div className="w-10 h-10 rounded-full border border-white/40 backdrop-blur-sm flex items-center justify-center group-hover:bg-[#D8C494] group-hover:border-[#D8C494] group-hover:text-black transition-all">
                   <ArrowRight className="w-4 h-4 -rotate-45" />
                 </div>
               </div>
@@ -345,10 +345,7 @@ export default async function Home() {
             What Clients Say
           </h2>
 
-          <div
-            className="flex gap-6 overflow-x-auto snap-x snap-mandatory pb-8 scrollbar-hide"
-            style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
-          >
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
             {[
               {
                 quote:
@@ -374,19 +371,21 @@ export default async function Home() {
             ].map((testimonial, i) => (
               <div
                 key={i}
-                className="bg-white p-8 rounded-2xl shadow-sm border border-[#EAEAEA] flex flex-col min-w-[300px] md:min-w-[400px] lg:min-w-[500px] snap-start shrink-0 text-left"
+                className="bg-white p-8 rounded-2xl shadow-sm border border-[#EAEAEA] flex flex-col justify-between hover:shadow-md hover:-translate-y-1 transition-all duration-300"
               >
-                <div className="flex gap-1 mb-4 text-[#F59E0B]">
-                  {[1, 2, 3, 4, 5].map((star) => (
-                    <svg key={star} className="w-5 h-5 fill-current" viewBox="0 0 20 20">
-                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                    </svg>
-                  ))}
+                <div>
+                  <div className="flex gap-1 mb-4 text-[#F59E0B]">
+                    {[1, 2, 3, 4, 5].map((star) => (
+                      <svg key={star} className="w-5 h-5 fill-current" viewBox="0 0 20 20">
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                      </svg>
+                    ))}
+                  </div>
+                  <p className="text-[#444] italic leading-relaxed mb-8">
+                    "{testimonial.quote}"
+                  </p>
                 </div>
-                <p className="text-[#444] italic leading-relaxed mb-8 flex-grow">
-                  "{testimonial.quote}"
-                </p>
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-4 border-t border-[#EAEAEA] pt-4">
                   <div className="w-12 h-12 rounded-full overflow-hidden flex-shrink-0 bg-gray-200">
                     <img src={testimonial.img} alt={testimonial.name} className="w-full h-full object-cover" />
                   </div>

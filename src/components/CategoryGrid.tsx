@@ -168,22 +168,19 @@ function CategoryGridComponent({ initialCategories }: CategoryGridProps) {
                     key={cat._id}
                     className="group flex flex-col rounded-3xl border border-[#EAEAEA] bg-white shadow-sm hover:shadow-hover hover:-translate-y-1 transition-all duration-300 overflow-hidden"
                   >
-                    {cat.featureImage ? (
-                      <div className="relative h-48 bg-[#f4f4f4] overflow-hidden">
-                        <img
-                          src={cat.featureImage}
-                          alt={`${cat._id} category`}
-                          loading="lazy"
-                          decoding="async"
-                          className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 z-0"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-[#111]/80 via-[#111]/10 to-transparent z-10" />
-                      </div>
-                    ) : (
-                      <div className="w-full h-48 bg-[#f4f4f4] flex items-center justify-center text-[#999] group-hover:scale-105 transition-transform duration-700">
-                        <Folder className="w-8 h-8 opacity-40" />
-                      </div>
-                    )}
+                    <div className="relative h-48 bg-[#1E1B38] overflow-hidden">
+                      <img
+                        src={
+                          cat.featureImage ||
+                          "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=800&auto=format&fit=crop"
+                        }
+                        alt={`${cat._id} category`}
+                        loading="lazy"
+                        decoding="async"
+                        className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 z-0"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#0B1B3D]/80 via-[#0B1B3D]/20 to-transparent z-10" />
+                    </div>
 
                     <div className="p-6">
                       <h3 className="font-playfair text-2xl font-medium mb-1 text-[#111]">
