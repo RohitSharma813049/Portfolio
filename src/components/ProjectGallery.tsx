@@ -51,8 +51,8 @@ export default function ProjectGallery({
 
   if (galleryItems.length === 0) {
     return (
-      <div className="w-full h-full bg-gradient-to-br from-gray-50 to-gray-200 rounded-2xl flex items-center justify-center relative z-10 border border-[#EAEAEA]">
-        <span className="text-[#999] font-playfair text-2xl text-center">No Image</span>
+      <div className="w-full aspect-[4/3] sm:aspect-[16/10] bg-gradient-to-br from-gray-100 to-gray-200 rounded-2xl flex items-center justify-center relative z-10 border border-[#EAEAEA]">
+        <span className="text-[#999] font-playfair text-xl sm:text-2xl text-center">No Image Available</span>
       </div>
     );
   }
@@ -68,49 +68,17 @@ export default function ProjectGallery({
   };
 
   return (
-    <div className="flex flex-col-reverse md:flex-row gap-4 w-full h-full p-2 relative">
-      {/* Thumbnails */}
-      {galleryItems.length > 1 && (
-        <div className="flex md:flex-col gap-3 overflow-x-auto md:overflow-y-auto no-scrollbar md:w-24 flex-shrink-0 z-10 p-1">
-          {galleryItems.map((item, idx) => (
-            <button
-              key={idx}
-              onClick={() => setActiveIndex(idx)}
-              className={`relative aspect-square rounded-lg overflow-hidden flex-shrink-0 border-2 transition-all duration-300 ${
-                activeIndex === idx
-                  ? "border-[#D8C494] shadow-[0_0_10px_rgba(216,196,148,0.3)]"
-                  : "border-transparent opacity-60 hover:opacity-100"
-              }`}
-            >
-              {item.type === "image" ? (
-                <img src={item.url} alt={`${projectName} thumbnail ${idx}`} className="w-full h-full object-cover" />
-              ) : (
-                <div className="w-full h-full bg-black flex items-center justify-center relative">
-                  {item.videoInfo?.thumbnail ? (
-                    <>
-                      <img src={item.videoInfo.thumbnail} className="w-full h-full object-cover opacity-60" alt="Video thumbnail" />
-                      <PlayCircle className="w-6 h-6 text-white absolute" />
-                    </>
-                  ) : (
-                    <PlayCircle className="w-8 h-8 text-white" />
-                  )}
-                </div>
-              )}
-            </button>
-          ))}
-        </div>
-      )}
-
-      {/* Main Display */}
-      <div className="flex-1 relative rounded-2xl overflow-hidden bg-black z-10 group shadow-sm border border-[#EAEAEA] w-full min-h-[300px] sm:min-h-[400px] md:h-full flex items-center justify-center">
+    <div className="flex flex-col gap-3 w-full relative z-10">
+      {/* Main Display Box */}
+      <div className="relative w-full aspect-[4/3] sm:aspect-[16/10] md:aspect-auto md:h-[420px] lg:h-[480px] rounded-2xl overflow-hidden bg-[#111] group shadow-sm border border-[#EAEAEA] flex items-center justify-center">
         {activeItem.type === "image" ? (
           <img
             src={activeItem.url}
             alt={`${projectName} view`}
-            className="w-full h-full object-contain bg-[#f8f9fa] transition-opacity duration-500"
+            className="w-full h-full object-contain bg-[#111] transition-opacity duration-300"
           />
         ) : activeItem.videoInfo?.isVideoFile ? (
-          <video src={activeItem.videoInfo.embedUrl} controls className="w-full h-full object-cover" />
+          <video src={activeItem.videoInfo.embedUrl} controls className="w-full h-full object-contain bg-black" />
         ) : (
           <iframe
             src={activeItem.videoInfo?.embedUrl || activeItem.url}
@@ -121,24 +89,65 @@ export default function ProjectGallery({
           ></iframe>
         )}
 
-        {/* Carousel Controls */}
+        {/* Carousel Overlay Nav Arrows */}
         {galleryItems.length > 1 && activeItem.type === "image" && (
           <>
             <button
               onClick={prevImage}
-              className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/90 shadow-lg flex items-center justify-center text-black opacity-0 group-hover:opacity-100 transition-opacity hover:bg-white hover:scale-105"
+              aria-label="Previous Image"
+              className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white/90 shadow-md flex items-center justify-center text-black opacity-90 sm:opacity-0 group-hover:opacity-100 transition-opacity hover:bg-white hover:scale-105 cursor-pointer z-20"
             >
-              <ChevronLeft className="w-6 h-6" />
+              <ChevronLeft className="w-5 h-5" />
             </button>
             <button
               onClick={nextImage}
-              className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/90 shadow-lg flex items-center justify-center text-black opacity-0 group-hover:opacity-100 transition-opacity hover:bg-white hover:scale-105"
+              aria-label="Next Image"
+              className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white/90 shadow-md flex items-center justify-center text-black opacity-90 sm:opacity-0 group-hover:opacity-100 transition-opacity hover:bg-white hover:scale-105 cursor-pointer z-20"
             >
-              <ChevronRight className="w-6 h-6" />
+              <ChevronRight className="w-5 h-5" />
             </button>
           </>
         )}
+
+        {/* Current Image Label / Counter Badge */}
+        {galleryItems.length > 1 && (
+          <div className="absolute bottom-3 right-3 bg-black/75 backdrop-blur-md text-white text-[10px] font-bold uppercase tracking-wider px-3 py-1.5 rounded-full z-20 border border-white/20">
+            {activeIndex + 1} / {galleryItems.length}
+          </div>
+        )}
       </div>
+
+      {/* Thumbnails Row */}
+      {galleryItems.length > 1 && (
+        <div className="flex items-center gap-2.5 overflow-x-auto py-1 px-0.5 scrollbar-hide w-full shrink-0">
+          {galleryItems.map((item, idx) => (
+            <button
+              key={idx}
+              onClick={() => setActiveIndex(idx)}
+              className={`relative w-14 h-14 sm:w-16 sm:h-16 rounded-xl overflow-hidden shrink-0 border-2 transition-all duration-200 cursor-pointer ${
+                activeIndex === idx
+                  ? "border-[#D8C494] shadow-md scale-105"
+                  : "border-transparent opacity-60 hover:opacity-100"
+              }`}
+            >
+              {item.type === "image" ? (
+                <img src={item.url} alt={`${projectName} thumbnail ${idx}`} className="w-full h-full object-cover" />
+              ) : (
+                <div className="w-full h-full bg-black flex items-center justify-center relative">
+                  {item.videoInfo?.thumbnail ? (
+                    <>
+                      <img src={item.videoInfo.thumbnail} className="w-full h-full object-cover opacity-60" alt="Video thumbnail" />
+                      <PlayCircle className="w-5 h-5 text-white absolute" />
+                    </>
+                  ) : (
+                    <PlayCircle className="w-6 h-6 text-white" />
+                  )}
+                </div>
+              )}
+            </button>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

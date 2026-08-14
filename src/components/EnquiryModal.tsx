@@ -36,7 +36,7 @@ export default function EnquiryModal({
 
     try {
       // Send notification or store inquiry
-      const res = await fetch("/api/notifications", {
+      await fetch("/api/notifications", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -57,49 +57,64 @@ export default function EnquiryModal({
   };
 
   return (
-    <div
-      className="fixed inset-0 z-50 overflow-y-auto bg-black/60 backdrop-blur-sm animate-fade-in flex min-h-full items-center justify-center p-3 sm:p-6 text-center"
-      onClick={onClose}
-    >
+    <div className="fixed inset-0 z-50 overflow-y-auto">
+      {/* Backdrop */}
       <div
-        className="bg-white border border-[#EAEAEA] rounded-2xl sm:rounded-3xl p-5 sm:p-8 max-w-lg w-full shadow-2xl relative animate-scale-in text-left my-auto max-h-[90vh] flex flex-col overflow-hidden"
-        onClick={(e) => e.stopPropagation()}
-      >
-        <button
-          onClick={onClose}
-          className="absolute top-4 right-4 sm:top-6 sm:right-6 p-2 rounded-full text-gray-400 hover:text-black hover:bg-gray-100 transition z-10"
-        >
-          <X className="w-5 h-5" />
-        </button>
+        className="fixed inset-0 bg-black/60 backdrop-blur-sm transition-opacity animate-fade-in"
+        onClick={onClose}
+      />
 
-        <div className="overflow-y-auto max-h-[calc(90vh-2rem)] pr-1">
-          {submitted ? (
-            <div className="text-center py-6 sm:py-8 space-y-3 sm:space-y-4">
-              <div className="w-14 h-14 sm:w-16 sm:h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto">
-                <CheckCircle className="w-7 h-7 sm:w-8 sm:h-8" />
-              </div>
-              <h3 className="text-xl sm:text-2xl font-bold text-[#111]">Enquiry Received!</h3>
-              <p className="text-xs sm:text-sm text-[#666] leading-relaxed">
-                Thank you for reaching out regarding <strong className="text-[#111]">{projectName}</strong>. Our team will contact you shortly.
-              </p>
-              <button
-                onClick={() => {
-                  setSubmitted(false);
-                  onClose();
-                }}
-                className="mt-4 sm:mt-6 bg-[#111] text-white px-8 py-3 rounded-full text-sm font-semibold hover:bg-[#333] transition"
-              >
-                Close
-              </button>
-            </div>
-          ) : (
-            <div>
+      {/* Modal Dialog Container */}
+      <div className="flex min-h-full items-center justify-center p-3 sm:p-6 text-center">
+        <div
+          className="relative w-full max-w-lg transform overflow-hidden rounded-2xl sm:rounded-3xl bg-white p-5 sm:p-8 text-left shadow-2xl transition-all my-auto max-h-[85vh] flex flex-col z-10 animate-scale-in"
+          onClick={(e) => e.stopPropagation()}
+        >
+          {/* Close Button */}
+          <button
+            onClick={onClose}
+            className="absolute top-4 right-4 sm:top-6 sm:right-6 p-2 rounded-full text-gray-400 hover:text-black hover:bg-gray-100 transition z-20 cursor-pointer"
+          >
+            <X className="w-5 h-5" />
+          </button>
+
+          {/* Modal Header - Fixed Top */}
+          {!submitted && (
+            <div className="mb-4 shrink-0 pr-8">
               <span className="text-[10px] font-bold uppercase tracking-widest text-[#D8C494] block mb-1">
                 GET IN TOUCH
               </span>
-              <h2 className="text-xl sm:text-2xl font-bold text-[#111] mb-1 sm:mb-2 pr-6">Enquire About {projectName}</h2>
-              <p className="text-xs sm:text-sm text-[#666] mb-4 sm:mb-6">Fill out the details below to receive pricing, demo credentials, or custom solutions.</p>
+              <h2 className="text-xl sm:text-2xl font-bold text-[#111] leading-snug">
+                Enquire About {projectName}
+              </h2>
+              <p className="text-xs sm:text-sm text-[#666] mt-1">
+                Fill out the details below to receive pricing, demo credentials, or custom solutions.
+              </p>
+            </div>
+          )}
 
+          {/* Modal Body - Scrollable */}
+          <div className="overflow-y-auto flex-1 min-h-0 pr-1">
+            {submitted ? (
+              <div className="text-center py-6 sm:py-8 space-y-3 sm:space-y-4">
+                <div className="w-14 h-14 sm:w-16 sm:h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto">
+                  <CheckCircle className="w-7 h-7 sm:w-8 sm:h-8" />
+                </div>
+                <h3 className="text-xl sm:text-2xl font-bold text-[#111]">Enquiry Received!</h3>
+                <p className="text-xs sm:text-sm text-[#666] leading-relaxed">
+                  Thank you for reaching out regarding <strong className="text-[#111]">{projectName}</strong>. Our team will contact you shortly.
+                </p>
+                <button
+                  onClick={() => {
+                    setSubmitted(false);
+                    onClose();
+                  }}
+                  className="mt-4 sm:mt-6 bg-[#111] text-white px-8 py-3 rounded-full text-sm font-semibold hover:bg-[#333] transition cursor-pointer"
+                >
+                  Close
+                </button>
+              </div>
+            ) : (
               <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4">
                 <div>
                   <label className="block text-[11px] sm:text-xs font-bold text-[#111] uppercase mb-1">Your Name *</label>
@@ -155,8 +170,8 @@ export default function EnquiryModal({
                   <Send className="w-4 h-4" /> {loading ? "Sending..." : "Submit Enquiry"}
                 </button>
               </form>
-            </div>
-          )}
+            )}
+          </div>
         </div>
       </div>
     </div>

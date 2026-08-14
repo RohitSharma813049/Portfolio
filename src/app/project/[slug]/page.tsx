@@ -103,8 +103,8 @@ export default async function ProjectDetails({ params }: { params: Promise<{ slu
             />
           </div>
 
-          <div className="w-full lg:w-6/12 bg-[#f8f9fa] rounded-2xl sm:rounded-3xl border border-[#EAEAEA] flex items-center justify-center p-2 sm:p-4 shadow-sm relative min-h-[280px] sm:min-h-[450px] lg:min-h-[550px]">
-            <div className="absolute inset-0 bg-gradient-to-tr from-[#f4f4f4] to-white z-0 rounded-2xl sm:rounded-3xl" />
+          <div className="w-full lg:w-6/12 bg-[#f8f9fa] rounded-2xl sm:rounded-3xl border border-[#EAEAEA] p-2.5 sm:p-4 shadow-sm relative overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-tr from-[#f4f4f4] to-white z-0 rounded-2xl sm:rounded-3xl pointer-events-none" />
             <ProjectGallery
               featureImage={project.featureImage || ""}
               screenshots={project.screenshots ? JSON.parse(JSON.stringify(project.screenshots)) : []}
