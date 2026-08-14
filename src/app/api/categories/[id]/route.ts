@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 import connectToDatabase from "@/lib/mongodb";
 import Category from "@/models/Category";
 import { cookies } from "next/headers";
@@ -17,6 +18,10 @@ export async function DELETE(req: Request, { params }: { params: Promise<{ id: s
     if (!deletedCategory) {
       return NextResponse.json({ success: false, error: "Category not found" }, { status: 404 });
     }
+
+    revalidatePath("/");
+    revalidatePath("/admin");
+    revalidatePath("/categories");
 
     return NextResponse.json({ success: true, data: {} });
   } catch (error: any) {
@@ -49,6 +54,10 @@ export async function PUT(req: Request, { params }: { params: Promise<{ id: stri
     if (!updatedCategory) {
       return NextResponse.json({ success: false, error: "Category not found" }, { status: 404 });
     }
+
+    revalidatePath("/");
+    revalidatePath("/admin");
+    revalidatePath("/categories");
 
     return NextResponse.json({ success: true, data: updatedCategory });
   } catch (error: any) {

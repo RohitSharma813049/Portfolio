@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 import connectToDatabase from "@/lib/mongodb";
 import Project from "@/models/Project";
 
@@ -44,6 +45,11 @@ export async function PUT(
       return NextResponse.json({ success: false, error: "Project not found" }, { status: 404 });
     }
 
+    revalidatePath("/");
+    revalidatePath("/admin");
+    revalidatePath("/projects");
+    revalidatePath("/categories");
+
     return NextResponse.json({ success: true, data: project });
   } catch (error: any) {
     if (error.code === 11000) {
@@ -66,6 +72,11 @@ export async function DELETE(
       return NextResponse.json({ success: false, error: "Project not found" }, { status: 404 });
     }
     
+    revalidatePath("/");
+    revalidatePath("/admin");
+    revalidatePath("/projects");
+    revalidatePath("/categories");
+
     return NextResponse.json({ success: true, data: {} });
   } catch (error: any) {
     return NextResponse.json({ success: false, error: error.message }, { status: 400 });

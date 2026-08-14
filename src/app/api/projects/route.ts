@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 import connectToDatabase from "@/lib/mongodb";
 import Project from "@/models/Project";
 
@@ -35,6 +36,12 @@ export async function POST(req: NextRequest) {
     }
 
     const project = await Project.create(body);
+    
+    // Purge cache for live dashboard and public pages
+    revalidatePath("/");
+    revalidatePath("/admin");
+    revalidatePath("/projects");
+    revalidatePath("/categories");
     
     return NextResponse.json({ success: true, data: project }, { status: 201 });
   } catch (error: any) {

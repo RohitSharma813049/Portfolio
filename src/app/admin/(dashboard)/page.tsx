@@ -5,6 +5,24 @@ import { Plus, TrendingUp, TrendingDown, FolderKanban, FileCheck, FileEdit, Eye,
 import AdminCharts from "@/components/AdminCharts";
 
 export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
+function getTimeAgo(dateInput: Date | string) {
+  if (!dateInput) return "Recently";
+  const date = new Date(dateInput);
+  const now = new Date();
+  const seconds = Math.floor((now.getTime() - date.getTime()) / 1000);
+
+  if (seconds < 60) return "Just now";
+  const minutes = Math.floor(seconds / 60);
+  if (minutes < 60) return `${minutes}m ago`;
+  const hours = Math.floor(minutes / 60);
+  if (hours < 24) return `${hours}h ago`;
+  const days = Math.floor(hours / 24);
+  if (days < 30) return `${days}d ago`;
+  const months = Math.floor(days / 30);
+  return `${months}mo ago`;
+}
 
 export default async function AdminDashboard() {
   await connectToDatabase();
@@ -16,6 +34,12 @@ export default async function AdminDashboard() {
   
   // Fetch recent projects for the table
   const recentProjects = await Project.find().sort({ createdAt: -1 }).limit(5);
+
+  // Fetch real activities from database projects
+  const activityProjects = await Project.find()
+    .sort({ updatedAt: -1, createdAt: -1 })
+    .limit(5)
+    .lean();
 
   // Aggregate Data for Charts
   const categoryAggregation = await Project.aggregate([
@@ -197,51 +221,42 @@ export default async function AdminDashboard() {
         {/* Activity Timeline */}
         <div className="bg-[var(--color-surface)] p-6 rounded-[var(--radius-card)] border border-[var(--color-border)] shadow-soft">
           <h2 className="text-lg font-bold text-[var(--color-text-primary)] mb-6">Activity Timeline</h2>
-          <div className="relative border-l border-[var(--color-border)] ml-5 space-y-8">
-            
-            {/* Timeline Item 1 */}
-            <div className="relative pl-8 group">
-              <div className="absolute -left-5 top-0 flex items-center justify-center w-10 h-10 rounded-full border-4 border-white bg-blue-50 text-[var(--color-primary)] shadow-sm">
-                <FolderKanban className="w-4 h-4" />
-              </div>
-              <div className="p-4 rounded-[var(--radius-card)] border border-[var(--color-border)] shadow-sm bg-[var(--color-background)] transition hover:shadow-hover">
-                <div className="flex items-center justify-between mb-1">
-                  <h4 className="font-semibold text-sm text-[var(--color-text-primary)]">Project Created</h4>
-                  <span className="text-xs font-medium text-[var(--color-text-secondary)]">2h ago</span>
-                </div>
-                <p className="text-sm text-[var(--color-text-secondary)] mt-1">You created a new project <span className="font-medium text-[var(--color-text-primary)]">"E-commerce Redesign"</span>.</p>
-              </div>
-            </div>
+          {activityProjects.length === 0 ? (
+            <p className="text-sm text-[var(--color-text-secondary)]">No recent activity logged.</p>
+          ) : (
+            <div className="relative border-l border-[var(--color-border)] ml-5 space-y-8">
+              {activityProjects.map((act: any) => {
+                const isPublished = act.status === "PUBLISHED";
+                const timeAgo = getTimeAgo(act.updatedAt || act.createdAt);
 
-            {/* Timeline Item 2 */}
-            <div className="relative pl-8 group">
-              <div className="absolute -left-5 top-0 flex items-center justify-center w-10 h-10 rounded-full border-4 border-white bg-green-50 text-[var(--color-success)] shadow-sm">
-                <FileCheck className="w-4 h-4" />
-              </div>
-              <div className="p-4 rounded-[var(--radius-card)] border border-[var(--color-border)] shadow-sm bg-[var(--color-background)] transition hover:shadow-hover">
-                <div className="flex items-center justify-between mb-1">
-                  <h4 className="font-semibold text-sm text-[var(--color-text-primary)]">Project Published</h4>
-                  <span className="text-xs font-medium text-[var(--color-text-secondary)]">5h ago</span>
-                </div>
-                <p className="text-sm text-[var(--color-text-secondary)] mt-1"><span className="font-medium text-[var(--color-text-primary)]">"SaaS Dashboard UI"</span> is now live.</p>
-              </div>
+                return (
+                  <div key={act._id.toString()} className="relative pl-8 group">
+                    <div
+                      className={`absolute -left-5 top-0 flex items-center justify-center w-10 h-10 rounded-full border-4 border-white shadow-sm ${
+                        isPublished
+                          ? "bg-green-50 text-[var(--color-success)]"
+                          : "bg-blue-50 text-[var(--color-primary)]"
+                      }`}
+                    >
+                      {isPublished ? <FileCheck className="w-4 h-4" /> : <FolderKanban className="w-4 h-4" />}
+                    </div>
+                    <div className="p-4 rounded-[var(--radius-card)] border border-[var(--color-border)] shadow-sm bg-[var(--color-background)] transition hover:shadow-hover">
+                      <div className="flex items-center justify-between mb-1">
+                        <h4 className="font-semibold text-sm text-[var(--color-text-primary)]">
+                          {isPublished ? "Project Published" : "Project Created"}
+                        </h4>
+                        <span className="text-xs font-medium text-[var(--color-text-secondary)]">{timeAgo}</span>
+                      </div>
+                      <p className="text-sm text-[var(--color-text-secondary)] mt-1">
+                        <span className="font-medium text-[var(--color-text-primary)]">"{act.name}"</span>{" "}
+                        {isPublished ? "is live on portfolio." : "is saved in workspace."}
+                      </p>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
-
-            {/* Timeline Item 3 */}
-            <div className="relative pl-8 group">
-              <div className="absolute -left-5 top-0 flex items-center justify-center w-10 h-10 rounded-full border-4 border-white bg-purple-50 text-purple-600 shadow-sm">
-                <Activity className="w-4 h-4" />
-              </div>
-              <div className="p-4 rounded-[var(--radius-card)] border border-[var(--color-border)] shadow-sm bg-[var(--color-background)] transition hover:shadow-hover">
-                <div className="flex items-center justify-between mb-1">
-                  <h4 className="font-semibold text-sm text-[var(--color-text-primary)]">System Update</h4>
-                  <span className="text-xs font-medium text-[var(--color-text-secondary)]">1d ago</span>
-                </div>
-                <p className="text-sm text-[var(--color-text-secondary)] mt-1">Admin dashboard UI has been updated.</p>
-              </div>
-            </div>
-
-          </div>
+          )}
         </div>
       </div>
 

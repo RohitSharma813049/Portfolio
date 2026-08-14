@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 import connectToDatabase from "@/lib/mongodb";
 import Category from "@/models/Category";
 import { cookies } from "next/headers";
@@ -31,6 +32,11 @@ export async function POST(req: Request) {
       name: body.name,
       coverImage: body.coverImage || ""
     });
+
+    revalidatePath("/");
+    revalidatePath("/admin");
+    revalidatePath("/categories");
+
     return NextResponse.json({ success: true, data: category });
   } catch (error: any) {
     if (error.code === 11000) {
