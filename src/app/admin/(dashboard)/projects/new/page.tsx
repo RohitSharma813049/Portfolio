@@ -13,7 +13,8 @@ export default function NewProject() {
     name: "",
     shortDescription: "",
     fullDescription: "",
-    status: "DRAFT",
+    status: "PUBLISHED",
+    purchaseOption: "BOTH",
     categories: "",
     technologies: "",
     industries: "",
@@ -52,6 +53,7 @@ export default function NewProject() {
     fetchData();
   }, []);
 
+  const [quickInfo, setQuickInfo] = useState([{ label: "", value: "" }]);
   const [features, setFeatures] = useState([{ title: "", description: "" }]);
   const [panels, setPanels] = useState([{ name: "", description: "", image: "" }]);
   const [screenshots, setScreenshots] = useState([{ url: "", type: "DESKTOP" }]);
@@ -102,6 +104,7 @@ export default function NewProject() {
         technologies: formData.technologies ? formData.technologies.split(",").map((c) => c.trim()).filter(Boolean) : [],
         industries: formData.industries ? formData.industries.split(",").map((c) => c.trim()).filter(Boolean) : [],
         similarProjects: selectedSimilarProjects,
+        quickInfo: quickInfo.filter((q) => q.label.trim() !== "" && q.value.trim() !== ""),
         features: features.filter((f) => f.title.trim() !== ""),
         panels: panels.filter((p) => p.name.trim() !== ""),
         screenshots: screenshots.filter((s) => s.url.trim() !== ""),
@@ -141,7 +144,7 @@ export default function NewProject() {
         {/* Basic Information */}
         <div className="p-8 space-y-6">
           <h2 className="font-bold text-lg border-b border-[#EAEAEA] pb-2">Basic Information</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="space-y-2">
               <label className="text-sm font-semibold text-[#0B1B3D]">Project Name *</label>
               <input
@@ -156,18 +159,31 @@ export default function NewProject() {
             </div>
 
             <div className="space-y-2">
-              <label className="text-sm font-semibold text-[#0B1B3D]">Status</label>
+              <label className="text-sm font-semibold text-[#0B1B3D]">Publish Status</label>
               <select
                 name="status"
                 value={formData.status}
                 onChange={handleChange}
                 className="w-full px-4 py-3 border border-[#EAEAEA] rounded-lg focus:outline-none focus:border-[#111111] transition bg-white"
               >
-                <option value="DRAFT">Draft</option>
-                <option value="BUY">Buy</option>
-                <option value="CUSTOMIZE">Customize</option>
                 <option value="PUBLISHED">Published</option>
+                <option value="DRAFT">Draft</option>
                 <option value="UPCOMING">Upcoming</option>
+              </select>
+            </div>
+
+            <div className="space-y-2">
+              <label className="text-sm font-semibold text-[#0B1B3D]">Buy / Customise Option</label>
+              <select
+                name="purchaseOption"
+                value={formData.purchaseOption}
+                onChange={handleChange}
+                className="w-full px-4 py-3 border border-[#EAEAEA] rounded-lg focus:outline-none focus:border-[#111111] transition bg-white"
+              >
+                <option value="BOTH">Buy & Customise (Both Available)</option>
+                <option value="BUY">Buy Ready Software Only</option>
+                <option value="CUSTOMISE">Customise Only</option>
+                <option value="NONE">Enquiry Only</option>
               </select>
             </div>
           </div>
@@ -346,6 +362,48 @@ export default function NewProject() {
               />
               <span className="text-sm font-semibold text-[#111]">Customizable</span>
             </label>
+          </div>
+
+          {/* Custom Quick Information Fields Repeater */}
+          <div className="pt-4 space-y-4">
+            <div className="flex justify-between items-center">
+              <label className="text-sm font-semibold text-[#0B1B3D]">Additional Quick Info Fields (Custom Key-Value)</label>
+              <button
+                type="button"
+                onClick={() => addArrayItem(setQuickInfo, quickInfo, { label: "", value: "" })}
+                className="text-xs font-semibold flex items-center gap-1 text-[#0B1B3D] hover:text-blue-800"
+              >
+                <Plus className="w-3.5 h-3.5" /> Add Field
+              </button>
+            </div>
+
+            <div className="space-y-3">
+              {quickInfo.map((info, idx) => (
+                <div key={idx} className="flex gap-3 items-center">
+                  <input
+                    type="text"
+                    value={info.label}
+                    onChange={(e) => handleArrayChange(setQuickInfo, quickInfo, idx, "label", e.target.value)}
+                    className="w-1/2 px-4 py-2.5 border border-[#EAEAEA] rounded-lg focus:outline-none focus:border-[#111111] transition text-sm bg-white"
+                    placeholder="Label (e.g. Database)"
+                  />
+                  <input
+                    type="text"
+                    value={info.value}
+                    onChange={(e) => handleArrayChange(setQuickInfo, quickInfo, idx, "value", e.target.value)}
+                    className="w-1/2 px-4 py-2.5 border border-[#EAEAEA] rounded-lg focus:outline-none focus:border-[#111111] transition text-sm bg-white"
+                    placeholder="Value (e.g. PostgreSQL)"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => removeArrayItem(setQuickInfo, quickInfo, idx)}
+                    className="p-2 text-red-500 hover:bg-red-50 rounded-lg transition shrink-0"
+                  >
+                    <Trash2 className="w-4 h-4" />
+                  </button>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 

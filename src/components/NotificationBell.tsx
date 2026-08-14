@@ -10,8 +10,8 @@ export default function NotificationBell() {
   // Mock data for now so it's always visible and looks good
   const notifications = [
     { id: 1, title: "System Update", text: "New features have been added to the dashboard.", time: "1h ago", isRead: false },
-    { id: 2, title: "New Publication", text: "A new journal article was just published.", time: "3h ago", isRead: false },
-    { id: 3, title: "Welcome", text: "Welcome to Global Scholar Publications!", time: "1d ago", isRead: true },
+    { id: 2, title: "New Project Added", text: "A new software project was added to the portfolio.", time: "3h ago", isRead: false },
+    { id: 3, title: "Welcome", text: "Welcome to Sahab Software Portfolio!", time: "1d ago", isRead: true },
   ];
   
   const unreadCount = notifications.filter(n => !n.isRead).length;

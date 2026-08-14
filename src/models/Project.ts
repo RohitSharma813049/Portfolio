@@ -23,6 +23,11 @@ export interface IDemoCredential {
   password?: string;
 }
 
+export interface IQuickInfo {
+  label: string;
+  value: string;
+}
+
 export interface IProject extends Document {
   name: string;
   slug: string;
@@ -30,7 +35,8 @@ export interface IProject extends Document {
   fullDescription?: string;
   featureImage?: string;
   bannerImage?: string;
-  status: "DRAFT" | "PUBLISHED" | "BUY" | "CUSTOMIZE" | "UPCOMING";
+  status: "DRAFT" | "PUBLISHED" | "UPCOMING";
+  purchaseOption?: "BOTH" | "BUY" | "CUSTOMISE" | "NONE";
   
   livePreviewUrl?: string;
   bookDemoUrl?: string;
@@ -53,6 +59,7 @@ export interface IProject extends Document {
   industries: string[];
   similarProjects?: (mongoose.Types.ObjectId | string | IProject)[];
   
+  quickInfo?: IQuickInfo[];
   features: IFeature[];
   panels: IPanel[];
   screenshots: IScreenshot[];
@@ -85,6 +92,11 @@ const DemoCredentialSchema = new Schema<IDemoCredential>({
   password: { type: String },
 });
 
+const QuickInfoSchema = new Schema<IQuickInfo>({
+  label: { type: String, required: true },
+  value: { type: String, required: true },
+});
+
 const ProjectSchema = new Schema<IProject>(
   {
     name: { type: String, required: true },
@@ -93,7 +105,8 @@ const ProjectSchema = new Schema<IProject>(
     fullDescription: { type: String },
     featureImage: { type: String },
     bannerImage: { type: String },
-    status: { type: String, enum: ["DRAFT", "PUBLISHED", "BUY", "CUSTOMIZE", "UPCOMING"], default: "DRAFT" },
+    status: { type: String, enum: ["DRAFT", "PUBLISHED", "UPCOMING"], default: "DRAFT" },
+    purchaseOption: { type: String, enum: ["BOTH", "BUY", "CUSTOMISE", "NONE"], default: "BOTH" },
     
     livePreviewUrl: { type: String },
     bookDemoUrl: { type: String },
@@ -116,6 +129,7 @@ const ProjectSchema = new Schema<IProject>(
     industries: [{ type: String }],
     similarProjects: [{ type: Schema.Types.ObjectId, ref: "Project" }],
     
+    quickInfo: [QuickInfoSchema],
     features: [FeatureSchema],
     panels: [PanelSchema],
     screenshots: [ScreenshotSchema],

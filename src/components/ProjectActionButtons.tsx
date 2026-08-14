@@ -3,13 +3,14 @@
 import { useState } from "react";
 import EnquiryModal from "./EnquiryModal";
 import { formatExternalUrl } from "@/lib/videoUtils";
-import { ExternalLink, Calendar, HelpCircle } from "lucide-react";
+import { ExternalLink, Calendar, ShoppingBag, Settings, HelpCircle } from "lucide-react";
 
 interface ProjectActionButtonsProps {
   projectId: string;
   projectName: string;
   bookDemoUrl?: string;
   livePreviewUrl?: string;
+  purchaseOption?: "BOTH" | "BUY" | "CUSTOMISE" | "NONE" | string;
 }
 
 export default function ProjectActionButtons({
@@ -17,6 +18,7 @@ export default function ProjectActionButtons({
   projectName,
   bookDemoUrl,
   livePreviewUrl,
+  purchaseOption = "BOTH",
 }: ProjectActionButtonsProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalSubject, setModalSubject] = useState("Project Enquiry");
@@ -44,37 +46,58 @@ export default function ProjectActionButtons({
     }
   };
 
-  const handleEnquiryForCost = () => {
-    setModalSubject("Project Cost & Pricing Enquiry");
+  const handleBuySoftware = () => {
+    setModalSubject("Buy Ready Software Enquiry");
     setIsModalOpen(true);
   };
 
+  const handleCustomiseSoftware = () => {
+    setModalSubject("Custom Software Development Request");
+    setIsModalOpen(true);
+  };
+
+  const showBuy = purchaseOption === "BUY" || purchaseOption === "BOTH";
+  const showCustomise = purchaseOption === "CUSTOMISE" || purchaseOption === "BOTH";
+
   return (
     <>
-      <div className="flex flex-wrap items-center gap-3">
+      <div className="grid grid-cols-1 sm:flex sm:flex-wrap items-center gap-3 w-full">
+        {/* Buy Button */}
+        {showBuy && (
+          <button
+            type="button"
+            onClick={handleBuySoftware}
+            className="w-full sm:w-auto bg-black hover:bg-[#D8C494] text-white px-6 py-3.5 rounded-full text-sm font-semibold transition-all shadow-sm hover:scale-105 duration-300 flex items-center justify-center gap-2 cursor-pointer"
+          >
+            <ShoppingBag className="w-4 h-4 text-[#D8C494]" /> Buy Software
+          </button>
+        )}
+
+        {/* Customise Button */}
+        {showCustomise && (
+          <button
+            type="button"
+            onClick={handleCustomiseSoftware}
+            className="w-full sm:w-auto bg-[#D8C494] text-black hover:bg-[#c2ae7c] px-6 py-3.5 rounded-full text-sm font-semibold transition-all shadow-sm hover:scale-105 duration-300 flex items-center justify-center gap-2 cursor-pointer"
+          >
+            <Settings className="w-4 h-4" /> Customise Software
+          </button>
+        )}
+
         {/* Book Demo Button */}
         <button
           type="button"
           onClick={handleBookDemo}
-          className="bg-black hover:bg-[#D8C494] text-white px-6 py-3 rounded-full text-sm font-semibold transition-all shadow-sm hover:scale-105 duration-300 flex items-center gap-2 cursor-pointer"
+          className="w-full sm:w-auto border border-[#EAEAEA] bg-white text-[#111] hover:border-[#D8C494] hover:text-[#D8C494] px-6 py-3.5 rounded-full text-sm font-semibold transition-all shadow-sm hover:scale-105 duration-300 flex items-center justify-center gap-2 cursor-pointer"
         >
           <Calendar className="w-4 h-4" /> Book Demo
-        </button>
-
-        {/* Enquiry for Cost Button */}
-        <button
-          type="button"
-          onClick={handleEnquiryForCost}
-          className="border border-[#EAEAEA] bg-white text-[#111] hover:border-[#D8C494] hover:text-[#D8C494] px-6 py-3 rounded-full text-sm font-semibold transition-all shadow-sm hover:scale-105 duration-300 flex items-center gap-2 cursor-pointer"
-        >
-          <HelpCircle className="w-4 h-4" /> Enquiry for Cost
         </button>
 
         {/* Live Preview Button */}
         <button
           type="button"
           onClick={handleLivePreview}
-          className="border border-[#EAEAEA] bg-white text-[#111] hover:border-[#D8C494] hover:text-[#D8C494] px-6 py-3 rounded-full text-sm font-semibold transition-all shadow-sm hover:scale-105 duration-300 flex items-center gap-2 cursor-pointer"
+          className="w-full sm:w-auto border border-[#EAEAEA] bg-white text-[#111] hover:border-[#D8C494] hover:text-[#D8C494] px-6 py-3.5 rounded-full text-sm font-semibold transition-all shadow-sm hover:scale-105 duration-300 flex items-center justify-center gap-2 cursor-pointer"
         >
           <ExternalLink className="w-4 h-4" /> Live Preview
         </button>

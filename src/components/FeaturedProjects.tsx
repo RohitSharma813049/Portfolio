@@ -1,83 +1,75 @@
 "use client";
 
-import { useRef } from "react";
-import Link from "next/link";
-import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
+import { useRef, useCallback, memo } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import ProjectCard from "./ProjectCard";
 
 interface FeaturedProjectsProps {
   projects: any[];
 }
 
-export default function FeaturedProjects({ projects }: FeaturedProjectsProps) {
+function FeaturedProjectsComponent({ projects }: FeaturedProjectsProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
 
-  const scrollLeft = () => {
-    if (scrollRef.current) scrollRef.current.scrollBy({ left: -350, behavior: 'smooth' });
-  };
+  const scrollLeft = useCallback(() => {
+    if (scrollRef.current) {
+      const containerWidth = scrollRef.current.clientWidth;
+      scrollRef.current.scrollBy({ left: -containerWidth, behavior: "smooth" });
+    }
+  }, []);
 
-  const scrollRight = () => {
-    if (scrollRef.current) scrollRef.current.scrollBy({ left: 350, behavior: 'smooth' });
-  };
+  const scrollRight = useCallback(() => {
+    if (scrollRef.current) {
+      const containerWidth = scrollRef.current.clientWidth;
+      scrollRef.current.scrollBy({ left: containerWidth, behavior: "smooth" });
+    }
+  }, []);
 
   return (
     <div className="relative w-full">
       <div className="flex justify-end gap-3 mb-6 relative z-20">
-        <button onClick={scrollLeft} className="w-12 h-12 flex items-center justify-center rounded-full border border-[#EAEAEA] bg-white hover:border-[#D8C494] hover:text-[#D8C494] transition-colors shadow-sm text-[#111]">
+        <button
+          onClick={scrollLeft}
+          aria-label="Previous Projects"
+          className="w-12 h-12 flex items-center justify-center rounded-full border border-[#EAEAEA] bg-white hover:border-[#D8C494] hover:text-[#D8C494] transition-colors shadow-sm text-[#111] cursor-pointer"
+        >
           <ChevronLeft className="w-5 h-5" />
         </button>
-        <button onClick={scrollRight} className="w-12 h-12 flex items-center justify-center rounded-full border border-[#EAEAEA] bg-white hover:border-[#D8C494] hover:text-[#D8C494] transition-colors shadow-sm text-[#111]">
+        <button
+          onClick={scrollRight}
+          aria-label="Next Projects"
+          className="w-12 h-12 flex items-center justify-center rounded-full border border-[#EAEAEA] bg-white hover:border-[#D8C494] hover:text-[#D8C494] transition-colors shadow-sm text-[#111] cursor-pointer"
+        >
           <ChevronRight className="w-5 h-5" />
         </button>
       </div>
 
-      <div 
-        ref={scrollRef} 
+      <div
+        ref={scrollRef}
         className="flex gap-6 overflow-x-auto snap-x snap-mandatory pb-8 scrollbar-hide"
-        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+        style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
       >
-        <style dangerouslySetInnerHTML={{__html: `
+        <style
+          dangerouslySetInnerHTML={{
+            __html: `
           .scrollbar-hide::-webkit-scrollbar {
             display: none;
           }
-        `}} />
-      {projects.map((project) => (
-        <div key={project._id.toString()} className="group snap-start bg-white rounded-3xl overflow-hidden border border-[#EAEAEA] shadow-sm hover:shadow-hover transition-all flex flex-col h-full min-w-[280px] md:min-w-[320px] lg:min-w-[380px] shrink-0">
-          {/* Image */}
-          <div className="relative h-48 bg-[#f4f4f4] overflow-hidden">
-            <span className="absolute top-4 left-4 z-10 bg-[#0B1B3D]/80 backdrop-blur-sm text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full">
-              {project.categories?.[0] || 'SOFTWARE'}
-            </span>
-            {project.featureImage ? (
-               <img src={project.featureImage} alt={project.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
-            ) : (
-               <div className="w-full h-full bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center group-hover:scale-105 transition-transform duration-700">
-                 <span className="text-[#0B1B3D]/20 font-bold text-xl px-4 text-center">{project.name}</span>
-               </div>
-            )}
-          </div>
-
-          {/* Content */}
-          <div className="p-6 flex flex-col flex-grow">
-            <h4 className="text-[10px] font-bold uppercase tracking-widest text-[#D8C494] mb-2">
-               {project.technologies?.[0] || 'FULL STACK'}
-            </h4>
-            <h3 className="font-playfair text-xl font-medium text-[#111] mb-4 line-clamp-2">
-               {project.name}
-            </h3>
-            
-            <p className="text-sm text-[#888] font-light line-clamp-2 mb-6 flex-grow">
-               {project.shortDescription}
-            </p>
-
-            <div className="flex items-center justify-between border-t border-[#EAEAEA] pt-4 mt-auto group/link cursor-pointer">
-              <Link href={`/project/${project.slug}`} className="text-sm font-semibold text-[#D8C494] flex items-center gap-2 group-hover/link:text-[#111] transition-colors">
-                View Project Details <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" />
-              </Link>
-            </div>
-          </div>
-        </div>
-      ))}
+        `,
+          }}
+        />
+        {projects.map((project) => (
+          <ProjectCard
+            key={project._id?.toString() || project.slug}
+            project={project}
+            showWishlist={false}
+            imageHeightClass="h-60 sm:h-64 md:h-72"
+            containerClass="group snap-start bg-white rounded-3xl overflow-hidden border border-[#EAEAEA] shadow-sm hover:shadow-hover transition-all flex flex-col h-full w-[85vw] sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] shrink-0"
+          />
+        ))}
       </div>
     </div>
   );
 }
+
+export default memo(FeaturedProjectsComponent);

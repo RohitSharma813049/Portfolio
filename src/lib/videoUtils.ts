@@ -25,52 +25,36 @@ export function getVideoEmbedInfo(url?: string): VideoEmbedInfo {
     return { isVideoFile: true, embedUrl: trimmed, thumbnail: "" };
   }
 
-  // YouTube watch?v=ID
-  const watchMatch = trimmed.match(/(?:youtube\.com\/watch\?v=)([a-zA-Z0-9_-]+)/);
-  if (watchMatch && watchMatch[1]) {
-    const id = watchMatch[1];
-    return {
-      isVideoFile: false,
-      embedUrl: `https://www.youtube.com/embed/${id}?autoplay=0&rel=0`,
-      thumbnail: `https://img.youtube.com/vi/${id}/hqdefault.jpg`,
-      videoId: id,
-    };
-  }
+  // Parse YouTube URLs reliably
+  try {
+    if (trimmed.includes("youtube.com") || trimmed.includes("youtu.be")) {
+      let videoId = "";
+      if (trimmed.includes("youtu.be/")) {
+        const parts = trimmed.split("youtu.be/");
+        if (parts[1]) videoId = parts[1].split("?")[0].split("/")[0];
+      } else if (trimmed.includes("youtube.com/shorts/")) {
+        const parts = trimmed.split("youtube.com/shorts/");
+        if (parts[1]) videoId = parts[1].split("?")[0].split("/")[0];
+      } else if (trimmed.includes("youtube.com/embed/")) {
+        const parts = trimmed.split("youtube.com/embed/");
+        if (parts[1]) videoId = parts[1].split("?")[0].split("/")[0];
+      } else if (trimmed.includes("v=")) {
+        const fullUrl = trimmed.startsWith("http") ? trimmed : `https://${trimmed}`;
+        const urlObj = new URL(fullUrl);
+        videoId = urlObj.searchParams.get("v") || "";
+      }
 
-  // YouTube shorts/ID
-  const shortsMatch = trimmed.match(/(?:youtube\.com\/shorts\/)([a-zA-Z0-9_-]+)/);
-  if (shortsMatch && shortsMatch[1]) {
-    const id = shortsMatch[1];
-    return {
-      isVideoFile: false,
-      embedUrl: `https://www.youtube.com/embed/${id}?autoplay=0&rel=0`,
-      thumbnail: `https://img.youtube.com/vi/${id}/hqdefault.jpg`,
-      videoId: id,
-    };
-  }
-
-  // YouTube youtu.be/ID
-  const youtuBeMatch = trimmed.match(/(?:youtu\.be\/)([a-zA-Z0-9_-]+)/);
-  if (youtuBeMatch && youtuBeMatch[1]) {
-    const id = youtuBeMatch[1];
-    return {
-      isVideoFile: false,
-      embedUrl: `https://www.youtube.com/embed/${id}?autoplay=0&rel=0`,
-      thumbnail: `https://img.youtube.com/vi/${id}/hqdefault.jpg`,
-      videoId: id,
-    };
-  }
-
-  // YouTube embed/ID
-  const embedMatch = trimmed.match(/(?:youtube\.com\/embed\/)([a-zA-Z0-9_-]+)/);
-  if (embedMatch && embedMatch[1]) {
-    const id = embedMatch[1];
-    return {
-      isVideoFile: false,
-      embedUrl: `https://www.youtube.com/embed/${id}?autoplay=0&rel=0`,
-      thumbnail: `https://img.youtube.com/vi/${id}/hqdefault.jpg`,
-      videoId: id,
-    };
+      if (videoId) {
+        return {
+          isVideoFile: false,
+          embedUrl: `https://www.youtube.com/embed/${videoId}?autoplay=0&rel=0`,
+          thumbnail: `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`,
+          videoId,
+        };
+      }
+    }
+  } catch (e) {
+    console.error("YouTube URL parsing error:", e);
   }
 
   // Vimeo
@@ -83,6 +67,19 @@ export function getVideoEmbedInfo(url?: string): VideoEmbedInfo {
       thumbnail: "",
       videoId: id,
     };
+  }
+
+  // Loom
+  if (trimmed.includes("loom.com/share/")) {
+    const loomId = trimmed.split("loom.com/share/")[1]?.split("?")[0];
+    if (loomId) {
+      return {
+        isVideoFile: false,
+        embedUrl: `https://www.loom.com/embed/${loomId}`,
+        thumbnail: "",
+        videoId: loomId,
+      };
+    }
   }
 
   // Google Drive view -> preview
@@ -98,7 +95,7 @@ export function getVideoEmbedInfo(url?: string): VideoEmbedInfo {
   // Fallback
   return {
     isVideoFile: false,
-    embedUrl: trimmed,
+    embedUrl: trimmed.startsWith("http") ? trimmed : `https://${trimmed}`,
     thumbnail: "",
   };
 }

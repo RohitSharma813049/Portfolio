@@ -7,12 +7,20 @@ import { ArrowRight, UserPlus, Compass, Code, Layers } from "lucide-react";
 import ClientSearch from "@/components/ClientSearch";
 import CTA from "@/components/CTA";
 
-export const revalidate = 60;
+export const dynamic = "force-dynamic";
 
 export default async function Home() {
-  await connectToDatabase();
-  const projects = await Project.find({}).sort({ createdAt: -1 }).lean();
-  const dbCategories = await Category.find({}).lean();
+  let projects: any[] = [];
+  let dbCategories: any[] = [];
+  try {
+    if (process.env.MONGODB_URI) {
+      await connectToDatabase();
+      projects = await Project.find({}, "name slug shortDescription featureImage categories technologies status createdAt purchaseOption livePreviewUrl bookDemoUrl").sort({ createdAt: -1 }).lean();
+      dbCategories = await Category.find({}, "name slug coverImage").lean();
+    }
+  } catch (error) {
+    console.error("Failed to fetch home page data:", error);
+  }
 
   const totalProjects = projects.length;
   // Create dynamic category cards from dbCategories, merging project counts
@@ -180,7 +188,6 @@ export default async function Home() {
         <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
           <div className="max-w-2xl">
             <div className="flex items-center gap-4 mb-4 text-xs font-bold tracking-widest uppercase text-[#D8C494]">
-              <span className="w-8 h-px bg-[#D8C494]"></span>
               BROWSE BY CATEGORY
             </div>
             <h2 className="text-4xl md:text-5xl font-playfair font-medium text-[#16276B] mb-6">
@@ -291,7 +298,6 @@ export default async function Home() {
       <section id="projects" className="py-16 md:py-24 px-4 sm:px-8 max-w-7xl mx-auto bg-white">
         <div className="flex flex-col mb-12">
           <div className="flex items-center gap-4 mb-4 text-xs font-bold tracking-widest uppercase text-[#D8C494]">
-            <span className="w-8 h-px bg-[#D8C494]"></span>
             CURATED PROJECTS
           </div>
 

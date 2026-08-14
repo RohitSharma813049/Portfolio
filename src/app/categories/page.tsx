@@ -3,24 +3,28 @@ import connectToDatabase from "@/lib/mongodb";
 import Project from "@/models/Project";
 import CategoryGrid from "@/components/CategoryGrid";
 
-export const revalidate = 60;
+export const dynamic = "force-dynamic";
 
 export default async function CategoriesPage() {
-  await connectToDatabase();
-  
-  // Aggregate to find all unique categories and their project counts, plus a feature image
-  const categoriesData = await Project.aggregate([
-    { $match: { status: "PUBLISHED" } },
-    { $unwind: "$categories" },
-    // Group by category, count projects, and get the featureImage of the most recently created project
-    { $sort: { createdAt: -1 } },
-    { $group: { 
-        _id: "$categories", 
-        count: { $sum: 1 },
-        featureImage: { $first: "$featureImage" } 
-    }},
-    { $sort: { _id: 1 } } // Sort alphabetically by category name
-  ]);
+  let categoriesData: any[] = [];
+  try {
+    if (process.env.MONGODB_URI) {
+      await connectToDatabase();
+      categoriesData = await Project.aggregate([
+        { $match: { status: "PUBLISHED" } },
+        { $unwind: "$categories" },
+        { $sort: { createdAt: -1 } },
+        { $group: { 
+            _id: "$categories", 
+            count: { $sum: 1 },
+            featureImage: { $first: "$featureImage" } 
+        }},
+        { $sort: { _id: 1 } }
+      ]);
+    }
+  } catch (error) {
+    console.error("Failed to fetch categories page data:", error);
+  }
 
   return (
     <main className="min-h-screen bg-white">

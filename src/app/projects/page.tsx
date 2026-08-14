@@ -3,11 +3,18 @@ import connectToDatabase from "@/lib/mongodb";
 import Project from "@/models/Project";
 import ProjectGrid from "@/components/ProjectGrid";
 
-export const revalidate = 60;
+export const dynamic = "force-dynamic";
 
 export default async function AllProjectsPage() {
-  await connectToDatabase();
-  const projects = await Project.find({ status: "PUBLISHED" }).sort({ createdAt: -1 }).lean();
+  let projects: any[] = [];
+  try {
+    if (process.env.MONGODB_URI) {
+      await connectToDatabase();
+      projects = await Project.find({ status: "PUBLISHED" }, "name slug shortDescription featureImage categories technologies status createdAt purchaseOption livePreviewUrl bookDemoUrl").sort({ createdAt: -1 }).lean();
+    }
+  } catch (error) {
+    console.error("Failed to fetch projects page data:", error);
+  }
 
   return (
     <main className="min-h-screen bg-white">

@@ -11,7 +11,7 @@ export default async function CategoryFilteredPage({ params }: { params: Promise
   const { slug } = await params;
   
   // Fetch all published projects
-  const allProjects = await Project.find({ status: "PUBLISHED" }).sort({ createdAt: -1 }).lean();
+  const allProjects = await Project.find({ status: "PUBLISHED" }, "name slug shortDescription featureImage categories technologies status createdAt purchaseOption livePreviewUrl bookDemoUrl").sort({ createdAt: -1 }).lean();
   
   // Filter projects by matching the slug against their categories
   const projects = allProjects.filter((project: any) => {

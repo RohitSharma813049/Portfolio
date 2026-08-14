@@ -3,6 +3,7 @@ import Image from "next/image";
 import { BookOpen, User } from "lucide-react";
 import NotificationBell from "./NotificationBell";
 import MobileMenu from "./MobileMenu";
+import NavLinks from "./NavLinks";
 import { cookies } from "next/headers";
 
 export default async function Header() {
@@ -42,23 +43,7 @@ export default async function Header() {
           </div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex space-x-8">
-            <Link href="/" className="text-[#16276B] hover:text-[#0B1B3D] px-3 py-2 text-sm font-medium transition-colors">
-              Home
-            </Link>
-            <Link href="/categories" className="text-[#16276B] hover:text-[#0B1B3D] px-3 py-2 text-sm font-medium transition-colors">
-              Categories
-            </Link>
-            <Link href="/projects" className="text-[#16276B] hover:text-[#0B1B3D] px-3 py-2 text-sm font-medium transition-colors">
-              All Projects
-            </Link>
-            <Link href="/about" className="text-[#16276B] hover:text-[#0B1B3D] px-3 py-2 text-sm font-medium transition-colors">
-              About
-            </Link>
-            <Link href="/connect" className="text-[#16276B] hover:text-[#0B1B3D] px-3 py-2 text-sm font-medium transition-colors">
-              Connect
-            </Link>
-          </nav>
+          <NavLinks />
 
           {/* Right side buttons */}
           <div className="flex items-center space-x-4">

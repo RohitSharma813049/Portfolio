@@ -8,37 +8,37 @@ export default function ProjectTabs({ project }: { project: any }) {
   const [activeTab, setActiveTab] = useState("overview");
 
   return (
-    <section className="max-w-5xl mx-auto px-8 pt-12">
+    <section className="max-w-5xl mx-auto px-4 sm:px-8 pt-8 sm:pt-12">
       {/* Tab Navigation */}
-      <div className="flex gap-8 border-b border-[#EAEAEA] mb-8 overflow-x-auto pb-4">
+      <div className="flex gap-4 sm:gap-8 border-b border-[#EAEAEA] mb-6 sm:mb-8 overflow-x-auto pb-3 scrollbar-hide">
         <button 
           onClick={() => setActiveTab("overview")}
-          className={`text-sm font-bold border-b-2 pb-2 whitespace-nowrap ${activeTab === 'overview' ? 'border-[#D8C494] text-[#D8C494]' : 'border-transparent text-[#666] hover:text-[#111]'}`}
+          className={`text-xs sm:text-sm font-bold border-b-2 pb-2 whitespace-nowrap transition-colors ${activeTab === 'overview' ? 'border-[#D8C494] text-[#D8C494]' : 'border-transparent text-[#666] hover:text-[#111]'}`}
         >
           Overview
         </button>
         <button 
           onClick={() => setActiveTab("features")}
-          className={`text-sm font-bold border-b-2 pb-2 whitespace-nowrap ${activeTab === 'features' ? 'border-[#D8C494] text-[#D8C494]' : 'border-transparent text-[#666] hover:text-[#111]'}`}
+          className={`text-xs sm:text-sm font-bold border-b-2 pb-2 whitespace-nowrap transition-colors ${activeTab === 'features' ? 'border-[#D8C494] text-[#D8C494]' : 'border-transparent text-[#666] hover:text-[#111]'}`}
         >
           Features
         </button>
         <button 
           onClick={() => setActiveTab("panels")}
-          className={`text-sm font-bold border-b-2 pb-2 whitespace-nowrap ${activeTab === 'panels' ? 'border-[#D8C494] text-[#D8C494]' : 'border-transparent text-[#666] hover:text-[#111]'}`}
+          className={`text-xs sm:text-sm font-bold border-b-2 pb-2 whitespace-nowrap transition-colors ${activeTab === 'panels' ? 'border-[#D8C494] text-[#D8C494]' : 'border-transparent text-[#666] hover:text-[#111]'}`}
         >
           Panels
         </button>
         <button 
           onClick={() => setActiveTab("screenshots")}
-          className={`text-sm font-bold border-b-2 pb-2 whitespace-nowrap ${activeTab === 'screenshots' ? 'border-[#D8C494] text-[#D8C494]' : 'border-transparent text-[#666] hover:text-[#111]'}`}
+          className={`text-xs sm:text-sm font-bold border-b-2 pb-2 whitespace-nowrap transition-colors ${activeTab === 'screenshots' ? 'border-[#D8C494] text-[#D8C494]' : 'border-transparent text-[#666] hover:text-[#111]'}`}
         >
           Screenshots
         </button>
         {project.videoUrl && (
           <button 
             onClick={() => setActiveTab("video")}
-            className={`text-sm font-bold border-b-2 pb-2 whitespace-nowrap ${activeTab === 'video' ? 'border-[#D8C494] text-[#D8C494]' : 'border-transparent text-[#666] hover:text-[#111]'}`}
+            className={`text-xs sm:text-sm font-bold border-b-2 pb-2 whitespace-nowrap transition-colors ${activeTab === 'video' ? 'border-[#D8C494] text-[#D8C494]' : 'border-transparent text-[#666] hover:text-[#111]'}`}
           >
             Video Tour
           </button>
@@ -46,7 +46,7 @@ export default function ProjectTabs({ project }: { project: any }) {
         {project.credentials && project.credentials.length > 0 && (
           <button 
             onClick={() => setActiveTab("demo")}
-            className={`text-sm font-bold border-b-2 pb-2 whitespace-nowrap ${activeTab === 'demo' ? 'border-[#D8C494] text-[#D8C494]' : 'border-transparent text-[#666] hover:text-[#111]'}`}
+            className={`text-xs sm:text-sm font-bold border-b-2 pb-2 whitespace-nowrap transition-colors ${activeTab === 'demo' ? 'border-[#D8C494] text-[#D8C494]' : 'border-transparent text-[#666] hover:text-[#111]'}`}
           >
             Demo Access
           </button>
@@ -54,8 +54,8 @@ export default function ProjectTabs({ project }: { project: any }) {
       </div>
 
       {/* Content Block */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-        <div className="md:col-span-2 space-y-8 min-h-[400px]">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
+        <div className="lg:col-span-2 space-y-6 sm:space-y-8 min-h-[300px]">
           
           {/* Overview Tab */}
           {activeTab === "overview" && (
@@ -147,8 +147,18 @@ export default function ProjectTabs({ project }: { project: any }) {
             const videoInfo = getVideoEmbedInfo(project.videoUrl);
             return (
               <div className="animate-in fade-in slide-in-from-bottom-2 duration-300">
-                <h3 className="text-xl font-bold mb-4">Video Tour</h3>
-                <div className="aspect-video bg-black rounded-3xl overflow-hidden shadow-sm flex items-center justify-center">
+                <div className="flex justify-between items-center mb-4">
+                  <h3 className="text-xl font-bold">Video Tour</h3>
+                  <a 
+                    href={project.videoUrl} 
+                    target="_blank" 
+                    rel="noreferrer" 
+                    className="text-xs font-semibold text-[#D8C494] hover:underline flex items-center gap-1"
+                  >
+                    Open Video in New Tab ↗
+                  </a>
+                </div>
+                <div className="aspect-video bg-black rounded-2xl sm:rounded-3xl overflow-hidden shadow-sm flex items-center justify-center relative">
                   {videoInfo.isVideoFile ? (
                     <video src={videoInfo.embedUrl} controls className="w-full h-full object-cover" />
                   ) : (
@@ -156,8 +166,9 @@ export default function ProjectTabs({ project }: { project: any }) {
                       src={videoInfo.embedUrl} 
                       title="Video Tour" 
                       className="w-full h-full border-0"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
                       allowFullScreen
+                      referrerPolicy="no-referrer-when-downgrade"
                     ></iframe>
                   )}
                 </div>
@@ -211,7 +222,13 @@ export default function ProjectTabs({ project }: { project: any }) {
               <li className="flex justify-between border-b border-[#EAEAEA] pb-3"><span className="text-[#666]">White Label</span><span className="font-medium text-[#111]">{project.isWhiteLabel ? 'Yes' : 'No'}</span></li>
               <li className="flex justify-between border-b border-[#EAEAEA] pb-3"><span className="text-[#666]">Subscription</span><span className="font-medium text-[#111]">{project.hasSubscription ? 'Available' : 'No'}</span></li>
               <li className="flex justify-between border-b border-[#EAEAEA] pb-3"><span className="text-[#666]">Source Code</span><span className="font-medium text-[#111]">{project.hasSourceCode ? 'Available' : 'No'}</span></li>
-              <li className="flex justify-between pb-1"><span className="text-[#666]">Customizable</span><span className="font-medium text-[#111]">{project.isCustomizable ? 'Yes' : 'No'}</span></li>
+              <li className="flex justify-between border-b border-[#EAEAEA] pb-3"><span className="text-[#666]">Customizable</span><span className="font-medium text-[#111]">{project.isCustomizable ? 'Yes' : 'No'}</span></li>
+              {project.quickInfo && project.quickInfo.map((info: any, idx: number) => (
+                <li key={idx} className="flex justify-between border-b border-[#EAEAEA] pb-3 last:border-0 last:pb-0">
+                  <span className="text-[#666]">{info.label}</span>
+                  <span className="font-medium text-[#111]">{info.value}</span>
+                </li>
+              ))}
             </ul>
           </div>
           

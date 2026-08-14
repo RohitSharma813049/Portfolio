@@ -124,7 +124,7 @@ export default function AdminProjects() {
   useMemo(() => setCurrentPage(1), [searchQuery, selectedCategory, sortBy]);
 
   return (
-    <div className="p-8 max-w-6xl mx-auto">
+    <div className="p-4 md:p-8 max-w-6xl mx-auto">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
         <div>
           <h1 className="text-2xl font-bold">Projects</h1>
@@ -142,7 +142,7 @@ export default function AdminProjects() {
             <Search className="absolute left-4 w-5 h-5 text-[#16325C] group-focus-within:text-[#0B1B3D] transition-colors" />
             <input 
               type="text" 
-              placeholder="Search projects by name or category..." 
+              placeholder="Search projects" 
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full pl-12 pr-4 py-3 rounded-none-none border border-[#EAEAEA] shadow-sm focus:outline-none focus:border-[#111111] transition-all text-sm"
