@@ -9,7 +9,8 @@ import ProjectGallery from "@/components/ProjectGallery";
 import ProjectActionButtons from "@/components/ProjectActionButtons";
 import ProjectCard from "@/components/ProjectCard";
 
-export const revalidate = 60; // ISR
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 export default async function ProjectDetails({ params }: { params: Promise<{ slug: string }> }) {
   await connectToDatabase();

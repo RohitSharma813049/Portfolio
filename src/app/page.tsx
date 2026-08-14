@@ -144,8 +144,8 @@ export default async function Home() {
             </span>
           </div>
 
-          <div className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none">
-            <h2 className="text-white/20 font-playfair font-bold text-[15rem] leading-none tracking-tighter mix-blend-overlay select-none">
+          <div className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none overflow-hidden">
+            <h2 className="text-white/20 font-playfair font-bold text-6xl sm:text-[10rem] lg:text-[15rem] leading-none tracking-tighter mix-blend-overlay select-none">
               DEV
             </h2>
           </div>
@@ -213,28 +213,21 @@ export default async function Home() {
         </div>
 
         <div
-          className={`grid gap-6 ${
-            displayCategories.length === 1
-              ? "grid-cols-1 max-w-md"
-              : displayCategories.length === 2
-              ? "grid-cols-1 sm:grid-cols-2 max-w-3xl"
-              : displayCategories.length === 3
-              ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 max-w-5xl"
-              : "grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 w-full"
-          }`}
+          className="flex lg:grid lg:grid-cols-4 gap-6 overflow-x-auto lg:overflow-visible snap-x snap-mandatory scrollbar-hide touch-pan-x pb-4"
+          style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
         >
           {displayCategories.map((cat, i) => (
             <Link
               href={`/categories`}
               key={i}
-              className="group relative h-96 rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-end p-8 text-white bg-[#1E1B38]"
+              className="group relative h-96 w-[80vw] sm:w-[320px] lg:w-full shrink-0 snap-start rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-end p-8 text-white bg-black"
             >
               <img
                 src={cat.image}
                 alt={cat.title}
                 className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 z-0"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#0B1B3D]/95 via-[#0B1B3D]/40 to-transparent z-10" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent z-10" />
 
               <div className="relative z-20">
                 <p className="text-[10px] font-bold tracking-widest uppercase mb-2 text-[#D8C494]">

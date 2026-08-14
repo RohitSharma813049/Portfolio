@@ -61,14 +61,14 @@ export default function CollabsPage() {
             No collaborators found.
           </div>
         ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse">
+          <div className="overflow-x-auto scrollbar-hide touch-pan-x">
+            <table className="w-full min-w-[650px] text-left border-collapse">
               <thead>
                 <tr className="bg-[#0a0a0a] border-b border-[#333]">
-                  <th className="px-6 py-4 text-xs font-semibold text-[#888] uppercase tracking-wider">Client</th>
-                  <th className="px-6 py-4 text-xs font-semibold text-[#888] uppercase tracking-wider">Contact</th>
-                  <th className="px-6 py-4 text-xs font-semibold text-[#888] uppercase tracking-wider">Project ID</th>
-                  <th className="px-6 py-4 text-xs font-semibold text-[#888] uppercase tracking-wider">Joined</th>
+                  <th className="px-6 py-4 text-xs font-semibold text-[#888] uppercase tracking-wider whitespace-nowrap">Client</th>
+                  <th className="px-6 py-4 text-xs font-semibold text-[#888] uppercase tracking-wider whitespace-nowrap">Contact</th>
+                  <th className="px-6 py-4 text-xs font-semibold text-[#888] uppercase tracking-wider whitespace-nowrap">Project ID</th>
+                  <th className="px-6 py-4 text-xs font-semibold text-[#888] uppercase tracking-wider whitespace-nowrap">Joined</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-[#333]">

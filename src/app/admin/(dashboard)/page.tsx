@@ -175,33 +175,33 @@ export default async function AdminDashboard() {
             <Link href="/admin/projects" className="text-sm text-[var(--color-primary)] font-medium hover:underline">View All</Link>
           </div>
           
-          <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse">
+          <div className="overflow-x-auto scrollbar-hide touch-pan-x">
+            <table className="w-full min-w-[550px] text-left border-collapse">
               <thead>
                 <tr className="border-b border-[var(--color-border)] text-xs font-semibold text-[var(--color-text-secondary)] uppercase tracking-wider">
-                  <th className="pb-3 pr-4">Project Name</th>
-                  <th className="pb-3 px-4">Status</th>
-                  <th className="pb-3 px-4">Date</th>
-                  <th className="pb-3 pl-4 text-right">Actions</th>
+                  <th className="pb-3 pr-4 whitespace-nowrap">Project Name</th>
+                  <th className="pb-3 px-4 whitespace-nowrap">Status</th>
+                  <th className="pb-3 px-4 whitespace-nowrap">Date</th>
+                  <th className="pb-3 pl-4 text-right whitespace-nowrap">Actions</th>
                 </tr>
               </thead>
               <tbody className="text-sm">
                 {recentProjects.map((project) => (
                   <tr key={project._id.toString()} className="border-b border-[var(--color-border)] last:border-0 hover:bg-gray-50 transition group">
-                    <td className="py-4 pr-4 font-medium text-[var(--color-text-primary)]">
+                    <td className="py-4 pr-4 font-medium text-[var(--color-text-primary)] min-w-[180px]">
                       {project.name}
                     </td>
-                    <td className="py-4 px-4">
+                    <td className="py-4 px-4 whitespace-nowrap">
                       <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
                         project.status === 'PUBLISHED' ? 'bg-green-100 text-green-800' : 'bg-orange-100 text-orange-800'
                       }`}>
                         {project.status === 'PUBLISHED' ? 'Published' : 'Draft'}
                       </span>
                     </td>
-                    <td className="py-4 px-4 text-[var(--color-text-secondary)]">
+                    <td className="py-4 px-4 text-[var(--color-text-secondary)] whitespace-nowrap">
                       {new Date(project.createdAt).toLocaleDateString()}
                     </td>
-                    <td className="py-4 pl-4 text-right">
+                    <td className="py-4 pl-4 text-right whitespace-nowrap">
                       <Link href={`/admin/projects/${project._id}`} className="text-[var(--color-primary)] hover:text-blue-700 font-medium">Edit</Link>
                     </td>
                   </tr>

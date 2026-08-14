@@ -4,7 +4,8 @@ import connectToDatabase from "@/lib/mongodb";
 import Project from "@/models/Project";
 import ProjectGrid from "@/components/ProjectGrid";
 
-export const revalidate = 60;
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 export default async function CategoryFilteredPage({ params }: { params: Promise<{ slug: string }> }) {
   await connectToDatabase();

@@ -37,7 +37,7 @@ export default async function Header() {
                 alt="Sahab Portfolio Logo" 
                 width={280} 
                 height={80} 
-                className="object-contain max-h-20 w-auto" 
+                className="object-contain max-h-12 md:max-h-14 w-auto" 
               />
             </Link>
           </div>
