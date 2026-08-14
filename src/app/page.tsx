@@ -302,14 +302,14 @@ export default async function Home() {
 
       {/* 5. FEATURED PROJECTS SECTION */}
       <section id="projects" className="py-16 md:py-24 px-4 sm:px-8 max-w-7xl mx-auto bg-white">
-        <div className="flex flex-col mb-12">
+        <div className="flex flex-col mb-8">
           <div className="flex items-center gap-4 mb-4 text-xs font-bold tracking-widest uppercase text-[#D8C494]">
             CURATED PROJECTS
           </div>
 
-          <div className="flex flex-col md:flex-row justify-between items-end gap-6 mb-12">
+          <div className="flex flex-col md:flex-row justify-between items-end gap-6">
             <div>
-              <h2 className="text-4xl md:text-5xl font-playfair font-medium text-[#16276B] mb-6">
+              <h2 className="text-4xl md:text-5xl font-playfair font-medium text-[#16276B] mb-4">
                 Featured <span className="text-[#D8C494] italic">Projects</span>
               </h2>
               <p className="text-[#666] font-light text-lg max-w-2xl">
@@ -323,22 +323,12 @@ export default async function Home() {
               View All Projects <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
-
-          {/* Tabs */}
-          <div className="flex flex-wrap gap-3 mb-10">
-            <span className="px-6 py-2 border border-[#D8C494] bg-[#D8C494]/10 text-[#D8C494] rounded-full text-sm font-medium cursor-pointer transition-colors">
-              All
-            </span>
-            <span className="px-6 py-2 border border-[#EAEAEA] text-[#666] rounded-full text-sm hover:border-[#D8C494] hover:text-[#D8C494] cursor-pointer transition-colors">
-              Web Apps
-            </span>
-            <span className="px-6 py-2 border border-[#EAEAEA] text-[#666] rounded-full text-sm hover:border-[#D8C494] hover:text-[#D8C494] cursor-pointer transition-colors">
-              Mobile Platforms
-            </span>
-          </div>
         </div>
 
-        <FeaturedProjects projects={JSON.parse(JSON.stringify(projects))} />
+        <FeaturedProjects
+          projects={JSON.parse(JSON.stringify(projects))}
+          categories={displayCategories.map((cat) => cat.title)}
+        />
       </section>
 
       {/* 6. TESTIMONIALS SECTION */}
