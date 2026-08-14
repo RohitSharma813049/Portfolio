@@ -61,15 +61,15 @@ export default function ProjectActionButtons({
 
   return (
     <>
-      <div className="grid grid-cols-1 sm:flex sm:flex-wrap items-center gap-3 w-full">
+      <div className="grid grid-cols-2 sm:flex sm:flex-wrap items-center gap-2.5 sm:gap-3 w-full">
         {/* Buy Button */}
         {showBuy && (
           <button
             type="button"
             onClick={handleBuySoftware}
-            className="w-full sm:w-auto bg-black hover:bg-[#D8C494] text-white px-6 py-3.5 rounded-full text-sm font-semibold transition-all shadow-sm hover:scale-105 duration-300 flex items-center justify-center gap-2 cursor-pointer"
+            className="w-full sm:w-auto bg-black hover:bg-[#D8C494] text-white px-3.5 sm:px-6 py-3 sm:py-3.5 rounded-full text-xs sm:text-sm font-semibold transition-all shadow-sm hover:scale-105 duration-300 flex items-center justify-center gap-1.5 sm:gap-2 cursor-pointer"
           >
-            <ShoppingBag className="w-4 h-4 text-[#D8C494]" /> Buy Software
+            <ShoppingBag className="w-4 h-4 shrink-0 text-[#D8C494]" /> Buy Software
           </button>
         )}
 
@@ -78,9 +78,9 @@ export default function ProjectActionButtons({
           <button
             type="button"
             onClick={handleCustomiseSoftware}
-            className="w-full sm:w-auto bg-[#D8C494] text-black hover:bg-[#c2ae7c] px-6 py-3.5 rounded-full text-sm font-semibold transition-all shadow-sm hover:scale-105 duration-300 flex items-center justify-center gap-2 cursor-pointer"
+            className="w-full sm:w-auto bg-[#D8C494] text-black hover:bg-[#c2ae7c] px-3.5 sm:px-6 py-3 sm:py-3.5 rounded-full text-xs sm:text-sm font-semibold transition-all shadow-sm hover:scale-105 duration-300 flex items-center justify-center gap-1.5 sm:gap-2 cursor-pointer"
           >
-            <Settings className="w-4 h-4" /> Customise Software
+            <Settings className="w-4 h-4 shrink-0" /> Customise Software
           </button>
         )}
 
@@ -88,18 +88,18 @@ export default function ProjectActionButtons({
         <button
           type="button"
           onClick={handleBookDemo}
-          className="w-full sm:w-auto border border-[#EAEAEA] bg-white text-[#111] hover:border-[#D8C494] hover:text-[#D8C494] px-6 py-3.5 rounded-full text-sm font-semibold transition-all shadow-sm hover:scale-105 duration-300 flex items-center justify-center gap-2 cursor-pointer"
+          className="w-full sm:w-auto border border-[#EAEAEA] bg-white text-[#111] hover:border-[#D8C494] hover:text-[#D8C494] px-3.5 sm:px-6 py-3 sm:py-3.5 rounded-full text-xs sm:text-sm font-semibold transition-all shadow-sm hover:scale-105 duration-300 flex items-center justify-center gap-1.5 sm:gap-2 cursor-pointer"
         >
-          <Calendar className="w-4 h-4" /> Book Demo
+          <Calendar className="w-4 h-4 shrink-0" /> Book Demo
         </button>
 
         {/* Live Preview Button */}
         <button
           type="button"
           onClick={handleLivePreview}
-          className="w-full sm:w-auto border border-[#EAEAEA] bg-white text-[#111] hover:border-[#D8C494] hover:text-[#D8C494] px-6 py-3.5 rounded-full text-sm font-semibold transition-all shadow-sm hover:scale-105 duration-300 flex items-center justify-center gap-2 cursor-pointer"
+          className="w-full sm:w-auto border border-[#EAEAEA] bg-white text-[#111] hover:border-[#D8C494] hover:text-[#D8C494] px-3.5 sm:px-6 py-3 sm:py-3.5 rounded-full text-xs sm:text-sm font-semibold transition-all shadow-sm hover:scale-105 duration-300 flex items-center justify-center gap-1.5 sm:gap-2 cursor-pointer"
         >
-          <ExternalLink className="w-4 h-4" /> Live Preview
+          <ExternalLink className="w-4 h-4 shrink-0" /> Live Preview
         </button>
       </div>
 
